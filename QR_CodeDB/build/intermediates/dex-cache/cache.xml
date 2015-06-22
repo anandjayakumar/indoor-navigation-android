@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/libs/core.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="f3c7e89b5124329cddba83bcf7c26c1c636c16b8">
+        <dex dex="/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/pre-dexed/debug/core-0de77c54f1d2a3652b5cd6659c1af74744bac899.jar" />
+    </item>
+    <item
+        jar="/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="cd3f0aeca8f8e53d60cad6597e69d5d753fb0360">
+        <dex dex="/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/pre-dexed/debug/classes-3defa7687aba9eb3bcd1f1f51f6a3614b3685cc2.jar" />
+    </item>
+
+</items>
