@@ -9,18 +9,21 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button2"
         app:siBorderWidth="2dp"
         app:siBorderColor="#000"/>
     <TextView
         android:id="@+id/textv"
         android:textColor="#000"
         android:textSize="20dp"
+        android:layout_below="@+id/button2"
         android:textStyle="bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/imgv"/>
     <TextView
         android:id="@+id/x_label"
+        android:visibility="invisible"
         android:textColor="#000"
         android:paddingLeft="10dp"
         android:paddingRight="2dp"
@@ -41,6 +44,7 @@
 
     <TextView
         android:id="@+id/y_label"
+        android:visibility="invisible"
         android:paddingRight="2dp"
         android:textColor="#000"
         android:layout_width="wrap_content"
@@ -59,6 +63,7 @@
 
     <TextView
         android:id="@+id/desg_label"
+        android:visibility="invisible"
         android:textColor="#000"
         android:paddingLeft="10dp"
         android:paddingRight="2dp"
@@ -75,5 +80,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/x_label"
         android:layout_toRightOf="@+id/desg_label"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search Employee"
+        android:id="@+id/button2"
+        android:onClick="find_emp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -15,7 +15,15 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.app2.aar.databaseimg.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:parentActivityName="com.app2.aar.databaseimg.StartActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".StartActivity" />
+        </activity>
+        <activity
+            android:name="com.app2.aar.databaseimg.StartActivity"
+            android:label="Database IMG" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

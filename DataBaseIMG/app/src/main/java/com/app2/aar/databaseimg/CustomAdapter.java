@@ -3,9 +3,12 @@ package com.app2.aar.databaseimg;
 /**
  * Created by user on 22/6/15.
  */
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +25,7 @@ import java.util.Locale;
 public class CustomAdapter extends BaseAdapter{
     Context mContext;
     ArrayList<Employee> elist;
-    List<Employee> empList;
+    List<Employee> empList = null;
     private static LayoutInflater inflater=null;
     public CustomAdapter(Context context,
                          List<Employee> employeeList) {
@@ -51,34 +54,62 @@ public class CustomAdapter extends BaseAdapter{
         return position;
     }
 
-    public class Holder
+    public class ViewHolder
     {
         TextView tv;
         ImageView img;
+        TextView tv1;
+        TextView tv2;
+        TextView tv3;
     }
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
 
-        Holder holder=new Holder();
-        View rowView;
-        rowView = inflater.inflate(R.layout.single_listview, null);
-        holder.tv=(TextView) rowView.findViewById(R.id.textv);
-        holder.img=(ImageView) rowView.findViewById(R.id.imgv);
+        final ViewHolder holder;
+        if (convertView == null) {
+            holder = new ViewHolder();
+            convertView = inflater.inflate(R.layout.single_listview, null);
+        holder.tv=(TextView) convertView.findViewById(R.id.textv);
+        holder.img=(ImageView) convertView.findViewById(R.id.imgv);
+        holder.tv1=(TextView) convertView.findViewById(R.id.x);
+        holder.tv2=(TextView) convertView.findViewById(R.id.y);
+        holder.tv3=(TextView) convertView.findViewById(R.id.desg);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
         holder.tv.setText(empList.get(position).getEmployeeName());
         holder.img.setImageResource(empList.get(position).getEmployeeImg());
+        holder.tv1.setText(String.valueOf(empList.get(position).getXval()));
+        holder.tv2.setText(String.valueOf(empList.get(position).getYval()));
+        holder.tv3.setText(empList.get(position).getEmployeeDesg());
         //byte[] data=empList.get(position).getEmployeeImg();
         //Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         //holder.img.setImageBitmap(bitmap);
         //holder.img.setImageResource(empList.get(position).getEmployeeImg());
-        /*rowView.setOnClickListener(new OnClickListener() {
+        convertView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
+                Intent intent=((Activity) mContext).getIntent();;
+                intent.putExtra("name",
+                        (empList.get(position).getEmployeeName()));
+                intent.putExtra("x_val",
+                        (empList.get(position).getXval()));
+                intent.putExtra("y_val",
+                        (empList.get(position).getYval()));
+                intent.putExtra("desg",
+                        (empList.get(position).getEmployeeDesg()));
+                intent.putExtra("images",
+                        (empList.get(position).getEmployeeImg()));
+                ((Activity) v.getContext()).setResult(StartActivity.RESULT_OK, intent);
+                ((Activity)v.getContext()).finish();
+                //setResult(intent);
+                //finish();
             }
-        });*/
-        return rowView;
+        });
+        return convertView;
     }
 
     // Filter Class

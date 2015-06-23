@@ -22,15 +22,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "contactsManager";
+    private static final String DATABASE_NAME = "EmployeesDB";
 
     // Contacts table name
-    private static final String TABLE_CONTACTS = "contacts";
+    private static final String TABLE_EMP = "contacts";
 
     // Contacts Table Columns names
     //private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_PH_NO = "phone_number";
+    private static final String KEY_X = "X_Cord";
+    private static final String KEY_Y = "Y_Cord";
+    private static final String KEY_DESG = "Designation";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,9 +42,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_EMP + "("
                 + KEY_NAME + " TEXT,"
-                + KEY_PH_NO + " INTEGER" + ")";
+                + KEY_PH_NO + " INTEGER," + KEY_X + " INTEGER," + KEY_Y + " INTEGER," + KEY_DESG + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -49,7 +52,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMP);
 
         // Create tables again
         onCreate(db);
@@ -66,13 +69,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, contact.getEmployeeName()); // Contact Name
         values.put(KEY_PH_NO, contact.getEmployeeImg()); // Contact Phone
+        values.put(KEY_X, contact.getXval()); // Contact Name
+        values.put(KEY_Y, contact.getYval()); // Contact Name
+        values.put(KEY_DESG, contact.getEmployeeDesg()); // Contact Name
         // Inserting Row
-        db.insert(TABLE_CONTACTS, null, values);
+        db.insert(TABLE_EMP, null, values);
         db.close(); // Closing database connection
     }
 
     // Getting single contact
-    Employee getContact(int id) {
+    /*Employee getContact(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] {KEY_NAME, KEY_PH_NO }, KEY_NAME + "=?",
@@ -83,13 +89,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Employee contact = new Employee(cursor.getString(0), cursor.getInt(1));
         // return contact
         return contact;
-    }
+    }*/
 
     // Getting All Contacts
     public List<Employee> getAllContacts() {
         List<Employee> contactList = new ArrayList<Employee>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT  * FROM " + TABLE_EMP;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -100,6 +106,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Employee contact = new Employee();
                 contact.setEmployeeName(cursor.getString(0));
                 contact.setEmployeeImg(cursor.getInt(1));
+                contact.setXval(cursor.getInt(2));
+                contact.setYval(cursor.getInt(3));
+                contact.setEmployeeDesg(cursor.getString(4));
                 // Adding contact to list
                 contactList.add(contact);
             } while (cursor.moveToNext());
@@ -110,7 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     // Updating single contact
-    public int updateContact(Employee contact) {
+    /*public int updateContact(Employee contact) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -121,19 +130,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return db.update(TABLE_CONTACTS, values, KEY_NAME+ " = ?",
                 new String[] { contact.getEmployeeName() });
     }
-
+    */
     // Deleting single contact
     public void deleteContact(Employee contact) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_NAME + " = ?",
+        db.delete(TABLE_EMP, KEY_NAME + " = ?",
                 new String[] { contact.getEmployeeName() });
         db.close();
     }
 
-
     // Getting contacts Count
     public int getContactsCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        String countQuery = "SELECT  * FROM " + TABLE_EMP;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
         cursor.close();

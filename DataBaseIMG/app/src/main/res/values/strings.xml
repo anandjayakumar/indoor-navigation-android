@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">DataBase IMG</string>
+    <string name="desg_lb">Designation: </string>
+    <string name="x_lb">X: </string>
+    <string name="y_lb">Y: </string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_start">StartActivity</string>
 </resources>

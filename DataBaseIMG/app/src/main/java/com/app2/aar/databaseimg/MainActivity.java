@@ -37,14 +37,14 @@ public class MainActivity extends ActionBarActivity{
         for (Employee info : employees) {
             handler.deleteContact(info);
         }
-        handler.addContact(new Employee("Aarathi R", R.drawable.flag));
-        handler.addContact(new Employee("Anita Grace Daniel", R.drawable.orange));
-        handler.addContact(new Employee("Anand Jaykumar", R.drawable.flag));
-        handler.addContact(new Employee("Elizabeth George", R.drawable.orange));
-        handler.addContact(new Employee("Gautham Krishna", R.drawable.flag));
-        handler.addContact(new Employee("Koushik", R.drawable.orange));
-        handler.addContact(new Employee("Lekha K P", R.drawable.flag));
-        handler.addContact(new Employee("Sona Thaj", R.drawable.orange));
+        handler.addContact(new Employee("Aarathi R", R.drawable.flag,2,1,"Software Engineer"));
+        handler.addContact(new Employee("Anita Grace Daniel", R.drawable.flag,3,2,"Software Engineer"));
+        handler.addContact(new Employee("Anand Jaykumar", R.drawable.flag,2,4,"Software Engineer"));
+        handler.addContact(new Employee("Elizabeth George", R.drawable.flag,3,1,"Software Engineer"));
+        handler.addContact(new Employee("Gautham Krishna", R.drawable.flag,4,3,"Software Engineer"));
+        handler.addContact(new Employee("Koushik", R.drawable.flag,1,1,"Software Engineer"));
+        handler.addContact(new Employee("Lekha K P", R.drawable.flag,2,3,"Software Engineer"));
+        handler.addContact(new Employee("Sona Thaj", R.drawable.flag,2,2,"Software Engineer"));
         // get image from drawable
         /*Bitmap image = BitmapFactory.decodeResource(getResources(),
                 R.drawable.flag);
