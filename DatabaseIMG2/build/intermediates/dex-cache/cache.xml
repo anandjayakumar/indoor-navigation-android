@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/user/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="ccbc77a5fd907ef863c29f3596c6f54ffa4e9442">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/kxml2-2.3.0-05b1d13c68b23b43350ee8f45ddd98f8d715e7cb.jar" />
+    </item>
+    <item
+        jar="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-25d16ee4123391531e8de651e0bd7f97802e767a.jar" />
+    </item>
+    <item
+        jar="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/classes-161dba414793a5aedf0abca2b2e1aff74439ddb9.jar" />
+    </item>
+    <item
+        jar="/home/user/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-93e79cf663bea5dd9e43d7beeaa37df7fb977cea.jar" />
+    </item>
+    <item
+        jar="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="d048a86aa4547b90ed59f2a933f98345a316aeb3">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/classes-e0b82363c5b0a0c5878f09bca7399bf3b54d4dcf.jar" />
+    </item>
+    <item
+        jar="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="73753982da6bde518f3a4c6b372749981d14d1a0">
+        <dex dex="/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/pre-dexed/debug/classes-1810d86c6430172b4a26c2bb8ac0d044b911587b.jar" />
+    </item>
+
+</items>
