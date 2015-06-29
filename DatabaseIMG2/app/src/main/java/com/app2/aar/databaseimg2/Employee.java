@@ -1,22 +1,31 @@
 package com.app2.aar.databaseimg2;
 
 public class Employee {
-    private String empName;
+    private String _empName;
     int _Prof_Pic;
     int _x,_y;
     String _designation;
 
     public Employee(){}
     public Employee(String name,int img,int X,int Y,String desg){
-        this.empName =name;
+        this._empName =name;
         this._Prof_Pic=img;
         this._x=X;
         this._y=Y;
         this._designation=desg;
     }
 
+    public Employee pullEMPdetails() {
+        Employee emp = new Employee();
+        emp._empName = getEmployeeName();
+        emp._x = getXval();
+        emp._y = getYval();
+        emp._Prof_Pic = getEmployeeImg();
+        emp._designation = getEmployeeDesg();
+        return emp;
+    }
     public void setEmployeeName(String employeeName) {
-        this.empName = employeeName;
+        this._empName = employeeName;
     }
 
     public void setEmployeeImg(int employeeImg) {
@@ -32,7 +41,7 @@ public class Employee {
         this._designation=employeeDesg;
     }
     public String getEmployeeName() {
-        return this.empName;
+        return this._empName;
     }
 
     public int getEmployeeImg() {

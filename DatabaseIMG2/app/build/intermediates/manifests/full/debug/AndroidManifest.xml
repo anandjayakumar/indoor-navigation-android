@@ -20,7 +20,8 @@
         </activity>
         <activity
             android:name="com.app2.aar.databaseimg2.StartActivity"
-            android:label="@string/title_activity_start" >
+            android:label="@string/title_activity_start"
+            android:launchMode="singleTask" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +31,10 @@
         <activity
             android:name="com.app2.aar.databaseimg2.PlaceActivity"
             android:label="@string/title_activity_place" >
+        </activity>
+        <activity
+            android:name="com.app2.aar.databaseimg2.TabsActivity"
+            android:label="@string/title_activity_tabs" >
         </activity>
     </application>
 

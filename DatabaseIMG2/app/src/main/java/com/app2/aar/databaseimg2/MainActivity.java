@@ -28,9 +28,20 @@ import java.util.Locale;
 public class MainActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
     CustomAdapter adapter;
-    EditText editsearch;
     SearchView search;
+    ListView lv;
+    int currentList;
+
+    DatabaseHandler handler;
+    int images[];
+    String designations[];
+    List<Label> arraylist = new ArrayList<Label>();
+
+    public MainActivity(){
+        this.currentList=1;
+    }
     private List<Employee> employees;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +50,22 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
         search=(SearchView) findViewById(R.id.searchView1);
         search.setQueryHint("Search Here");
 
-        DatabaseHandler handler = new DatabaseHandler(this);
+        images=new int[] { R.drawable.project_manager, R.drawable.developer,
+                R.drawable.architect, R.drawable.software_engineer,
+                R.drawable.trainee, R.drawable.intern, R.drawable.designer };
+        designations=new String[]{"Project Manager","Developer","Architect","Software Engineer","Trainee","Intern","Designer"};
 
-
-        employees = handler.getAllEmployees();
-        adapter=new CustomAdapter(this,1,employees,null);
-        ListView lv=(ListView) findViewById(R.id.listView);
+        // Locate the ListView in listview_main.xml
+        lv = (ListView) findViewById(R.id.listView);
         lv.setOnItemClickListener(this);
+
+        for (int i = 0; i < designations.length; i++)
+        {
+            Label wp = new Label(images[i], designations[i]);
+            arraylist.add(wp);
+        }
+        handler = new DatabaseHandler(this);
+        adapter=new CustomAdapter(this,3,arraylist);
         lv.setAdapter(adapter);
 
      //*** setOnQueryTextListener ***
@@ -53,7 +73,19 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
             public boolean onQueryTextChange(String newText) {
                 // this is your adapter that will be filtered
                 String text =newText.toLowerCase(Locale.getDefault());
-                adapter.filter(1,text);
+                if(text.length()==0){
+                    currentList=1;
+                    adapter=new CustomAdapter(MainActivity.this,3,arraylist);
+                    lv.setAdapter(adapter);
+                    adapter.filter(3,text);
+                }
+                else{
+                    employees = handler.getAllEmployees();
+                    adapter=new CustomAdapter(MainActivity.this,1,employees,null);
+                    lv.setAdapter(adapter);
+                    currentList=2;
+                    adapter.filter(1,text);
+                }
                 return true;
             }
 
@@ -78,19 +110,34 @@ public class MainActivity extends ActionBarActivity implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent returnIntent = new Intent();
-        returnIntent.putExtra("name",
-                        (employees.get(position).getEmployeeName()));
-        returnIntent.putExtra("x_val",
-                        (employees.get(position).getXval()));
-        returnIntent.putExtra("y_val",
-                        (employees.get(position).getYval()));
-        returnIntent.putExtra("desg",
-                        (employees.get(position).getEmployeeDesg()));
-        returnIntent.putExtra("images",
-                        (employees.get(position).getEmployeeImg()));
-                setResult(StartActivity.RESULT_OK, returnIntent);
-                finish();
+        if(currentList==1) {
+            String designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
+            ArrayList <Employee> employeeList=new ArrayList<Employee>();
+            employees=handler.getAllEmployees();
+            adapter=new CustomAdapter(MainActivity.this,1,employees,null);
+            lv.setAdapter(adapter);
+            currentList=2;
+            adapter.filter(4,designationEmp);
+        }
+ else {
+
+            Intent returnIntent = new Intent(this, StartActivity.class);
+            returnIntent.putExtra("act_val", 1);
+            returnIntent.putExtra("name",
+                    (employees.get(position).getEmployeeName()));
+            returnIntent.putExtra("x_val",
+                    (employees.get(position).getXval()));
+            returnIntent.putExtra("y_val",
+                    (employees.get(position).getYval()));
+            returnIntent.putExtra("desg",
+                    (employees.get(position).getEmployeeDesg()));
+            returnIntent.putExtra("images",
+                    (employees.get(position).getEmployeeImg()));
+            startActivity(returnIntent);
+//                setResult(StartActivity.RESULT_OK, returnIntent);
+//                finish();
+
+        }
 
     }
 }

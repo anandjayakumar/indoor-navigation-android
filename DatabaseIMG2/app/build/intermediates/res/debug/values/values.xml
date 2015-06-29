@@ -232,6 +232,7 @@
     <eat-comment/>
     <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_tabs">TabsActivity</string>
     <string name="x_lb">X: </string>
     <string name="y_lb">Y: </string>
     <!-- From: file:/home/user/AndroidStudioProjects/DatabaseIMG2/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->

@@ -7,8 +7,11 @@ import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -25,9 +28,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TabWidget;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TabsActivity extends TabActivity {
+
+    int indx,act;
+    String name,desig;
+    int x,y,img;
+    TabHost mytabs;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,8 +50,8 @@ public class TabsActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-
-        Resources ressources = getResources();
+        Intent i;
+        Resources resources = getResources();
         TabHost tabHost = getTabHost();
         //TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
@@ -49,14 +59,14 @@ public class TabsActivity extends TabActivity {
         Intent intentEmployee = new Intent().setClass(this, MainActivity.class);
         TabSpec tabSpecEmployee = tabHost
                 .newTabSpec("Employees")
-                .setIndicator("", ressources.getDrawable(R.drawable.emp_layout))
+                .setIndicator("EMPLOYEES")
                 .setContent(intentEmployee);
 
 
         Intent intentPlace = new Intent().setClass(this, PlaceActivity.class);
         TabSpec tabSpecPlace = tabHost
                 .newTabSpec("Places")
-                .setIndicator("", ressources.getDrawable(R.drawable.plc_layout))
+                .setIndicator("PLACES")
                 .setContent(intentPlace);
 
 
@@ -64,12 +74,33 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabSpecEmployee);
         tabHost.addTab(tabSpecPlace);
 
-        //set Windows tab as default (zero based)
         tabHost.setCurrentTab(2);
+        /*mytabs = getTabHost();
+        mytabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String arg0) {
+                int index = mytabs.getCurrentTab();
+                switch (index) {
+                    case 0:
+                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
+
+                        break;
+                    case 1:
+                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
+                        startActivityForResult(i,3);
+                        break;
+                }
+            }
+        });*/
     }
 
 
 
+    /*private void changetabs(TabWidget tabWidget) {
+        // Change background
+        for(int i=0; i < tabWidget.getChildCount(); i++)
+            tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_selector);
+    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -81,5 +112,7 @@ public class TabsActivity extends TabActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-        }}
+        }
+    }
+
 }

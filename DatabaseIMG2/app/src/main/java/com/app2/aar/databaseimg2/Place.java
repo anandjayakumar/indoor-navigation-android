@@ -15,6 +15,14 @@ public class Place {
         this._pic=picture;
     }
 
+    public Place getPlaceDetails() {
+        Place plc = new Place();
+        plc._Place_name = getPlaceName();
+        plc._px = getPXval();
+        plc._py = getPYval();
+        plc._pic = getPic();
+        return plc;
+    }
     public void setPlaceName(String placeName) {
             this._Place_name=placeName;
     }

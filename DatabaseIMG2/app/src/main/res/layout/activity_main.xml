@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#66aff3"
-    android:paddingTop="12dp"
+    android:layout_marginTop="53dp"
     tools:context="com.app2.aar.databaseaccess2.SQLiteActivity">
     <SearchView
         android:id="@+id/searchView1"
         android:searchIcon="@drawable/ictop_search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
