@@ -182,15 +182,16 @@ public class StartActivity extends ActionBarActivity implements DBQueries.Employ
         handler.addPlace(new Place("Meeting Room 3",5,2,R.drawable.ic_eatery));
         handler.addPlace(new Place("Toilet (Ladies)",2,3,R.drawable.ic_eatery));
         handler.addPlace(new Place("Toilet (Gents)",2,3,R.drawable.ic_eatery));
+        handler.addPlace(new Place("Entry 1", 4, 3, R.drawable.ic_eatery));
+        handler.addPlace(new Place("Entry 2", 5, 4, R.drawable.ic_eatery));
+        handler.addPlace(new Place("Exit 1", 1, 4, R.drawable.ic_eatery));
+        handler.addPlace(new Place("Exit 2", 2, 4, R.drawable.ic_eatery));
         handler.addPlace(new Place("Beverages 1",2,1,R.drawable.ic_eatery));
         handler.addPlace(new Place("Beverages 2",5,1,R.drawable.ic_eatery));
         handler.addPlace(new Place("Server", 3, 3, R.drawable.ic_eatery));
         handler.addPlace(new Place("Eatery 1", 3, 3, R.drawable.ic_eatery));
         handler.addPlace(new Place("Eatery 2", 3, 3, R.drawable.ic_eatery));
-        handler.addPlace(new Place("Entry 1", 4, 3, R.drawable.ic_eatery));
-        handler.addPlace(new Place("Entry 2", 5, 4, R.drawable.ic_eatery));
-        handler.addPlace(new Place("Exit 1", 1, 4, R.drawable.ic_eatery));
-        handler.addPlace(new Place("Exit 2", 2, 4, R.drawable.ic_eatery));
+
 
     }
     @Override

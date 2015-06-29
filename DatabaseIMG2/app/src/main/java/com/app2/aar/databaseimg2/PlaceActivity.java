@@ -40,10 +40,10 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
         search=(SearchView) findViewById(R.id.searchView2);
         search.setQueryHint("Search Here");
 
-        images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,
+        images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,R.drawable.ic_entry,
                 R.drawable.ic_beverage, R.drawable.ic_toilet,
                 R.drawable.ic_server, R.drawable.ic_eatery};
-        places=new String[]{"Meeting","Entry / Exit","Beverages","Toilet","Server","Eatery"};
+        places=new String[]{"Meeting","Entry","Exit","Beverages","Toilet","Server","Eatery"};
 
         // Locate the ListView in listview_main.xml
         lv = (ListView) findViewById(R.id.listView2);
