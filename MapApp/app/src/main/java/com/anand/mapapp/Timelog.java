@@ -20,11 +20,7 @@ public class Timelog {
     }
 
     // constructor
-    public Timelog(String link, String _date, String _time){
-        this._link = link;
-        this._date = _date;
-        this._time = _time;
-    }
+
     // getting ID
     public int getId(){
         return this._id;

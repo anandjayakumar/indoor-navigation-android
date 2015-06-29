@@ -1,7 +1,5 @@
 package com.anand.mapapp;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,6 +23,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +41,10 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
+    String namep;
+    int x,y;  int act;
+    String designation;
+    int image;
 
     public SensorManager sensorService;
     public Sensor compass;
@@ -126,14 +131,59 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    protected void onNewIntent(Intent in) {
+        super.onNewIntent(in);
+        setIntent(in);
+    }
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        Intent in=getIntent();
+//
+//        TextView name = (TextView) findViewById(R.id.textv);
+//        TextView x_co = (TextView) findViewById(R.id.x);
+//        TextView y_co = (TextView) findViewById(R.id.y);
+//        TextView desg = (TextView) findViewById(R.id.desg);
+//        ImageView img=(ImageView)findViewById(R.id.imgv);
+//
+//        act=in.getIntExtra("act_val",act);
+//        namep=in.getStringExtra("name");
+//        x=in.getIntExtra("x_val",x);
+//        y=in.getIntExtra("y_val",y);
+//        image=in.getIntExtra("images",image);
+//        designation=in.getStringExtra("desg");
+//        if(act==1||act==2){
+//            findViewById(R.id.x_label).setVisibility(View.VISIBLE);
+//            findViewById(R.id.y_label).setVisibility(View.VISIBLE);
+//            name.setText(namep);
+//            x_co.setText(String.valueOf(x));
+//            y_co.setText(String.valueOf(y));
+//            img.setImageResource(image);
+//        }
+//        if(act==1){
+//            findViewById(R.id.desg_label).setVisibility(View.VISIBLE);
+//            designation = in.getStringExtra("desg");
+//            desg.setText(designation);
+//        }
+//        else if(act==2){
+//            findViewById(R.id.desg_label).setVisibility(View.INVISIBLE);
+//            desg.setText("");
+//        }
+//    }
+
+
     public void addEmployee() {
         DBQueries dbQueries = new DBQueries(getApplicationContext());
         dbQueries.insertEmployees(new DBQueries.EmployeeinsertionCompletion() {
             @Override
             public void employeeinsertionCompleted() {
-                Log.i("dbb------","inserted");
-//                Employee c =db.getEmployeeId(2);
-              //  pullDb();
+                Log.i("dbb","inserted");
+                Employee c =db.getEmployeeId(2);
+                Toast.makeText(getApplicationContext(),""+c.getX()+" "+c.getY(),Toast.LENGTH_SHORT).show();
+
+                pullDb();
 
             }
         });
@@ -172,6 +222,18 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void callLog(View v) {
+        Intent intent=new Intent(MainActivity.this,LogActivity.class);
+        startActivity(intent);
+    }
+
+    public void callSearch(View v) {
+        Intent intent=new Intent(MainActivity.this,TabsActivity.class);
+        startActivity(intent);
+    }
+
+
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
@@ -186,7 +248,11 @@ public class MainActivity extends ActionBarActivity {
             QRcode qr = db.getQRcodeId(link);
             posX=qr.getX();
             posY=qr.getY();*/
-
+            List<Timelog> tlogg;
+            tlogg = db.getAllTimelog();
+            int size = tlogg.size();
+            Timelog tlog = new Timelog(size+1,message,date(),time());
+            db.insertLog(tlog);
 
         }
 
@@ -199,8 +265,6 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-
-
     }
 
     public String date() {
@@ -208,24 +272,49 @@ public class MainActivity extends ActionBarActivity {
         GregorianCalendar date = new GregorianCalendar();
         int day, month, year;
         String date1="";
+
+
         day = date.get(Calendar.DAY_OF_MONTH);
         month = date.get(Calendar.MONTH)+1;
         year = date.get(Calendar.YEAR);
         date1=""+day+"/"+month+"/"+year;
+
         return date1;
     }
 
     public String time() {
 
         GregorianCalendar date = new GregorianCalendar();
-        int second, minute, hour;
+
+        String sec,min,hr;
         String time1="";
-        second = date.get(Calendar.SECOND);
-        minute = date.get(Calendar.MINUTE);
-        hour = date.get(Calendar.HOUR);
-        time1=""+hour+":"+minute+":"+second;
+        long time = System.currentTimeMillis();
+        double hours = ((time/3600000)%24)+6.5;
+        int hrs = (int)hours;
+
+        if(hrs<10)
+            hr="0"+hrs;
+        else
+            hr=""+hrs;
+
+        if(date.get(Calendar.SECOND)<10)
+            sec="0"+date.get(Calendar.SECOND);
+        else
+            sec=""+date.get(Calendar.SECOND);
+
+        if(date.get(Calendar.MINUTE)<10)
+            min="0"+date.get(Calendar.MINUTE);
+        else
+            min=""+date.get(Calendar.MINUTE);
+
+        //hour = date.get(Calendar.HOUR);
+        time1=""+hr+":"+min+":"+sec;
+
+
         return time1;
     }
+
+
 
     public SensorEventListener compassListener = new SensorEventListener() {
         @Override
@@ -250,6 +339,38 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
+        Intent in=getIntent();
+
+//        TextView name = (TextView) findViewById(R.id.textv);
+//        TextView x_co = (TextView) findViewById(R.id.x);
+//        TextView y_co = (TextView) findViewById(R.id.y);
+//        TextView desg = (TextView) findViewById(R.id.desg);
+//        ImageView img=(ImageView)findViewById(R.id.imgv);
+
+        act=in.getIntExtra("act_val",act);
+        namep=in.getStringExtra("name");
+        x=in.getIntExtra("x_val",x);
+        y=in.getIntExtra("y_val",y);
+        image=in.getIntExtra("images",image);
+        designation=in.getStringExtra("desg");
+
+//        if(act==1||act==2){
+//            findViewById(R.id.x_label).setVisibility(View.VISIBLE);
+//            findViewById(R.id.y_label).setVisibility(View.VISIBLE);
+//            name.setText(namep);
+//            x_co.setText(String.valueOf(x));
+//            y_co.setText(String.valueOf(y));
+//            img.setImageResource(image);
+//        }
+//        if(act==1){
+//            findViewById(R.id.desg_label).setVisibility(View.VISIBLE);
+//            designation = in.getStringExtra("desg");
+//            desg.setText(designation);
+//        }
+//        else if(act==2){
+//            findViewById(R.id.desg_label).setVisibility(View.INVISIBLE);
+//            desg.setText("");
+//        }
 
 
        /* timer.scheduleAtFixedRate(new TimerTask() {
@@ -278,6 +399,9 @@ public class MainActivity extends ActionBarActivity {
 
         };
         handler.postDelayed(runnable, 2000);
+
+
+
 
     }
 

@@ -75,6 +75,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
+    void insertLog(Timelog tlog) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_ID,tlog.getId());
+        cv.put(KEY_LINK,tlog.getLink());
+        cv.put(KEY_DATE, tlog.getDate());
+        cv.put(KEY_TIME, tlog.getTime());
+        db.insert(TABLE_LOG, null, cv);
+        db.close();
+
+    }
+
+
     void batchInsertEmployee(List<Employee> EmployeeList) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.beginTransaction();
@@ -152,13 +165,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
         Employee employee = new Employee();
-        employee.setId(cursor.getInt(cursor.getColumnIndex(KEY_ID)));
-//        employee.setName(cursor.getString(1));
-//        employee.setX(cursor.getInt(2));
-//        employee.setY(cursor.getInt(3));
-//        employee.setPic(cursor.getInt(4));
-
+        employee.setId(cursor.getInt(0));
+        employee.setName(cursor.getString(1));
+        employee.setX(cursor.getInt(2));
+        employee.setY(cursor.getInt(3));
+        employee.setPic(cursor.getInt(4));
+        employee.setDesg(cursor.getString(5));
+        db.close();
         return employee;
+
 
     }
 
@@ -168,11 +183,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
         Place place = new Place();
-        place.setId(Integer.parseInt(cursor.getString(0)));
+        place.setId(cursor.getInt(0));
         place.setName(cursor.getString(1));
-        place.setX(Integer.parseInt(cursor.getString(2)));
-        place.setY(Integer.parseInt(cursor.getString(3)));
-        place.setPic(Integer.parseInt(cursor.getString(4)));
+        place.setX(cursor.getInt(2));
+        place.setY(cursor.getInt(3));
+        place.setPic(cursor.getInt(4));
+        db.close();
         return place;
 
     }
@@ -183,10 +199,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
         Timelog log = new Timelog();
-        log.setId(Integer.parseInt(cursor.getString(0)));
+        log.setId(cursor.getInt(0));
         log.setLink(cursor.getString(1));
         log.setDate(cursor.getString(2));
         log.setTime(cursor.getString(3));
+        db.close();
         return log;
 
     }
@@ -197,37 +214,81 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
         QRcode qr = new QRcode();
-        qr.setId(Integer.parseInt(cursor.getString(0)));
+        qr.setId(cursor.getInt(0));
         qr.setLink(cursor.getString(1));
-        qr.setX(Integer.parseInt(cursor.getString(2)));
-        qr.setY(Integer.parseInt(cursor.getString(3)));
+        qr.setX(cursor.getInt(2));
+        qr.setY(cursor.getInt(3));
+        db.close();
         return qr;
 
     }
 
     public List<Timelog> getAllTimelog() {
         List<Timelog> logList = new ArrayList<Timelog>();
-        String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE;
+        String selectQuery = "SELECT  * FROM " + TABLE_LOG;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
                 Timelog log = new Timelog();
-                log.setId(Integer.parseInt(cursor.getString(0)));
+                log.setId(cursor.getInt(0));
                 log.setLink(cursor.getString(1));
                 log.setDate(cursor.getString(2));
                 log.setTime(cursor.getString(3));
                 logList.add(log);
             } while (cursor.moveToNext());
         }
-
+        db.close();
         return logList;
     }
 
+    public List<Employee> getAllEmployees() {
+        List<Employee> employeeList = new ArrayList<Employee>();
+        String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
+        if (cursor.moveToFirst()) {
+            do {
+                Employee emp_o = new Employee();
+                emp_o.setId(cursor.getInt(0));
+                emp_o.setName(cursor.getString(1));
+                emp_o.setX(cursor.getInt(2));
+                emp_o.setY(cursor.getInt(3));
+                emp_o.setPic(cursor.getInt(4));
+                emp_o.setDesg(cursor.getString(5));
+                employeeList.add(emp_o);
+            } while (cursor.moveToNext());
+        }
 
+        return employeeList;
+    }
 
+    public List<Place> getAllPlaces() {
+        List<Place> placeList = new ArrayList<Place>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_PLACE;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Place pl=new Place();
+                pl.setName(cursor.getString(0));
+                pl.setX(cursor.getInt(1));
+                pl.setY(cursor.getInt(2));
+                pl.setPic(cursor.getInt(3));
+                // Adding contact to list
+                placeList.add(pl);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return placeList;
+    }
 
 
 

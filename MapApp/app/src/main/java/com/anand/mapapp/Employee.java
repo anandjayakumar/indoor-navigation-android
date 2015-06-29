@@ -12,7 +12,7 @@ public class Employee {
         String _designation;
 
         public Employee(){}
-        public Employee(int id,String name,int img,int X,int Y,String desg){
+        public Employee(int id,String name,int X,int Y,int img,String desg){
             this._id =id;
             this._name =name;
             this._pic=img;

@@ -14,10 +14,16 @@ import android.widget.TextView;
 
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 
 public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCodeReadListener {
 
     private QRCodeReaderView mydecoderview;
+    DatabaseHandler db = new DatabaseHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +42,46 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
     public void onQRCodeRead(String text, PointF[] points)
     {
         data=text;
+       /* List<Timelog> tlogg;
+        tlogg = db.getAllTimelog();
+        int size = tlogg.size();
+        Timelog tlog = new Timelog(size+1,data,date(),time());*/
+
         Intent intent=new Intent();
         intent.putExtra("MESSAGE",data);
         setResult(2,intent);
         finish();
 
+    }
+
+    public String date() {
+
+        GregorianCalendar date = new GregorianCalendar();
+        int day, month, year;
+        String date1="";
+
+
+        day = date.get(Calendar.DAY_OF_MONTH);
+        month = date.get(Calendar.MONTH)+1;
+        year = date.get(Calendar.YEAR);
+        date1=""+day+"/"+month+"/"+year;
+
+        return date1;
+    }
+
+    public String time() {
+
+        GregorianCalendar date = new GregorianCalendar();
+        int second, minute, hour;
+        String time1="";
+
+
+        second = date.get(Calendar.SECOND);
+        minute = date.get(Calendar.MINUTE);
+        hour = date.get(Calendar.HOUR);
+        time1=""+hour+":"+minute+":"+second;
+
+        return time1;
     }
 
 
