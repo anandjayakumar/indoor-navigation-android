@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="#fff"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/imgv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        app:siBorderWidth="2dp"
+        app:siBorderColor="#000"/>
+    <TextView
+        android:id="@+id/textv"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgv"/>
+    <TextView
+        android:id="@+id/x_label"
+        android:textColor="#000"
+        android:paddingLeft="10dp"
+        android:paddingRight="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/imgv"
+        android:layout_below="@+id/textv"
+        android:text="@string/x_lb" />
+
+    <TextView
+        android:id="@+id/x"
+        android:textColor="#000"
+        android:paddingRight="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/x_label"
+        android:layout_below="@+id/textv"/>
+
+    <TextView
+        android:id="@+id/y_label"
+        android:paddingRight="2dp"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/x"
+        android:layout_below="@+id/textv"
+        android:text="@string/y_lb" />
+
+    <TextView
+        android:id="@+id/y"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/y_label"
+        android:layout_below="@+id/textv"/>
+
+    <TextView
+        android:id="@+id/desg_label"
+        android:textColor="#000"
+        android:paddingLeft="10dp"
+        android:paddingRight="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/x_label"
+        android:layout_toRightOf="@+id/imgv"
+        android:text="@string/desg_lb"/>
+
+    <TextView
+        android:id="@+id/desg"
+        android:textColor="#000"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/x_label"
+        android:layout_toRightOf="@+id/desg_label"/>
+
+</RelativeLayout><!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/layout/single_listview.xml -->

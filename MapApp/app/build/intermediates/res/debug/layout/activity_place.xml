@@ -1,0 +1,26 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#66aff3"
+    android:layout_marginTop="53dp"
+    tools:context="com.app2.aar.databaseaccess2.SQLiteActivity">
+    <SearchView
+        android:id="@+id/searchView2"
+        android:searchIcon="@drawable/ictop_search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/round_corner"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true">
+    </SearchView>
+    <ListView
+        android:id="@+id/listView2"
+        android:layout_below="@+id/searchView2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+    </ListView>
+</RelativeLayout><!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/layout/activity_place.xml -->
