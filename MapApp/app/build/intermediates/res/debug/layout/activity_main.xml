@@ -28,6 +28,7 @@
         android:layout_height="70dp"
         android:id="@+id/searchButton"
         android:src="@drawable/search"
+        android:onClick="callSearch"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -38,14 +39,10 @@
         android:layout_height="70dp"
         android:id="@+id/logButton"
         android:src="@drawable/log"
+        android:onClick="callLog"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp" />
-
-
-
-
-
 
 </RelativeLayout>
 <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/layout/activity_main.xml -->

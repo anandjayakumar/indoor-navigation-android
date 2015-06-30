@@ -22,44 +22,71 @@ ADDED from AndroidManifest.xml:6:5
 	android:name
 		ADDED from AndroidManifest.xml:6:22
 application
-ADDED from AndroidManifest.xml:7:5
+ADDED from AndroidManifest.xml:8:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 	android:label
-		ADDED from AndroidManifest.xml:10:9
-	android:allowBackup
-		ADDED from AndroidManifest.xml:8:9
-	android:icon
-		ADDED from AndroidManifest.xml:9:9
-	android:theme
 		ADDED from AndroidManifest.xml:11:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:9:9
+	android:icon
+		ADDED from AndroidManifest.xml:10:9
+	android:theme
+		ADDED from AndroidManifest.xml:12:9
 activity#com.anand.mapapp.MainActivity
 ADDED from AndroidManifest.xml:13:9
 	android:label
 		ADDED from AndroidManifest.xml:15:13
 	android:name
 		ADDED from AndroidManifest.xml:14:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:16:13
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:16:13
+ADDED from AndroidManifest.xml:17:13
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:17:17
+ADDED from AndroidManifest.xml:18:17
 	android:name
-		ADDED from AndroidManifest.xml:17:25
+		ADDED from AndroidManifest.xml:18:25
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:19:17
+ADDED from AndroidManifest.xml:20:17
 	android:name
-		ADDED from AndroidManifest.xml:19:27
+		ADDED from AndroidManifest.xml:20:27
 activity#com.anand.mapapp.DecoderActivity
 ADDED from AndroidManifest.xml:23:9
 	android:label
 		ADDED from AndroidManifest.xml:25:13
 	android:name
 		ADDED from AndroidManifest.xml:24:13
+activity#com.anand.mapapp.LogActivity
+ADDED from AndroidManifest.xml:27:9
+	android:label
+		ADDED from AndroidManifest.xml:29:13
+	android:name
+		ADDED from AndroidManifest.xml:28:13
+activity#com.anand.mapapp.PlaceActivity
+ADDED from AndroidManifest.xml:31:9
+	android:label
+		ADDED from AndroidManifest.xml:33:13
+	android:name
+		ADDED from AndroidManifest.xml:32:13
+activity#com.anand.mapapp.TabsActivity
+ADDED from AndroidManifest.xml:35:9
+	android:label
+		ADDED from AndroidManifest.xml:37:13
+	android:name
+		ADDED from AndroidManifest.xml:36:13
+activity#com.anand.mapapp.EmployeeActivity
+ADDED from AndroidManifest.xml:39:9
+	android:label
+		ADDED from AndroidManifest.xml:41:13
+	android:name
+		ADDED from AndroidManifest.xml:40:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0:7:5
+MERGED from com.github.siyamed:android-shape-imageview:0.9.2:8:5
 	android:targetSdkVersion
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0

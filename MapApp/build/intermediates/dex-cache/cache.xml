@@ -2,32 +2,11 @@
 <items version="2" >
 
     <item
-        jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.0 rc2"
-        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
-        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/classes-48e59be10d404efb67c09a07ab15b5fa76b028b9.jar" />
-    </item>
-    <item
-        jar="/home/user/Downloads/MapApp/app/libs/svg-android-1.1.jar"
-        jumboMode="false"
-        revision="23.0.0 rc2"
-        sha1="9f7c80e87e9925b691875dc9388869d87515f7d2">
-        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/svg-android-1.1-091bfb2a3c63d879fbd06fc86181f047b8341c55.jar" />
-    </item>
-    <item
         jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/libs/internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="23.0.0 rc2"
         sha1="57f2ab85c164ff1676ec64dee787981c046fab79">
         <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/internal_impl-22.2.0-645787cded9eec159585b5c30d2e5253e14e2800.jar" />
-    </item>
-    <item
-        jar="/home/user/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
-        jumboMode="false"
-        revision="23.0.0 rc2"
-        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
-        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-93e79cf663bea5dd9e43d7beeaa37df7fb977cea.jar" />
     </item>
     <item
         jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/jars/classes.jar"
@@ -37,6 +16,41 @@
         <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/classes-dbfb8c6911168fb75b7de933d66c7363c95523da.jar" />
     </item>
     <item
+        jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/jars/libs/core.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="f3c7e89b5124329cddba83bcf7c26c1c636c16b8">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/core-88031b7681290e57ae95be56354462fc8ae2eafd.jar" />
+    </item>
+    <item
+        jar="/home/user/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="ccbc77a5fd907ef863c29f3596c6f54ffa4e9442">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/kxml2-2.3.0-05b1d13c68b23b43350ee8f45ddd98f8d715e7cb.jar" />
+    </item>
+    <item
+        jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/22.2.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="1ee588ff2c4daf7b97c1cbf922a6c7f027285c2f">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/classes-48e59be10d404efb67c09a07ab15b5fa76b028b9.jar" />
+    </item>
+    <item
+        jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.2/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="d048a86aa4547b90ed59f2a933f98345a316aeb3">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/classes-3f14768a3854b51f7853fcaf272d6c03ab2ae26a.jar" />
+    </item>
+    <item
+        jar="/home/user/Downloads/MapApp/app/libs/svg-android-1.1.jar"
+        jumboMode="false"
+        revision="23.0.0 rc2"
+        sha1="9f7c80e87e9925b691875dc9388869d87515f7d2">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/svg-android-1.1-091bfb2a3c63d879fbd06fc86181f047b8341c55.jar" />
+    </item>
+    <item
         jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/jars/classes.jar"
         jumboMode="false"
         revision="23.0.0 rc2"
@@ -44,11 +58,11 @@
         <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/classes-9935b1aee05b1a5b288ee8c50043aeb2c515cefd.jar" />
     </item>
     <item
-        jar="/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/jars/libs/core.jar"
+        jar="/home/user/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/22.2.0/support-annotations-22.2.0.jar"
         jumboMode="false"
         revision="23.0.0 rc2"
-        sha1="f3c7e89b5124329cddba83bcf7c26c1c636c16b8">
-        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/core-88031b7681290e57ae95be56354462fc8ae2eafd.jar" />
+        sha1="66b42a1f3eb7676070b7ef7f14b603483aecbee1">
+        <dex dex="/home/user/Downloads/MapApp/app/build/intermediates/pre-dexed/debug/support-annotations-22.2.0-93e79cf663bea5dd9e43d7beeaa37df7fb977cea.jar" />
     </item>
 
 </items>

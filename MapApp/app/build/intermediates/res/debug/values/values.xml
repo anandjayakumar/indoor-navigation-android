@@ -5,6 +5,28 @@
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
     <attr format="boolean" name="isLightTheme"/>
+    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.2/res/values/values.xml -->
+    <eat-comment/>
+    <attr name="siArrowPosition">
+        <enum name="left" value="0"/>
+        <enum name="right" value="1"/>
+    </attr>
+    <attr name="siBorderType">
+        <enum name="stroke" value="0"/>
+        <enum name="fill" value="1"/>
+    </attr>
+    <attr name="siStrokeCap">
+        <enum name="butt" value="0"/>
+        <enum name="round" value="1"/>
+        <enum name="square" value="2"/>
+    </attr>
+    <attr name="siStrokeJoin">
+        <enum name="bevel" value="0"/>
+        <enum name="miter" value="1"/>
+        <enum name="round" value="2"/>
+    </attr>
+    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <attr format="string" name="title"/>
     <bool name="abc_action_bar_embed_tabs">true</bool>
     <bool name="abc_action_bar_embed_tabs_pre_jb">false</bool>
@@ -82,6 +104,7 @@
     <declare-styleable name="PopupWindow"><attr format="boolean" name="overlapAnchor"/><attr name="android:popupBackground"/></declare-styleable>
     <declare-styleable name="PopupWindowBackgroundState"><attr format="boolean" name="state_above_anchor"/></declare-styleable>
     <declare-styleable name="SearchView"><attr format="reference" name="layout"/><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr format="string" name="defaultQueryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/><attr format="reference" name="closeIcon"/><attr format="reference" name="goIcon"/><attr format="reference" name="searchIcon"/><attr format="reference" name="searchHintIcon"/><attr format="reference" name="voiceIcon"/><attr format="reference" name="commitIcon"/><attr format="reference" name="suggestionRowLayout"/><attr format="reference" name="queryBackground"/><attr format="reference" name="submitBackground"/><attr name="android:focusable"/></declare-styleable>
+    <declare-styleable name="ShaderImageView"><attr format="boolean" name="siSquare"/><attr format="color" name="siBorderColor"/><attr format="dimension" name="siBorderWidth"/><attr format="float" name="siBorderAlpha"/><attr format="integer|reference" name="siForeground"/><attr format="dimension" name="siRadius"/><attr name="siArrowPosition"/><attr format="dimension" name="siTriangleHeight"/><attr format="integer|reference" name="siShape"/><attr name="siBorderType"/><attr name="siStrokeCap"/><attr name="siStrokeJoin"/><attr format="dimension" name="siStrokeMiter"/></declare-styleable>
     <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/><attr name="android:background"/></declare-styleable>
     <declare-styleable name="SwitchCompat"><attr name="android:thumb"/><attr format="reference" name="track"/><attr name="android:textOn"/><attr name="android:textOff"/><attr format="dimension" name="thumbTextPadding"/><attr format="reference" name="switchTextAppearance"/><attr format="dimension" name="switchMinWidth"/><attr format="dimension" name="switchPadding"/><attr format="boolean" name="splitTrack"/><attr format="boolean" name="showText"/></declare-styleable>
     <declare-styleable name="TextAppearance"><attr name="android:textSize"/><attr name="android:textColor"/><attr name="android:textStyle"/><attr name="android:typeface"/><attr name="textAllCaps"/></declare-styleable>
@@ -200,6 +223,7 @@
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">MapApp</string>
+    <string name="desg_lb">Designation: </string>
     <string name="hello_world">Hello world!</string>
     <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
     <eat-comment/>
@@ -210,7 +234,13 @@
     <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_decoder">DecoderActivity</string>
+    <string name="title_activity_employee">EmployeeActivity</string>
+    <string name="title_activity_log">LogActivity</string>
+    <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_qr">QRActivity</string>
+    <string name="title_activity_tabs">TabsActivity</string>
+    <string name="x_lb">X: </string>
+    <string name="y_lb">Y: </string>
     <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
