@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,9 +29,15 @@ import java.util.Locale;
 public class EmployeeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
     CustomAdapter adapter;
-    SearchView search;
+    EditText search;
     ListView lv;
+    String designationEmp;
     int currentList=1;
+    int state=0;
+    int TYPE_NAME=1;
+    int TYPE_DESIGNATION=2;
+    int TYPE_NAME_DESIGNATION=3;
+    int CLICKED=0;
 
     DatabaseHandler handler;
     int images[];
@@ -43,8 +50,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_employee);
-        search=(SearchView) findViewById(R.id.searchView1);
-        search.setQueryHint("Search Here");
+        search=(EditText) findViewById(R.id.editText1);
+
+        search.setHint("Search Here");
 
         images=new int[] { R.drawable.project_manager, R.drawable.developer,
                 R.drawable.architect, R.drawable.software_engineer,
@@ -64,31 +72,59 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         adapter=new CustomAdapter(this,3,arraylist);
         lv.setAdapter(adapter);
 
-     //*** setOnQueryTextListener ***
-        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            public boolean onQueryTextChange(String newText) {
-                // this is your adapter that will be filtered
-                String text =newText.toLowerCase(Locale.getDefault());
-                if(text.length()==0){
-                    currentList=1;
-                    adapter=new CustomAdapter(EmployeeActivity.this,3,arraylist);
-                    lv.setAdapter(adapter);
-                    adapter.filter(3,text);
+        search.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+
+                String text = search.getText().toString().toLowerCase(Locale.getDefault());
+                if(text.length()==0||text==""){
+                    if(CLICKED==1){
+                        currentList=2;
+                        search.setHint(designationEmp);
+                        employees=handler.getEmployeesByName(TYPE_NAME_DESIGNATION,text,designationEmp);
+                        adapter=new CustomAdapter(EmployeeActivity.this,1,employees,null);
+                        lv.setAdapter(adapter);
+                        adapter.filter(1, text);
+                        state=1;
+                    }
+                    else{
+                        currentList=1;
+                        search.setHint("Search Here");
+                        adapter=new CustomAdapter(EmployeeActivity.this,3,arraylist);
+                        lv.setAdapter(adapter);
+                        adapter.filter(3, text);
+                        state=0;
+                    }
                 }
                 else{
-                    employees = handler.getAllEmployees();
-                    adapter=new CustomAdapter(EmployeeActivity.this,1,employees,null);
-                    lv.setAdapter(adapter);
-                    currentList=2;
-                    adapter.filter(1,text);
+                    if(CLICKED==1){
+                        employees=handler.getEmployeesByName(TYPE_NAME_DESIGNATION,text,designationEmp);
+                        state=2;
+                    }
+                    else {
+                        employees = handler.getEmployeesByName(TYPE_NAME, text,null);
+                        state = 1;
+                    }
+                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+                        lv.setAdapter(adapter);
+                        currentList = 2;
+                        adapter.filter(1, text);
+
+
                 }
-                return true;
             }
 
-            public boolean onQueryTextSubmit(String query) {
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1,
+                                          int arg2, int arg3) {
                 // TODO Auto-generated method stub
-                //Here u can get the value "query" which is entered in the search box.
-                return false;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+                // TODO Auto-generated method stub
             }
         });
     }
@@ -107,15 +143,17 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(currentList==1) {
-            String designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
-            employees=handler.getAllEmployees();
+            designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
+            employees=handler.getEmployeesByName(TYPE_DESIGNATION,designationEmp,null);
             adapter=new CustomAdapter(EmployeeActivity.this,1,employees,null);
             lv.setAdapter(adapter);
             currentList=2;
+            CLICKED=1;
+            state=1;
+            search.setHint(designationEmp);
             adapter.filter(4,designationEmp);
         }
  else {
-
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 1);
             returnIntent.putExtra("name",
@@ -129,10 +167,33 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             returnIntent.putExtra("images",
                     (employees.get(position).getPic()));
             startActivity(returnIntent);
-//                setResult(StartActivity.RESULT_OK, returnIntent);
-//                finish();
-
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
+
+            CLICKED=0;
+            if(state==2){
+                search.setHint(designationEmp);
+                if(search.getText()!=null){
+                    search.setText(null);
+                    state=0;
+                }
+                else{
+                    state=1;
+                }
+
+            }
+            else{
+                search.setHint("Search Here");
+                search.setText(null);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
 
     }
+
 }

@@ -71,7 +71,7 @@ public class DBQueries {
             empList.add(em);
             em = new Employee(2,"Anita Grace Daniel",  3, 2,R.drawable.flag, "Project Manager");
             empList.add(em);
-            em = new Employee(3,"Anand Jaykumar",  2, 4,R.drawable.flag, "Software Engineer");
+            em = new Employee(3,"Anand Jaykumar",  2, 4,R.drawable.flag, "Intern");
             empList.add(em);
             em = new Employee(4,"Elizabeth George",  3, 1,R.drawable.flag, "Designer");
             empList.add(em);

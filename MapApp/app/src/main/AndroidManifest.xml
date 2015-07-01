@@ -9,7 +9,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -30,15 +30,18 @@
         </activity>
         <activity
             android:name=".PlaceActivity"
-            android:label="@string/title_activity_place" >
+            android:label="@string/title_activity_place"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".TabsActivity"
-            android:label="@string/title_activity_tabs" >
+            android:label="@string/title_activity_tabs"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
             android:name=".EmployeeActivity"
-            android:label="@string/title_activity_employee" >
+            android:label="@string/title_activity_employee"
+            android:windowSoftInputMode="stateHidden">
         </activity>
     </application>
 

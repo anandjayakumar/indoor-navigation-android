@@ -43,9 +43,9 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
 
     String namep;
-    int x,y;  int act;
+    int Ex,Ey;  int act,Px,Py;
     String designation;
-    int id;
+    int Eid,Pid;
 
     public SensorManager sensorService;
     public Sensor compass;
@@ -59,10 +59,15 @@ public class MainActivity extends ActionBarActivity {
 
     String message = null;
 
-    int mk[] = new int[100];
-    float xk[] = new float[100];
-    float yk[] = new float[100];
-    int mkid=0,pos;
+    int Emk[] = new int[100];
+    float Exk[] = new float[100];
+    float Eyk[] = new float[100];
+    int Emkid=0,Epos;
+
+    int Pmk[] = new int[100];
+    float Pxk[] = new float[100];
+    float Pyk[] = new float[100];
+    int Pmkid=0,Ppos;
 
     TouchImageView img;
     private Matrix mapMatrix = new Matrix();
@@ -105,9 +110,8 @@ public class MainActivity extends ActionBarActivity {
         width = mapp.getWidth();
         height = mapp.getHeight();
 
-        mk[0]=0;
-
-        //aaaa
+        Emk[0]=0;
+        Pmk[0]=0;
 
         db = new DatabaseHandler(this);
         dbQueries = new DBQueries(getApplicationContext());
@@ -151,11 +155,9 @@ public class MainActivity extends ActionBarActivity {
         dbQueries.insertEmployees(new DBQueries.EmployeeinsertionCompletion() {
             @Override
             public void employeeinsertionCompleted() {
-                Log.i("dbb", "inserted");
-                Employee c = db.getEmployeeId(2);
-                Toast.makeText(getApplicationContext(), "" + c.getX() + " " + c.getY(), Toast.LENGTH_SHORT).show();
 
-                pullDb();
+                Employee c = db.getEmployeeId(2);
+                //pullDb();
 
             }
         });
@@ -167,9 +169,6 @@ public class MainActivity extends ActionBarActivity {
         dbQueries.insertPlaces(new DBQueries.PlaceinsertionCompletion() {
             @Override
             public void placeinsertionCompleted() {
-                Log.i("dbb", "inserted");
-
-                //pullDb();
 
             }
         });
@@ -181,9 +180,6 @@ public class MainActivity extends ActionBarActivity {
         dbQueries.insertQR(new DBQueries.QRinsertionCompletion() {
             @Override
             public void qrinsertionCompleted() {
-                Log.i("dbb", "inserted");
-
-                // pullDb();
 
             }
         });
@@ -258,15 +254,6 @@ public class MainActivity extends ActionBarActivity {
 
         }
 
-        /*else if(requestCode == 3) {
-
-            mkid = Integer.parseInt(data.getStringExtra("mkid"));
-            int pos=mk[0]+1;
-            mk[0]++;
-            mk[pos]=mkid;
-
-        }*/
-
     }
 
     public String date() {
@@ -274,8 +261,6 @@ public class MainActivity extends ActionBarActivity {
         GregorianCalendar date = new GregorianCalendar();
         int day, month, year;
         String date1="";
-
-
         day = date.get(Calendar.DAY_OF_MONTH);
         month = date.get(Calendar.MONTH)+1;
         year = date.get(Calendar.YEAR);
@@ -287,7 +272,6 @@ public class MainActivity extends ActionBarActivity {
     public String time() {
 
         GregorianCalendar date = new GregorianCalendar();
-
         String sec,min,hr;
         String time1="";
         long time = System.currentTimeMillis();
@@ -342,32 +326,29 @@ public class MainActivity extends ActionBarActivity {
 
         Intent in=getIntent();
         act=in.getIntExtra("act_val", act);
-        id=in.getIntExtra("id",id);
-        x=in.getIntExtra("x_val",x);
-        y=in.getIntExtra("y_val", y);
+        Eid=in.getIntExtra("id",Eid);
+        Ex=in.getIntExtra("x_val",Ex);
+        Ey=in.getIntExtra("y_val", Ey);
 
 
-       /* timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-
-                MainActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        update();
-                    }
-                });
-
-
-            }
-        }, 2000, 200);*/
         if(act==1)
         {
-            pos=mk[0]+1;
-            mkid = id;
-            xk[pos]=(float)x/10;
-            yk[pos]=(float)y/10;
-            mk[pos]=mkid;
-            mk[0]++;
+            Epos=Emk[0]+1;
+            Emkid = Eid;
+            Exk[Epos]=(float)Ex/10;
+            Eyk[Epos]=(float)Ey/10;
+            Emk[Epos]=Emkid;
+            Emk[0]++;
+        }
+
+        if(act==2){
+            Ppos=Pmk[0]+1;
+            Pmkid = Pid;
+            Pxk[Ppos]=(float)Px/10;
+            Pyk[Ppos]=(float)Py/10;
+            Pmk[Ppos]=Pmkid;
+            Pmk[0]++;
+
         }
 
         final Handler handler = new Handler();
@@ -399,8 +380,6 @@ public class MainActivity extends ActionBarActivity {
             else
                 point = pointp;
 
-
-            Log.i("timetaken1",""+time());
            mapPlot();
 
 
@@ -431,14 +410,25 @@ public class MainActivity extends ActionBarActivity {
 
             mapMatrix.setRotate(degrees1, imgX, imgY);
             canvas.drawBitmap(mapp, mapMatrix, null);
-            for(int j=1;j<=mk[0];j++){
+
+            for(int j=1;j<=Emk[0];j++){
                 markerMatrix.reset();
-                float xw = xk[j]*width;
-                float yw = yk[j]*height;
+                float xw = Exk[j]*width;
+                float yw = Eyk[j]*height;
                 markerMatrix.setTranslate(xw,yw);
                 markerMatrix.postRotate(degrees1, pinX, pinY);
                 canvas.drawBitmap(marker,markerMatrix,null);
             }
+
+            for(int j=1;j<=Pmk[0];j++){
+                markerMatrix.reset();
+                float xw = Pxk[j]*width;
+                float yw = Pyk[j]*height;
+                markerMatrix.setTranslate(xw,yw);
+                markerMatrix.postRotate(degrees1, pinX, pinY);
+                canvas.drawBitmap(marker,markerMatrix,null);
+            }
+
             canvas.drawBitmap(point,pinX ,pinY, null);
 
         }
@@ -448,17 +438,24 @@ public class MainActivity extends ActionBarActivity {
             pointerMatrix.setTranslate(pinX, pinY);
             pointerMatrix.postRotate(degrees2, imgX, imgY);
             canvas.drawBitmap(mapp, 0,0, null);
-            for(int j=1;j<=mk[0];j++){
-                float xw = xk[j]*width;
-                float yw = yk[j]*height;
+
+            for(int j=1;j<=Emk[0];j++){
+                float xw = Exk[j]*width;
+                float yw = Eyk[j]*height;
                 canvas.drawBitmap(marker,xw,yw,null);
             }
+
+            for(int j=1;j<=Pmk[0];j++){
+                float xw = Pxk[j]*width;
+                float yw = Pyk[j]*height;
+                canvas.drawBitmap(marker,xw,yw,null);
+            }
+
             canvas.drawBitmap(point, pointerMatrix, null);
 
 
         }
 
-        //mk[1] to mk[mk[0]]
 
         img.setImageBitmap(map);
 
@@ -493,7 +490,8 @@ public class MainActivity extends ActionBarActivity {
 
         else if (id == R.id.clear) {
             state=1;
-            mk[0]=0;
+            Emk[0]=0;
+            Pmk[0]=0;
         }
 
         return super.onOptionsItemSelected(item);

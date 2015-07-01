@@ -12,6 +12,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
+
+    int TYPE_NAME=1;
+    int TYPE_PLACE=1;
+    int TYPE_LABEL=2;
+    int TYPE_DESIGNATION=2;
+    int TYPE_NAME_DESIGNATION=3;
+    int TYPE_PLACE_LABEL=3;
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 2;
@@ -305,6 +312,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return placeList;
     }
 
+    public List<Employee> getEmployeesByName(int type, String text, String desgName){
+        String selectQuery = null;
+        List<Employee> employeeList = new ArrayList<Employee>();
+        if(type==TYPE_NAME){
+            selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE " + KEY_NAME +" LIKE " + "'%"+text+"%'";
+        }
+        else if(type==TYPE_DESIGNATION){
+            selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE " + KEY_DESIGNATION +" LIKE " + "'"+text+"'";
+        }
+        else if(type==TYPE_NAME_DESIGNATION){
+            selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE " + KEY_DESIGNATION +" LIKE " + "'"+desgName+"'"+" AND "+ KEY_NAME +" LIKE "+"'%"+text+"%'";
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Employee emp_o = new Employee();
+                emp_o.setId(cursor.getInt(0));
+                emp_o.setName(cursor.getString(1));
+                emp_o.setX(cursor.getInt(2));
+                emp_o.setY(cursor.getInt(3));
+                emp_o.setPic(cursor.getInt(4));
+                emp_o.setDesg(cursor.getString(5));
+                employeeList.add(emp_o);
+            } while (cursor.moveToNext());
+        }
+        return employeeList;
+    }
 
+    public List<Place> getPlacesByName(int type, String text, String place) {
+        List<Place> placeList = new ArrayList<Place>();
+        String selectQuery = null;
+        if(type==TYPE_PLACE){
+            selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE " + KEY_NAME +" LIKE " + "'%"+text+"%'";
+        }
+        else if(type==TYPE_LABEL){
+            selectQuery = "SELECT  * FROM " + TABLE_PLACE+ " WHERE " + KEY_NAME +" LIKE " + "'"+text+"'";
+        }
+        else if(type==TYPE_PLACE_LABEL){
+            selectQuery = "SELECT  * FROM " + TABLE_PLACE+ " WHERE " + KEY_NAME +" LIKE " + "'"+place+"%'"+" AND "+ KEY_NAME +" LIKE "+"'%"+text+"%'";
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Place pl=new Place();
+                pl.setId(cursor.getInt(0));
+                pl.setName(cursor.getString(1));
+                pl.setX(cursor.getInt(2));
+                pl.setY(cursor.getInt(3));
+                pl.setPic(cursor.getInt(4));
+                placeList.add(pl);
+            } while (cursor.moveToNext());
+        }
+
+        return placeList;
+    }
 
 }
