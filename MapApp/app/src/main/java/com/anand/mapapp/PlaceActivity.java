@@ -69,25 +69,37 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
 // TODO Auto-generated method stub
                 String text = search.getText().toString().toLowerCase(Locale.getDefault());
                 if(text.length()==0||text==""){
-                    currentList=1;
-                    search.setHint("Search Here");
-                    adapter=new CustomAdapter(PlaceActivity.this,3,arraylist);
-                    lv.setAdapter(adapter);
-                    adapter.filter(3, text);
-                    state=0;
+                    if(CLICKED==1){
+                        currentList=2;
+                        search.setHint(placeLabel);
+                        plp=handler.getPlacesByName(TYPE_PLACE_LABEL,text,placeLabel);
+                        adapter=new CustomAdapter(PlaceActivity.this,2,null,plp);
+                        lv.setAdapter(adapter);
+                        adapter.filter(2, text);
+                        state=1;
+                    }
+                    else {
+                        currentList = 1;
+                        search.setHint("Search Here");
+                        adapter = new CustomAdapter(PlaceActivity.this, 3, arraylist);
+                        lv.setAdapter(adapter);
+                        adapter.filter(3, text);
+                        state = 0;
+                    }
                 }
                 else{
                     if(CLICKED==1){
                         plp=handler.getPlacesByName(TYPE_PLACE_LABEL,text,placeLabel);
+                        state=2;
                     }
                     else {
                         plp = handler.getPlacesByName(TYPE_PLACE,text,null);
+                        state=1;
                     }
                     adapter=new CustomAdapter(PlaceActivity.this,2,null,plp);
                     lv.setAdapter(adapter);
                     currentList=2;
                     adapter.filter(2,text);
-                    state=1;
                 }
             }
 
@@ -187,15 +199,23 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
-           // adapter=new CustomAdapter(this,3,arraylist);
-           // lv.setAdapter(adapter);
-            search.setText(null);
-            search.setHint("Search Here");
-            CLICKED=0;
-            //currentList=1;
-            state=0;
+           if(state==2){
+                search.setHint(placeLabel);
+                if(search.getText()!=null){
+                    search.setText(null);
+                    CLICKED=1;
+                }
+                else{
+                    CLICKED=0;
+                }
+                state=1;
+            }
+            else {
+               CLICKED=0;
+               search.setHint("Search Here");
+               search.setText(null);
+           }
             return true;
-
         }
         return super.onKeyDown(keyCode, event);
 

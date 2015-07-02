@@ -173,20 +173,20 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
-
-            CLICKED=0;
             if(state==2){
                 search.setHint(designationEmp);
                 if(search.getText()!=null){
                     search.setText(null);
-                    state=0;
+                    CLICKED=1;
                 }
                 else{
-                    state=1;
-                }
+                    CLICKED=0;
 
+                }
+                state=1;
             }
             else{
+                CLICKED=0;
                 search.setHint("Search Here");
                 search.setText(null);
             }
