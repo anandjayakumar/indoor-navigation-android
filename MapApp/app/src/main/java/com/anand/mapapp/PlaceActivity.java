@@ -1,10 +1,13 @@
 package com.anand.mapapp;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,14 +16,23 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class PlaceActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     CustomAdapter adapter;
-    ListView lv;
+    SwipeMenuListView lv;
+    SwipeMenuCreator creator=null,creator2=null;
     int currentList=1,state=0;
     int CLICKED=0;
     EditText search;
@@ -40,9 +52,9 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_place);
         search=(EditText) findViewById(R.id.searchView2);
+
         search.setHint("Search Here");
 
         images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,R.drawable.ic_entry,
@@ -51,7 +63,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
         places=new String[]{"Meeting","Entry","Exit","Beverages","Toilet","Server","Eatery"};
 
         // Locate the ListView in listview_main.xml
-        lv = (ListView) findViewById(R.id.listView2);
+        lv = (SwipeMenuListView)findViewById(R.id.listView2);
         lv.setOnItemClickListener(this);
 
         for (int i = 0; i < places.length; i++)
@@ -68,38 +80,38 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             public void afterTextChanged(Editable arg0) {
 // TODO Auto-generated method stub
                 String text = search.getText().toString().toLowerCase(Locale.getDefault());
-                if(text.length()==0||text==""){
-                    if(CLICKED==1){
-                        currentList=2;
+                if (text.length() == 0 || text == "") {
+                    if (CLICKED == 1) {
+                        currentList = 2;
                         search.setHint(placeLabel);
-                        plp=handler.getPlacesByName(TYPE_PLACE_LABEL,text,placeLabel);
-                        adapter=new CustomAdapter(PlaceActivity.this,2,null,plp);
+                        plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
+                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
+                        lv.setMenuCreator(creator);
                         lv.setAdapter(adapter);
                         adapter.filter(2, text);
-                        state=1;
-                    }
-                    else {
+                        state = 1;
+                    } else {
                         currentList = 1;
                         search.setHint("Search Here");
                         adapter = new CustomAdapter(PlaceActivity.this, 3, arraylist);
+                        lv.setMenuCreator(creator2);
                         lv.setAdapter(adapter);
                         adapter.filter(3, text);
                         state = 0;
                     }
-                }
-                else{
-                    if(CLICKED==1){
-                        plp=handler.getPlacesByName(TYPE_PLACE_LABEL,text,placeLabel);
-                        state=2;
+                } else {
+                    if (CLICKED == 1) {
+                        plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
+                        state = 2;
+                    } else {
+                        plp = handler.getPlacesByName(TYPE_PLACE, text, null);
+                        state = 1;
                     }
-                    else {
-                        plp = handler.getPlacesByName(TYPE_PLACE,text,null);
-                        state=1;
-                    }
-                    adapter=new CustomAdapter(PlaceActivity.this,2,null,plp);
+                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
+                    lv.setMenuCreator(creator);
                     lv.setAdapter(adapter);
-                    currentList=2;
-                    adapter.filter(2,text);
+                    currentList = 2;
+                    adapter.filter(2, text);
                 }
             }
 
@@ -116,34 +128,75 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             }
         });
 
-//        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            public boolean onQueryTextChange(String newText) {
-//                // this is your adapter that will be filtered
-//                String text =newText.toLowerCase(Locale.getDefault());
-//                if(text.length()==0){
-//                    currentList=1;
-//                    adapter=new CustomAdapter(PlaceActivity.this,3,arraylist);
-//                    lv.setAdapter(adapter);
-//                    adapter.filter(3, text);
-//                    state=1;
-//                }
-//                else{
-//                    plp = handler.getAllPlaces();
-//                    adapter=new CustomAdapter(PlaceActivity.this,2,null,plp);
-//                    lv.setAdapter(adapter);
-//                    currentList=2;
-//                    adapter.filter(2,text);
-//                    state=1;
-//                }
-//                return true;
-//            }
-//
-//            public boolean onQueryTextSubmit(String query) {
-//                // TODO Auto-generated method stub
-//                //Here u can get the value "query" which is entered in the search box.
-//                return false;
-//            }
-//        });
+
+        creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "open" item
+                SwipeMenuItem favItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                favItem.setBackground(new ColorDrawable(Color.rgb(216, 219, 224)));
+                // set item width
+                favItem.setWidth(dp2px(90));
+                // set item title
+                favItem.setIcon(R.drawable.fav);
+                // set item title fontsize
+
+                // add to menu
+                menu.addMenuItem(favItem);
+
+                // create "delete" item
+                SwipeMenuItem infoItem = new SwipeMenuItem(
+                        getApplicationContext());
+                // set item background
+                infoItem.setBackground(new ColorDrawable(Color.rgb(120,120,120)));
+                // set item width
+                infoItem.setWidth(dp2px(90));
+                // set a icon
+                infoItem.setIcon(R.drawable.info3);
+                // add to menu
+                menu.addMenuItem(infoItem);
+            }
+        };
+
+
+        creator2 = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+
+
+            }
+        };
+
+        lv.setMenuCreator(creator2);
+
+        lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
+                switch (index) {
+                    case 0:
+                        Toast.makeText(getApplicationContext(), "open", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        SweetAlertDialog sd = new SweetAlertDialog(PlaceActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                                .setTitleText((plp.get(position).getName()))
+                                .setContentText((plp.get(position).getX()) + " " + (plp.get(position).getY()))
+                                        .setCustomImage((plp.get(position).getPic()));
+                        sd.show();
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getResources().getDisplayMetrics());
     }
 
     @Override
@@ -154,12 +207,6 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == id.action_settings) {
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -175,6 +222,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             currentList = 2;
             CLICKED=1;
             state=1;
+            lv.setMenuCreator(creator);
             search.setHint(placeLabel);
             adapter.filter(5,placeLabel);
 
@@ -191,8 +239,6 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             returnIntent.putExtra("images",
                     (plp.get(position).getPic()));
             startActivity(returnIntent);
-//        setResult(StartActivity.RESULT_OK, returnIntent);
-//        finish();
         }
     }
 

@@ -12,8 +12,9 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        app:siBorderWidth="2dp"
-        app:siBorderColor="#000"/>
+        app:siBorderWidth="0dp"
+        app:siBorderColor="#fff"/>
+
     <TextView
         android:id="@+id/textv1"
         android:textColor="#000"

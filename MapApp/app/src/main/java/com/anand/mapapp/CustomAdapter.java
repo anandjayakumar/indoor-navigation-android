@@ -99,9 +99,9 @@ public class CustomAdapter extends BaseAdapter {
     {
         TextView tv;
         ImageView img;
-        TextView tv1;
-        TextView tv2;
-        TextView tv3;
+//        TextView tv1;
+//        TextView tv2;
+//        TextView tv3;
 
     }
 
@@ -127,9 +127,9 @@ public class CustomAdapter extends BaseAdapter {
                 convertView = inflater.inflate(R.layout.single_listview, null);
                 holder.tv = (TextView) convertView.findViewById(R.id.textv);
                 holder.img = (ImageView) convertView.findViewById(R.id.imgv);
-                holder.tv1 = (TextView) convertView.findViewById(R.id.x);
-                holder.tv2 = (TextView) convertView.findViewById(R.id.y);
-                holder.tv3 = (TextView) convertView.findViewById(R.id.desg);
+//                holder.tv1 = (TextView) convertView.findViewById(R.id.x);
+//                holder.tv2 = (TextView) convertView.findViewById(R.id.y);
+//                holder.tv3 = (TextView) convertView.findViewById(R.id.desg);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -142,15 +142,15 @@ public class CustomAdapter extends BaseAdapter {
         else if(val == ITEM_TYPE_EMPLOYEE) {
             holder.tv.setText(empList.get(position).getName());
             holder.img.setImageResource(empList.get(position).getPic());
-            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
-            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
-            holder.tv3.setText(empList.get(position).getDesg());
+//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
+//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
+//            holder.tv3.setText(empList.get(position).getDesg());
 
         }else if(val == ITEM_TYPE_PLACE) {
             holder.tv.setText(plList.get(position).getName());
             holder.img.setImageResource(plList.get(position).getPic());
-            holder.tv1.setText(String.valueOf(plList.get(position).getX()));
-            holder.tv2.setText(String.valueOf(plList.get(position).getY()));
+//            holder.tv1.setText(String.valueOf(plList.get(position).getX()));
+//            holder.tv2.setText(String.valueOf(plList.get(position).getY()));
         }
 
 

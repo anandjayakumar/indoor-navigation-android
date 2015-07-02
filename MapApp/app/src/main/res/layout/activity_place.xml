@@ -20,10 +20,9 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true" />
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:id="@+id/listView2"
         android:layout_below="@+id/searchView2"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
-    </ListView>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
