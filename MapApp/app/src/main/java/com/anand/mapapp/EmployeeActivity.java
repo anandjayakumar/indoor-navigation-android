@@ -1,6 +1,7 @@
 package com.anand.mapapp;
 
-import android.content.Intent;
+import
+        android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
