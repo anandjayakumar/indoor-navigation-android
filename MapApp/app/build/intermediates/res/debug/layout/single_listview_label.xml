@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:background="#fff"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/imgv1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        app:siBorderWidth="0dp"
+        app:siBorderColor="#fff"/>
+
+    <TextView
+        android:id="@+id/textv1"
+        android:textColor="#000"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imgv1"/>
+    </RelativeLayout><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/single_listview_label.xml -->
