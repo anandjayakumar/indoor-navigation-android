@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">QR_Code</string>
+    <string name="hello_world">Hello world!</string>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <string name="menu_settings">Settings</string>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="title_activity_decoder">DecoderActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <!-- From: file:/home/user/AndroidStudioProjects/QR_Code/app/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+    </style>
+</resources>
