@@ -14,14 +14,12 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp">
-
             <TabWidget
                 android:layout_width="match_parent"
                 android:layout_height="62dp"
                 android:id="@android:id/tabs"
                 android:layout_marginTop="50dp"
-                android:background="#66aff3"
-                >
+                android:background="#66aff3">
             </TabWidget>
         </FrameLayout>
     </LinearLayout>
