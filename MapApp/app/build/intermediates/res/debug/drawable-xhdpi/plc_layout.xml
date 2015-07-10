@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:state_selected="true" />
+        <!-- When not selected, you should use bg with white -->
+        <item  />
+</selector><!-- From: file:/home/user/MapApp/app/src/main/res/drawable-xhdpi/plc_layout.xml -->
