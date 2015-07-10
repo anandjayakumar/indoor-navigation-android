@@ -15,4 +15,4 @@
     <!--    Focused states -->
     <item android:state_focused="true" android:state_selected="false" android:state_pressed="true" android:drawable="@drawable/yellow" />
     <item android:state_focused="true" android:state_selected="true"  android:state_pressed="true" android:drawable="@drawable/yellow" />
-    </selector><!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/drawable-xhdpi/tab_selector.xml -->
+    </selector><!-- From: file:/home/user/MapApp/app/src/main/res/drawable-xhdpi/tab_selector.xml -->

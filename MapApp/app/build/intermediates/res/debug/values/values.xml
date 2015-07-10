@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
     <attr format="boolean" name="isLightTheme"/>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.2/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.github.siyamed/android-shape-imageview/0.9.2/res/values/values.xml -->
     <eat-comment/>
     <attr name="siArrowPosition">
         <enum name="left" value="0"/>
@@ -25,7 +25,7 @@
         <enum name="miter" value="1"/>
         <enum name="round" value="2"/>
     </attr>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <attr format="string" name="title"/>
     <bool name="abc_action_bar_embed_tabs">true</bool>
@@ -45,6 +45,12 @@
     <color name="background_floating_material_light">#ffeeeeee</color>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="blue_btn_bg_color">#AEDEF4</color>
+    <color name="blue_btn_bg_pressed_color">#96BFD2</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
@@ -53,20 +59,58 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="button_text_color">#FFFFFF</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
     <color name="dim_foreground_material_dark">#ffbebebe</color>
     <color name="dim_foreground_material_light">#ff323232</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="error_stroke_color">#F27474</color>
+    <color name="float_transparent">#00000000</color>
+    <color name="gray_btn_bg_color">#D0D0D0</color>
+    <color name="gray_btn_bg_pressed_color">#B6B6B6</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
     <color name="link_text_material_dark">@color/material_deep_teal_200</color>
     <color name="link_text_material_light">@color/material_deep_teal_500</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_80">#ff37474f</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_90">#ff263238</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_900">#ff263238</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_blue_grey_95">#ff21272b</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_blue_grey_950">#ff21272b</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_deep_teal_20">#ff80cbc4</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_deep_teal_200">#ff80cbc4</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="material_deep_teal_50">#ff009688</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="material_deep_teal_500">#ff009688</color>
     <color name="primary_dark_material_dark">#ff000000</color>
     <color name="primary_dark_material_light">#ff757575</color>
@@ -76,16 +120,33 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="red_btn_bg_color">#DD6B55</color>
+    <color name="red_btn_bg_pressed_color">#CD5B55</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="ripple_material_dark">#4dffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="success_stroke_color">#A5DC86</color>
+    <color name="sweet_dialog_bg_color">#FFFFFF</color>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="text_color">#575757</color>
+    <color name="trans_success_stroke_color">#33A5DC86</color>
+    <color name="warning_stroke_color">#F8BB86</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
@@ -94,6 +155,7 @@
     <declare-styleable name="ActivityChooserView"><attr format="string" name="initialActivityCount"/><attr format="reference" name="expandActivityOverflowButtonDrawable"/></declare-styleable>
     <declare-styleable name="AlertDialog"><attr name="android:layout"/><attr format="reference" name="buttonPanelSideLayout"/><attr format="reference" name="listLayout"/><attr format="reference" name="multiChoiceItemLayout"/><attr format="reference" name="singleChoiceItemLayout"/><attr format="reference" name="listItemLayout"/></declare-styleable>
     <declare-styleable name="AppCompatTextView"><attr format="reference|boolean" name="textAllCaps"/><attr name="android:textAppearance"/></declare-styleable>
+    <declare-styleable name="CircleImageView"><attr format="dimension" name="border_width"/><attr format="color" name="border_color"/><attr format="boolean" name="border_overlay"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="topBottomBarArrowSize"/><attr format="dimension" name="middleBarArrowSize"/><attr format="dimension" name="barSize"/><attr format="dimension" name="thickness"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat"><attr name="android:orientation"/><attr name="android:gravity"/><attr name="android:baselineAligned"/><attr name="android:baselineAlignedChildIndex"/><attr name="android:weightSum"/><attr format="boolean" name="measureWithLargestChild"/><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
@@ -103,6 +165,8 @@
     <declare-styleable name="MenuView"><attr name="android:itemTextAppearance"/><attr name="android:horizontalDivider"/><attr name="android:verticalDivider"/><attr name="android:headerBackground"/><attr name="android:itemBackground"/><attr name="android:windowAnimationStyle"/><attr name="android:itemIconDisabledAlpha"/><attr format="boolean" name="preserveIconSpacing"/></declare-styleable>
     <declare-styleable name="PopupWindow"><attr format="boolean" name="overlapAnchor"/><attr name="android:popupBackground"/></declare-styleable>
     <declare-styleable name="PopupWindowBackgroundState"><attr format="boolean" name="state_above_anchor"/></declare-styleable>
+    <declare-styleable name="ProgressWheel"><attr format="boolean" name="progressIndeterminate"/><attr format="color" name="barColor"/><attr format="color" name="rimColor"/><attr format="dimension" name="rimWidth"/><attr format="float" name="spinSpeed"/><attr format="integer" name="barSpinCycleTime"/><attr format="dimension" name="circleRadius"/><attr format="boolean" name="fillRadius"/><attr format="dimension" name="barWidth"/></declare-styleable>
+    <declare-styleable name="Rotate3dAnimation"><attr format="enum" name="rollType"><enum name="x" value="0"/><enum name="y" value="1"/><enum name="z" value="2"/></attr><attr format="float" name="fromDeg"/><attr format="float" name="toDeg"/><attr format="fraction" name="pivotX"/><attr format="fraction" name="pivotY"/></declare-styleable>
     <declare-styleable name="SearchView"><attr format="reference" name="layout"/><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr format="string" name="defaultQueryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/><attr format="reference" name="closeIcon"/><attr format="reference" name="goIcon"/><attr format="reference" name="searchIcon"/><attr format="reference" name="searchHintIcon"/><attr format="reference" name="voiceIcon"/><attr format="reference" name="commitIcon"/><attr format="reference" name="suggestionRowLayout"/><attr format="reference" name="queryBackground"/><attr format="reference" name="submitBackground"/><attr name="android:focusable"/></declare-styleable>
     <declare-styleable name="ShaderImageView"><attr format="boolean" name="siSquare"/><attr format="color" name="siBorderColor"/><attr format="dimension" name="siBorderWidth"/><attr format="float" name="siBorderAlpha"/><attr format="integer|reference" name="siForeground"/><attr format="dimension" name="siRadius"/><attr name="siArrowPosition"/><attr format="dimension" name="siTriangleHeight"/><attr format="integer|reference" name="siShape"/><attr name="siBorderType"/><attr name="siStrokeCap"/><attr name="siStrokeJoin"/><attr format="dimension" name="siStrokeMiter"/></declare-styleable>
     <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/><attr name="android:background"/></declare-styleable>
@@ -112,6 +176,8 @@
     <declare-styleable name="Toolbar"><attr format="reference" name="titleTextAppearance"/><attr format="reference" name="subtitleTextAppearance"/><attr name="title"/><attr name="subtitle"/><attr name="android:gravity"/><attr format="dimension" name="titleMargins"/><attr format="dimension" name="titleMarginStart"/><attr format="dimension" name="titleMarginEnd"/><attr format="dimension" name="titleMarginTop"/><attr format="dimension" name="titleMarginBottom"/><attr name="contentInsetStart"/><attr name="contentInsetEnd"/><attr name="contentInsetLeft"/><attr name="contentInsetRight"/><attr format="dimension" name="maxButtonHeight"/><attr format="reference" name="collapseIcon"/><attr format="string" name="collapseContentDescription"/><attr name="popupTheme"/><attr format="reference" name="navigationIcon"/><attr format="string" name="navigationContentDescription"/><attr name="android:minHeight"/></declare-styleable>
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/><attr format="reference" name="theme"/><attr name="android:theme"/><attr format="color" name="backgroundTint"/><attr name="backgroundTintMode"><enum name="src_over" value="3"/><enum name="src_in" value="5"/><enum name="src_atop" value="9"/><enum name="multiply" value="14"/><enum name="screen" value="15"/></attr></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
     <dimen name="abc_action_bar_default_padding_material">4dp</dimen>
@@ -172,11 +238,15 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="alert_width">290dp</dimen>
+    <dimen name="common_circle_width">3dp</dimen>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
@@ -187,6 +257,11 @@
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="progress_circle_radius">34dp</dimen>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
@@ -202,6 +277,11 @@
     <integer name="abc_max_action_buttons">2</integer>
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <string name="LOADING">Loading...</string>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <eat-comment/>
     <string name="abc_action_bar_home_description">Navigate home</string>
     <string name="abc_action_bar_home_description_format">%1$s, %2$s</string>
     <string name="abc_action_bar_home_subtitle_description_format">%1$s, %2$s, %3$s</string>
@@ -219,19 +299,26 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">MapApp</string>
     <string name="desg_lb">Designation: </string>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/strings.xml -->
+    <eat-comment/>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
     <eat-comment/>
     <string name="menu_settings">Settings</string>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_decoder">DecoderActivity</string>
     <string name="title_activity_employee">EmployeeActivity</string>
@@ -241,13 +328,13 @@
     <string name="title_activity_tabs">TabsActivity</string>
     <string name="x_lb">X: </string>
     <string name="y_lb">Y: </string>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.dlazaro66.qrcodereaderview/qrcodereaderview/1.0.0/res/values/values.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--
@@ -256,12 +343,12 @@
             backward-compatibility can go here.
         -->
     </style>
-    <!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/user/MapApp/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
-    <!-- From: file:/home/user/Downloads/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -1503,4 +1590,25 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="RtlOverlay.Widget.AppCompat.Toolbar.Button.Navigation"/>
+    <!-- From: file:/home/user/MapApp/app/build/intermediates/exploded-aar/cn.pedant.sweetalert/library/1.3/res/values/values.xml -->
+    <eat-comment/>
+    <style name="alert_dialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowBackground">@color/float_transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.4</item>
+    </style>
+    <style name="dialog_blue_button" parent="android:Widget.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">31dp</item>
+        <item name="android:background">@drawable/blue_button_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingLeft">21dp</item>
+        <item name="android:paddingRight">21dp</item>
+        <item name="android:textColor">@color/button_text_color</item>
+    </style>
 </resources>

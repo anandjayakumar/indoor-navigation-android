@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.anand.mapapp.DecoderActivity">
+    tools:context="com.anand.mapapp.Activities.DecoderActivity">
     <com.dlazaro66.qrcodereaderview.QRCodeReaderView
         android:id="@+id/qrdecoderview"
         android:layout_width="fill_parent"
@@ -20,4 +20,4 @@
         android:scaleType="fitXY" />
 
 
-</RelativeLayout><!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/layout/activity_decoder.xml -->
+</RelativeLayout><!-- From: file:/home/user/MapApp/app/src/main/res/layout/activity_decoder.xml -->

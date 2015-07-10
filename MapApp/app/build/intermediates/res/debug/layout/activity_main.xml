@@ -5,7 +5,7 @@
     android:id="@+id/RootView"
     tools:context=".MainActivity">
 
-    <com.anand.mapapp.TouchImageView
+    <com.anand.mapapp.Libraries.TouchImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/touchImg"
@@ -45,4 +45,4 @@
         android:layout_margin="20dp" />
 
 </RelativeLayout>
-<!-- From: file:/home/user/Downloads/MapApp/app/src/main/res/layout/activity_main.xml -->
+<!-- From: file:/home/user/MapApp/app/src/main/res/layout/activity_main.xml -->
