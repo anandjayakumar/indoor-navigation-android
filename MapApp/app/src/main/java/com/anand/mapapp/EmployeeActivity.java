@@ -31,10 +31,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,16 +40,10 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
-import java.io.ByteArrayOutputStream;
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.zip.Inflater;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class EmployeeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
@@ -86,11 +77,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     public List<Employee> employees;
 
 
-
-
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,9 +101,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         imgH = winH;
 
         padding = winH;
-
-
-
 
         search.setHint("Search Here");
 
@@ -257,7 +240,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "open", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
 
@@ -310,8 +293,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         });
         //popup.isOutsideTouchable();
         popup.setFocusable(true);
-
-        popup.setAnimationStyle(R.style.dialog_blue_button);
 
         // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
         int OFFSET_X = winW;

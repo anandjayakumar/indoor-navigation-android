@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
 public class PlaceActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
     CustomAdapter adapter;
     SwipeMenuListView lv;
@@ -146,18 +144,6 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
 
                 // add to menu
                 menu.addMenuItem(favItem);
-
-                // create "delete" item
-                SwipeMenuItem infoItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                infoItem.setBackground(new ColorDrawable(Color.rgb(120,120,120)));
-                // set item width
-                infoItem.setWidth(dp2px(90));
-                // set a icon
-                infoItem.setIcon(R.drawable.info3);
-                // add to menu
-                menu.addMenuItem(infoItem);
             }
         };
 
@@ -178,14 +164,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "open", Toast.LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        SweetAlertDialog sd = new SweetAlertDialog(PlaceActivity.this, SweetAlertDialog.CUSTOM_IMAGE_TYPE)
-                                .setTitleText((plp.get(position).getName()))
-                                .setContentText((plp.get(position).getX()) + " " + (plp.get(position).getY()))
-                                        .setCustomImage((plp.get(position).getPic()));
-                        sd.show();
+                        Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
