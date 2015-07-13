@@ -26,6 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -81,7 +82,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
         search=(EditText) findViewById(R.id.searchView1);
-
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
         windowW = getWindowManager().getDefaultDisplay().getWidth();
@@ -89,9 +89,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         winW = windowW / 10;
         winH = windowH / 10;
         WiW = winW * 8;
-        WiH = winH * 7;
-        imgW = winW * 4;
-        imgH = winH * 4;
+        WiH = winH * 5;
+        imgW = winW * 5;
+        imgH = winH * 5;
         padding = winW;
         search.setHint("Search Here");
 
@@ -123,6 +123,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(designationEmp);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                         lv.setMenuCreator(creator);
@@ -131,6 +132,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         state = 1;
                     } else {
                         currentList = 1;
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         search.setHint("Search Here");
                         adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist);
                         lv.setAdapter(adapter);
@@ -140,13 +142,14 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                     }
                 } else {
                     if (CLICKED == 1) {
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         state = 2;
 
                     } else {
                         employees = handler.getEmployeesByName(TYPE_NAME, text, null);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
-
                     }
                     lv.setMenuCreator(creator);
                     adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
@@ -198,7 +201,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         Toast.makeText(getApplicationContext(), "open", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        showPopup(EmployeeActivity.this,position);
+                        showPopup(EmployeeActivity.this, position);
                         break;
                 }
                 return false;
@@ -233,7 +236,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
         POP_PRESENT=1;
         layout_EMP.getForeground().setAlpha(400);
-        LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+        RelativeLayout viewGroup = (RelativeLayout) context.findViewById(R.id.popup);
         LayoutInflater layoutInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
@@ -246,7 +249,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                POP_PRESENT=0;
+                POP_PRESENT = 0;
                 layout_EMP.getForeground().setAlpha(0);
             }
         });
@@ -259,22 +262,24 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
         ImageView img = (ImageView) layout.findViewById(R.id.imageView);
         img.setImageResource(employees.get(position).getPic());
-        img.setMaxWidth(imgW); img.setMinimumWidth(imgW);
-        img.setMaxHeight(imgH); img.setMinimumHeight(imgH);
+        //img.setLayoutParams(new android.view.ViewGroup.LayoutParams(imgW, imgH));
+        img.getLayoutParams().width = imgW;
+        img.getLayoutParams().height = imgH;
+        //img.setPadding(padding,padding,padding,padding);
+
+//        img.setMaxWidth(imgW-100);
+//        img.setMaxHeight(imgH-100);
 
         TextView nameTV=(TextView)layout.findViewById(R.id.nameT);
         nameTV.setText(employees.get(position).getName());
 
         TextView desgTV=(TextView)layout.findViewById(R.id.desgT);
         desgTV.setText(employees.get(position).getDesg());
-        Button close = (Button) layout.findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                popup.dismiss();
-            }
-        });
+        TextView emailTV=(TextView)layout.findViewById(R.id.emailT);
+        emailTV.setText(employees.get(position).getEmail());
+
+
     }
 
     @Override
@@ -307,10 +312,11 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(currentList==1) {
+        if(currentList == 1) {
+            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
-            adapter=new CustomAdapter(EmployeeActivity.this,1,employees,null);
+            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
             lv.setAdapter(adapter);
             currentList=2;
             CLICKED=1;
@@ -319,7 +325,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             search.setHint(designationEmp);
             adapter.filter(4,designationEmp);
         }
- else {
+        else {
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 1);
             returnIntent.putExtra("name",
@@ -330,6 +336,8 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                     (employees.get(position).getY()));
             returnIntent.putExtra("desg",
                     (employees.get(position).getDesg()));
+            returnIntent.putExtra("email",
+                    (employees.get(position).getEmail()));
             returnIntent.putExtra("images",
                     (employees.get(position).getPic()));
             startActivity(returnIntent);
@@ -341,6 +349,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
             if(state==2){
                 if(POP_PRESENT==0) {
+//                    EditText search1 = (EditText)findViewById(R.id.searchView1);
+//                   search1.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.profile), null);
+
                     search.setHint(designationEmp);
                     if (search.getText() != null) {
                         search.setText(null);
@@ -359,7 +370,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             else{
                 if(POP_PRESENT==0) {
                     CLICKED = 0;
-                    search.setHint("Search Here");
                     search.setText(null);
                 }
                 else if(POP_PRESENT==1) {

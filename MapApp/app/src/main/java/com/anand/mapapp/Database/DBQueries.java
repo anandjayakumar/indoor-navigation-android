@@ -69,31 +69,31 @@ public class DBQueries {
 
             DatabaseHandler dbh = new DatabaseHandler(mContext);
             List<Employee> empList = new ArrayList<Employee>();
-            Employee em = new Employee();
+            Employee em;
 
-            em = new Employee(1,"Aarathi R",  2, 1, R.drawable.flag, "Software Engineer");
+            em = new Employee(1,"Aarathi R",  2, 1, R.drawable.flag, "Software Engineer", "aarathirchandran@gmail.com");
             empList.add(em);
-            em = new Employee(2,"Anita Grace Daniel",  3, 2,R.drawable.flag, "Project Manager");
+            em = new Employee(2,"Anita Grace Daniel",  3, 2,R.drawable.flag, "Project Manager", "animoldaniel@gmail.com");
             empList.add(em);
-            em = new Employee(3,"Anand Jaykumar",  2, 4,R.drawable.flag, "Intern");
+            em = new Employee(3,"Anand Jayakumar",  2, 4,R.drawable.flag, "Intern", "anandjayakumar18@gmail.com");
             empList.add(em);
-            em = new Employee(4,"Elizabeth George",  3, 1,R.drawable.flag, "Designer");
+            em = new Employee(4,"Elizabeth George",  3, 1,R.drawable.flag, "Designer", "elizabethgeorge94@gmail.com");
             empList.add(em);
-            em = new Employee(5,"Goutham Krishna",  4, 3,R.drawable.flag, "Intern");
+            em = new Employee(5,"Goutham Krishna",  4, 3,R.drawable.flag, "Intern", "gouthamkrishna.mr@gmail.com");
             empList.add(em);
-            em = new Employee(6,"Jithin V",  1, 2,R.drawable.flag, "Architect");
+            em = new Employee(6,"Jithin V",  1, 2,R.drawable.flag, "Architect","jithinsrk14@gmail.com");
             empList.add(em);
-            em = new Employee(7,"Jose Thomas",  5, 4,R.drawable.flag, "Trainee");
+            em = new Employee(7,"Jose Thomas",  5, 4,R.drawable.flag, "Trainee","josethomas919@gmail.com");
             empList.add(em);
-            em = new Employee(8,"Koushik CP",  3, 3,R.drawable.flag, "Software Engineer");
+            em = new Employee(8,"Koushik CP",  3, 3,R.drawable.flag, "Software Engineer","koushikcp94@gmail.com");
             empList.add(em);
-            em = new Employee(9,"Lekha KP",  2, 4,R.drawable.flag, "Developer");
+            em = new Employee(9,"Lekha KP",  2, 4,R.drawable.flag, "Developer"," lekhakp1994@gmail.com");
             empList.add(em);
-            em = new Employee(10,"Manu Jose",  5, 3,R.drawable.flag, "Trainee");
+            em = new Employee(10,"Manu Jose",  5, 3,R.drawable.flag, "Trainee","manu.jose9645@gmail.com");
             empList.add(em);
-            em = new Employee(11,"Roni Vincent",  1, 4,R.drawable.flag, "Designer");
+            em = new Employee(11,"Roni Vincent",  1, 4,R.drawable.flag, "Designer","vincentroni93@gmail.com");
             empList.add(em);
-            em = new Employee(12,"Sona Thaj KN",  5, 2,R.drawable.flag, "Trainee");
+            em = new Employee(12,"Sona Thaj KN",  5, 2,R.drawable.flag, "Software Engineer","sonathaj@gmail.com");
             empList.add(em);
 
             dbh.batchInsertEmployee(empList);

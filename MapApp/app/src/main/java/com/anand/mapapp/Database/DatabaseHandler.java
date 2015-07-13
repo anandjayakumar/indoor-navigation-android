@@ -24,20 +24,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
     int TYPE_PLACE_LABEL=3;
-    // All Static variables
-    // Database Version
+
     private static final int DATABASE_VERSION = 2;
 
-    // Database Name
     private static final String DATABASE_NAME = "MAIN_DB";
 
-    // Table name
     private static final String TABLE_EMPLOYEE = "employee";
     private static final String TABLE_PLACE = "place";
     private static final String TABLE_LOG = "log";
     private static final String TABLE_QR = "qr";
 
-    // Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_LINK = "link";
     private static final String KEY_X = "x";
@@ -48,18 +44,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_DESIGNATION = "designation";
     private static final String KEY_PIC = "pic";
     private static final String KEY_TAG = "tag";
+    private static final String KEY_EMAIL = "email";
+
 
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_EMPLOYEE_TABLE = "CREATE TABLE " + TABLE_EMPLOYEE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_X + " INTEGER,"
-                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER," +KEY_DESIGNATION + " TEXT" + ")";
+                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER," +KEY_DESIGNATION + " TEXT," + KEY_EMAIL+ " TEXT "+ ")";
         db.execSQL(CREATE_EMPLOYEE_TABLE);
 
         String CREATE_PLACE_TABLE = "CREATE TABLE " + TABLE_PLACE + "("
@@ -79,7 +76,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
-    // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -122,6 +118,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cv.put(KEY_Y,EmployeeList.get(i).getY());
             cv.put(KEY_PIC,EmployeeList.get(i).getPic());
             cv.put(KEY_DESIGNATION,EmployeeList.get(i).getDesg());
+            cv.put(KEY_EMAIL,EmployeeList.get(i).getEmail());
             db.insert(TABLE_EMPLOYEE, null, cv);
         }
         db.setTransactionSuccessful();
@@ -195,6 +192,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         employee.setY(cursor.getInt(3));
         employee.setPic(cursor.getInt(4));
         employee.setDesg(cursor.getString(5));
+        employee.setEmail(cursor.getString(6));
         cursor.close();
         db.close();
         return employee;
@@ -305,6 +303,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 emp_o.setY(cursor.getInt(3));
                 emp_o.setPic(cursor.getInt(4));
                 emp_o.setDesg(cursor.getString(5));
+                emp_o.setEmail(cursor.getString(6));
                 employeeList.add(emp_o);
             } while (cursor.moveToNext());
         }
@@ -359,6 +358,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 emp_o.setY(cursor.getInt(3));
                 emp_o.setPic(cursor.getInt(4));
                 emp_o.setDesg(cursor.getString(5));
+                emp_o.setEmail(cursor.getString(6));
                 employeeList.add(emp_o);
             } while (cursor.moveToNext());
         }

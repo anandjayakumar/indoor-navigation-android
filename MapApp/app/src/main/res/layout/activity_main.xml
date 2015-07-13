@@ -12,36 +12,66 @@
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true" />
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/qrButton"
-        android:onClick="callQR"
-        android:src="@drawable/qr"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_margin="20dp" />
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="15dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#66aff3">
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/searchButton"
-        android:src="@drawable/search"
-        android:onClick="callSearch"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_margin="20dp" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/qrButton"
+            android:onClick="callQR"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/qricon"
+            android:padding="12dp"/>
 
-    <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:id="@+id/logButton"
-        android:src="@drawable/log"
-        android:onClick="callLog"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/searchButton"
+            android:src="@drawable/searchicon"
+            android:onClick="callSearch"
+            android:layout_toRightOf="@+id/qrButton"
+            android:layout_toLeftOf="@+id/logButton"
+            android:padding="10dp" />
 
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/logButton"
+            android:src="@drawable/logicon"
+            android:onClick="callLog"
+            android:layout_centerInParent="true"
+            android:padding="12dp" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/lockButton"
+            android:src="@drawable/lockicon"
+            android:onClick="callLock"
+            android:layout_toLeftOf="@+id/marker"
+            android:layout_toRightOf="@+id/logButton"
+            android:padding="12dp" />
+
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/marker"
+            android:src="@drawable/markerclear"
+            android:onClick="callClear"
+            android:layout_alignParentRight="true"
+            android:padding="12dp"/>
+    </RelativeLayout>
 </RelativeLayout>

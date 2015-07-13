@@ -35,8 +35,6 @@ public class TabsActivity extends TabActivity {
         Intent i;
         Resources resources = getResources();
         TabHost tabHost = getTabHost();
-        //TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
-
 
         Intent intentEmployee = new Intent().setClass(this, EmployeeActivity.class);
         TabSpec tabSpecEmployee = tabHost
@@ -57,32 +55,9 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabSpecPlace);
 
         tabHost.setCurrentTab(2);
-        /*mytabs = getTabHost();
-        mytabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String arg0) {
-                int index = mytabs.getCurrentTab();
-                switch (index) {
-                    case 0:
-                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
 
-                        break;
-                    case 1:
-                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
-                        startActivityForResult(i,3);
-                        break;
-                }
-            }
-        });*/
     }
 
-
-
-    /*private void changetabs(TabWidget tabWidget) {
-        // Change background
-        for(int i=0; i < tabWidget.getChildCount(); i++)
-            tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_selector);
-    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

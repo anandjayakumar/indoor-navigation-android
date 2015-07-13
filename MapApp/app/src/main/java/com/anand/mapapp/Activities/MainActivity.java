@@ -63,6 +63,8 @@ public class MainActivity extends ActionBarActivity {
     int state=1;
     int first=0;
 
+    int check=0;
+
     public SensorManager sensorService;
     public Sensor compass;
 
@@ -103,58 +105,58 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sensorService = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        compass = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-        sensorService.registerListener(compassListener, compass, SensorManager.SENSOR_DELAY_NORMAL);
+            sensorService = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            compass = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);
+            sensorService.registerListener(compassListener, compass, SensorManager.SENSOR_DELAY_NORMAL);
 
-        img = (TouchImageView) findViewById(R.id.touchImg);
-        img.setDrawingCacheEnabled(true);
-        img.buildDrawingCache(true);
-        AssetManager asset = getAssets();
+            img = (TouchImageView) findViewById(R.id.touchImg);
+            img.setDrawingCacheEnabled(true);
+            img.buildDrawingCache(true);
+            AssetManager asset = getAssets();
 
-        mapp = assetBitmap(asset, "mainMap.png");
-        pointp = assetBitmap(asset, "point.png");
-        pointp2 = assetBitmap(asset,"point2.png");
-        circle = assetBitmap(asset,"marker.png");
-        user = assetBitmap(asset, "user.png");
+            mapp = assetBitmap(asset, "mainMap.png");
+            pointp = assetBitmap(asset, "point.png");
+            pointp2 = assetBitmap(asset, "point2.png");
+            circle = assetBitmap(asset, "marker.png");
+            user = assetBitmap(asset, "user.png");
 
-        img.setMaxZoom(5.5f);
-        img.setMinZoom(2f);
-        img.setZoom(2f);
+            img.setMaxZoom(5.5f);
+            img.setMinZoom(2f);
+            img.setZoom(2f);
 
-        mPaint = new Paint();
-        mPaint.setAntiAlias(false);
-        mPaint.setFilterBitmap(true);
+            mPaint = new Paint();
+            mPaint.setAntiAlias(false);
+            mPaint.setFilterBitmap(true);
 
-        Emk[0]=0;
-        Pmk[0]=0;
+            Emk[0] = 0;
+            Pmk[0] = 0;
 
-        db = new DatabaseHandler(this);
-        dbQueries = new DBQueries(getApplicationContext());
+            db = new DatabaseHandler(this);
+            dbQueries = new DBQueries(getApplicationContext());
 
-        sp = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
-        String restoredText = sp.getString("flag", null);
-        if (restoredText == null) {
+            sp = getSharedPreferences("MyPREFERENCES", Context.MODE_PRIVATE);
+            String restoredText = sp.getString("flag", null);
+            if (restoredText == null) {
 
-            getApplicationContext().deleteDatabase("MAIN_DB");
-            addEmployee();
-            addPlace();
-            addQR();
-            SharedPreferences.Editor editor = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE).edit();
-            editor.putString("flag", "set");
-            editor.commit();
-        }
+                getApplicationContext().deleteDatabase("MAIN_DB");
+                addEmployee();
+                addPlace();
+                addQR();
+                SharedPreferences.Editor editor = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE).edit();
+                editor.putString("flag", "set");
+                editor.commit();
+            }
 
-        options = new BitmapFactory.Options();
-        options.inPurgeable = true;
-        options.inInputShareable= true;
-        options.inScaled = false;
-        options.inDither = false;
+            options = new BitmapFactory.Options();
+            options.inPurgeable = true;
+            options.inInputShareable = true;
+            options.inScaled = false;
+            options.inDither = false;
 
-        posX = (float)0.5;
-        posY = (float)0.5;
+            posX = (float) 0.5;
+            posY = (float) 0.5;
 
-        handler = new Handler();
+            handler = new Handler();
 
     }
 
@@ -232,6 +234,23 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
+    public void callLock(View v) {
+
+        if((state==0)||(state==2)) {
+            state=1;
+        }
+        else {
+            state = 2;
+
+        }
+    }
+
+    public void callClear(View v) {
+
+        Emk[0]=0;
+        Pmk[0]=0;
+    }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -287,19 +306,21 @@ public class MainActivity extends ActionBarActivity {
             Pmk[0]++;
         }
 
-
+        if(check==0){
         Runnable runnable = new Runnable()
         {
 
             public void run()
             {
                 update();
-                handler.postDelayed(this,40);
+                handler.postDelayed(this,0);
             }
 
         };
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 1000);
+        check=1;
+        }
     }
 
 
@@ -335,7 +356,7 @@ public class MainActivity extends ActionBarActivity {
             map.recycle();
         }
 
-        map = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        map = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         Canvas canvas = new Canvas(map);
         canvas.drawColor(Color.rgb(237,237,237));
         mapMatrix.reset();
@@ -348,11 +369,15 @@ public class MainActivity extends ActionBarActivity {
 
         if(state==1) {
 
-            mapMatrix.setTranslate(mapLeft,mapTop);
-            mapMatrix.postRotate(degrees1, imgX, imgY);
-            canvas.drawBitmap(mapp,mapMatrix, mPaint);
+           // mapMatrix.setTranslate(mapLeft,mapTop);
+           // mapMatrix.postRotate(degrees1, imgX, imgY);
+           // canvas.drawBitmap(mapp,mapMatrix, null);
+            canvas.save(); //save the position of the canvas
+            canvas.rotate(degrees1,imgX ,imgY ); //rotate the canvas
+            canvas.drawBitmap(mapp, mapLeft, mapTop, null); //draw the ball on the rotated canvas
+            canvas.restore();
 
-            for(int j=1;j<=Emk[0];j++){
+          /*  for(int j=1;j<=Emk[0];j++){
                 markerMatrix.reset();
                 float xw = Exk[j]*width - mkh;
                 float yw = Eyk[j]*height - mkh;
@@ -372,7 +397,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
 
-            canvas.drawBitmap(point,pinX ,pinY, mPaint);
+            canvas.drawBitmap(point,pinX ,pinY, mPaint);*/
 
 
         }
@@ -420,22 +445,6 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
-        if (id == R.id.lock) {
-            if((state==0)||(state==2)) {
-                state=1;
-            }
-            else {
-                state = 2;
-            }
-        }
-
-        else if (id == R.id.clear) {
-            state=1;
-            Emk[0]=0;
-            Pmk[0]=0;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -515,8 +524,8 @@ public class MainActivity extends ActionBarActivity {
     public SensorEventListener compassListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
-            degrees1 = -2*Math.round(event.values[0]/2);
-            degrees2 = 2*Math.round(event.values[0]/2);
+            degrees1 = -1*Math.round(event.values[0]);
+            degrees2 = Math.round(event.values[0]);
         }
 
         @Override
@@ -525,37 +534,7 @@ public class MainActivity extends ActionBarActivity {
         }
     };
 
-    /*@Override
-    public void onPostExecute() {
-        //Now you have your bitmap update by do in background
-        //do stuff here
-    }
 
-    public interface MyInterface
-    {
-        public void onPostExecute();
-    }
-
-    private class MyTask extends AsyncTask<Void, Void, Void>
-    {
-        MyInterface myinterface;
-
-        MyTask(MyInterface mi)
-        {
-            myinterface = mi;
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            //firt declare bitmap as class member of MyActivity
-            //update bitmap here and then call
-
-            myinterface.onPostExecute();
-
-            return null;
-        }
-
-    }*/
 
 }
 
