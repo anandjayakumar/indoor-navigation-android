@@ -502,7 +502,7 @@ int id action_menu_presenter 0x7f0d0003
 int id action_mode_bar 0x7f0d0046
 int id action_mode_bar_stub 0x7f0d0045
 int id action_mode_close_button 0x7f0d002e
-int id action_settings 0x7f0d0084
+int id action_settings 0x7f0d0087
 int id activity_chooser_view_content 0x7f0d002f
 int id alertTitle 0x7f0d0039
 int id always 0x7f0d001f
@@ -601,6 +601,8 @@ int id stroke 0x7f0d000c
 int id submit_area 0x7f0d0054
 int id tab 0x7f0d0060
 int id tabMode 0x7f0d0014
+int id tabsLayout 0x7f0d0084
+int id tabsText 0x7f0d0085
 int id text 0x7f0d0079
 int id text2 0x7f0d0077
 int id textSpacerNoButtons 0x7f0d003c
@@ -615,6 +617,7 @@ int id title 0x7f0d0035
 int id title_template 0x7f0d0038
 int id topPanel 0x7f0d0037
 int id touchImg 0x7f0d0067
+int id underLine 0x7f0d0086
 int id up 0x7f0d0008
 int id useLogo 0x7f0d001b
 int id withText 0x7f0d0023
@@ -670,6 +673,8 @@ int layout select_dialog_singlechoice_material 0x7f04002a
 int layout single_listview 0x7f04002b
 int layout single_listview_label 0x7f04002c
 int layout support_simple_spinner_dropdown_item 0x7f04002d
+int layout tab1 0x7f04002e
+int layout tab2 0x7f04002f
 int menu menu_decoder 0x7f0e0000
 int menu menu_employee 0x7f0e0001
 int menu menu_log 0x7f0e0002

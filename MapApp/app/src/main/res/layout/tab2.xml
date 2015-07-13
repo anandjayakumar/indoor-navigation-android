@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:background="#66aff3"
+    android:orientation="vertical"
+    android:layout_margin="0dp" >
+
+    <TextView
+        android:id="@+id/tabsText"
+        android:text="PLACES"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:paddingBottom="1dp"
+        android:textSize="20dp" />
+    <View
+        android:id="@+id/underLine"
+        android:layout_width="81dp"
+        android:layout_height="2dp"
+        android:background="#EEE516"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

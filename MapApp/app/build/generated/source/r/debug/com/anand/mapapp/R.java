@@ -1751,7 +1751,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f0d0046;
         public static final int action_mode_bar_stub=0x7f0d0045;
         public static final int action_mode_close_button=0x7f0d002e;
-        public static final int action_settings=0x7f0d0084;
+        public static final int action_settings=0x7f0d0087;
         public static final int activity_chooser_view_content=0x7f0d002f;
         public static final int alertTitle=0x7f0d0039;
         public static final int always=0x7f0d001f;
@@ -1850,6 +1850,8 @@ containing a value of this type.
         public static final int submit_area=0x7f0d0054;
         public static final int tab=0x7f0d0060;
         public static final int tabMode=0x7f0d0014;
+        public static final int tabsLayout=0x7f0d0084;
+        public static final int tabsText=0x7f0d0085;
         public static final int text=0x7f0d0079;
         public static final int text2=0x7f0d0077;
         public static final int textSpacerNoButtons=0x7f0d003c;
@@ -1864,6 +1866,7 @@ containing a value of this type.
         public static final int title_template=0x7f0d0038;
         public static final int topPanel=0x7f0d0037;
         public static final int touchImg=0x7f0d0067;
+        public static final int underLine=0x7f0d0086;
         public static final int up=0x7f0d0008;
         public static final int useLogo=0x7f0d001b;
         public static final int withText=0x7f0d0023;
@@ -1923,6 +1926,8 @@ containing a value of this type.
         public static final int single_listview=0x7f04002b;
         public static final int single_listview_label=0x7f04002c;
         public static final int support_simple_spinner_dropdown_item=0x7f04002d;
+        public static final int tab1=0x7f04002e;
+        public static final int tab2=0x7f04002f;
     }
     public static final class menu {
         public static final int menu_decoder=0x7f0e0000;

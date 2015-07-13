@@ -19,7 +19,6 @@
             android:id="@+id/searchViewHolder"
             android:layout_alignParentTop="true"
             android:background="#66aff3">
-
             <EditText
                 android:drawableLeft="@drawable/ictop_search2"
 

@@ -1,9 +1,12 @@
 package com.anand.mapapp.Activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anand.mapapp.R;
@@ -21,10 +25,11 @@ public class TabsActivity extends TabActivity {
     String name,desig;
     int x,y,img;
     TabHost mytabs;
-//    View tv1=(View)findViewById(R.id.tab1);
-//
-//    View tv2=(View)findViewById(R.id.tab2);
-
+    TabHost tabHost;
+//    String UNDERLINED_EMPLOYEE="<u>EMPLOYEES</u>";
+//    String EMPLOYEE="EMPLOYEES";
+//    String UNDERLINED_PLACE="<u>PLACES</u>";
+//    String PLACE="PLACES";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -37,23 +42,31 @@ public class TabsActivity extends TabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
-        Intent i;
+
         Resources resources = getResources();
-        TabHost tabHost = getTabHost();
+        tabHost = getTabHost();
         //TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
+        final View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
+        final TextView tv1=(TextView) view1.findViewById(R.id.tabsText);
+        final View line1=(View) view1.findViewById(R.id.underLine);
 
         Intent intentEmployee = new Intent().setClass(this, EmployeeActivity.class);
         TabSpec tabSpecEmployee = tabHost
                 .newTabSpec("Employees")
-                .setIndicator("EMPLOYEES")
+                .setIndicator(view1)
                 .setContent(intentEmployee);
+
+        final View view2 = LayoutInflater.from(this).inflate(R.layout.tab2, null);
+        final TextView tv2=(TextView) view2.findViewById(R.id.tabsText);
+        final View line2=(View) view2.findViewById(R.id.underLine);
+        line2.setVisibility(View.GONE);
 
 
         Intent intentPlace = new Intent().setClass(this, PlaceActivity.class);
         TabSpec tabSpecPlace = tabHost
                 .newTabSpec("Places")
-                .setIndicator("PLACES")
+                .setIndicator(view2)
                 .setContent(intentPlace);
 
 
@@ -62,32 +75,33 @@ public class TabsActivity extends TabActivity {
         tabHost.addTab(tabSpecPlace);
 
         tabHost.setCurrentTab(2);
-        /*mytabs = getTabHost();
+
+
+        mytabs = getTabHost();
         mytabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
-            public void onTabChanged(String arg0) {
+            public void onTabChanged(String tabId) {
+
                 int index = mytabs.getCurrentTab();
                 switch (index) {
                     case 0:
-                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
-
+                        tv1.setTextColor(Color.parseColor("#EEE516"));
+                        line1.setVisibility(View.VISIBLE);
+                        tv2.setTextColor(Color.parseColor("#FFFFFF"));
+                        line2.setVisibility(View.GONE);
                         break;
                     case 1:
-                        Intent i = new Intent().setClass(TabsActivity.this, MainActivity.class);
-                        startActivityForResult(i,3);
+                        tv1.setTextColor(Color.parseColor("#FFFFFF"));
+                        line1.setVisibility(View.GONE);
+                        tv2.setTextColor(Color.parseColor("#EEE516"));
+                        line2.setVisibility(View.VISIBLE);
                         break;
                 }
+
             }
-        });*/
+        });
     }
 
-
-
-    /*private void changetabs(TabWidget tabWidget) {
-        // Change background
-        for(int i=0; i < tabWidget.getChildCount(); i++)
-            tabWidget.getChildAt(i).setBackgroundResource(R.drawable.tab_selector);
-    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
