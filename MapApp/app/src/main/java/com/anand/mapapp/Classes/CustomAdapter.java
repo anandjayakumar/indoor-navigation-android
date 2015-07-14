@@ -20,6 +20,11 @@ public class CustomAdapter extends BaseAdapter {
     private static final int ITEM_TYPE_PLACE=2;
 
     private static final int ITEM_TYPE_LABEL=3;
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+
+
     Context mContext;
     ArrayList<Employee> elist;
     ArrayList<Place> plist;
@@ -28,6 +33,7 @@ public class CustomAdapter extends BaseAdapter {
     List<Employee> empList = null;
     List<Place> plList = null;
     int val;
+    int imgW,imgH;
     private static LayoutInflater inflater=null;
 
     public CustomAdapter(Context context, int value, List<Label> arraylist) {
@@ -39,17 +45,21 @@ public class CustomAdapter extends BaseAdapter {
         this.label_list.addAll(arraylist);
     }
 
-    public CustomAdapter(Context context, int value, List<Employee> employeeList, List<Place> placeList) {
+    public CustomAdapter(Context context, int value, List<Employee> employeeList, List<Place> placeList,int imageWidth, int imageHeight) {
         val=value;
-        switch(value) {
-            case 1:
-                mContext = context;
-                this.empList = employeeList;
-                inflater = LayoutInflater.from(mContext);
-                this.elist = new ArrayList<Employee>();
-                this.elist.addAll(empList);
-                break;
-            case 2:
+        imgW=imageWidth;
+        imgH=imageHeight;
+
+        if(value==1 ||value==4) {
+            mContext = context;
+            this.empList = employeeList;
+            inflater = LayoutInflater.from(mContext);
+            this.elist = new ArrayList<Employee>();
+            this.elist.addAll(empList);
+
+        }
+        else if(value==2 || value==5)
+        {
                 mContext = context;
                 this.plList= placeList;
                 inflater = LayoutInflater.from(mContext);
@@ -62,9 +72,9 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (val == ITEM_TYPE_EMPLOYEE) {
+        if (val == ITEM_TYPE_EMPLOYEE || val == ITEM_TYPE_FAVOURITE_EMP) {
             return empList.size();
-        }else if(val == ITEM_TYPE_PLACE) {
+        }else if(val == ITEM_TYPE_PLACE || val == ITEM_TYPE_FAVOURITE_PLACE) {
             return plList.size();
         }else if(val==ITEM_TYPE_LABEL){
                 return label.size();
@@ -76,9 +86,9 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        if (val == ITEM_TYPE_EMPLOYEE) {
+        if (val == ITEM_TYPE_EMPLOYEE ||val == ITEM_TYPE_FAVOURITE_EMP) {
             return empList.get(position);
-        }else if(val == ITEM_TYPE_PLACE) {
+        }else if(val == ITEM_TYPE_PLACE||val == ITEM_TYPE_FAVOURITE_PLACE) {
             return plList.get(position);
         }else if(val==ITEM_TYPE_LABEL){
             return label.get(position);
@@ -98,8 +108,8 @@ public class CustomAdapter extends BaseAdapter {
     {
         TextView tv;
         ImageView img;
-//        TextView tv1;
-//        TextView tv2;
+        TextView tv1;
+        TextView tv2;
 //        TextView tv3;
 
     }
@@ -115,6 +125,7 @@ public class CustomAdapter extends BaseAdapter {
                 convertView = inflater.inflate(R.layout.single_listview_label, null);
                 holder.tv = (TextView) convertView.findViewById(R.id.textv1);
                 holder.img = (ImageView) convertView.findViewById(R.id.imgv1);
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -123,9 +134,19 @@ public class CustomAdapter extends BaseAdapter {
         else {
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = inflater.inflate(R.layout.single_listview, null);
-                holder.tv = (TextView) convertView.findViewById(R.id.textv);
-                holder.img = (ImageView) convertView.findViewById(R.id.imgv);
+                if(val == ITEM_TYPE_FAVOURITE_EMP || val==ITEM_TYPE_FAVOURITE_PLACE){
+                    convertView = inflater.inflate(R.layout.favourite_single_item, null);
+                    holder.tv = (TextView) convertView.findViewById(R.id.nameFav);
+                    holder.tv1 = (TextView) convertView.findViewById(R.id.desgFav);
+                    holder.tv2 = (TextView) convertView.findViewById(R.id.emailFav);
+                    holder.img = (ImageView) convertView.findViewById(R.id.imageFav);
+                    holder.img.getLayoutParams().height=imgH; holder.img.getLayoutParams().width=imgW;
+                }
+                else {
+                    convertView = inflater.inflate(R.layout.single_listview, null);
+                    holder.tv = (TextView) convertView.findViewById(R.id.textv);
+                    holder.img = (ImageView) convertView.findViewById(R.id.imgv);
+                }
 //                holder.tv1 = (TextView) convertView.findViewById(R.id.x);
 //                holder.tv2 = (TextView) convertView.findViewById(R.id.y);
 //                holder.tv3 = (TextView) convertView.findViewById(R.id.desg);
@@ -141,6 +162,26 @@ public class CustomAdapter extends BaseAdapter {
         else if(val == ITEM_TYPE_EMPLOYEE) {
             holder.tv.setText(empList.get(position).getName());
             holder.img.setImageResource(empList.get(position).getPic());
+//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
+//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
+//            holder.tv3.setText(empList.get(position).getDesg());
+
+        }
+        else if(val == ITEM_TYPE_FAVOURITE_EMP) {
+            holder.tv.setText(empList.get(position).getName());
+            holder.tv1.setText(empList.get(position).getDesg());
+            holder.tv2.setText(empList.get(position).getEmail());
+            holder.img.setImageResource(empList.get(position).getPic());
+//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
+//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
+//            holder.tv3.setText(empList.get(position).getDesg());
+
+        }
+        else if(val == ITEM_TYPE_FAVOURITE_PLACE) {
+            holder.tv.setText(plList.get(position).getName());
+            holder.tv1.setText("");
+            holder.tv2.setText("");
+            holder.img.setImageResource(plList.get(position).getPic());
 //            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
 //            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
 //            holder.tv3.setText(empList.get(position).getDesg());

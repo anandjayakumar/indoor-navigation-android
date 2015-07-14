@@ -249,6 +249,11 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
+    public void callFavourite(View v) {
+        Intent intent=new Intent(MainActivity.this,FavouriteActivity.class);
+        startActivity(intent);
+    }
+
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data)

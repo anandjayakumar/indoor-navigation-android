@@ -13,4 +13,5 @@
     <string name="title_activity_tabs">TabsActivity</string>
     <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_employee">EmployeeActivity</string>
+    <string name="title_activity_favourite">FavouriteActivity</string>
 </resources>

@@ -8,13 +8,16 @@ public class Place {
     String _name;
     int _x,_y;
     int _pic;
+    int _Favourite;
     public Place(){}
-    public Place(int id,String name,int X,int Y,int picture){
+    public Place(int id,String name,int X,int Y,int picture,int fav){
         this._id=id;
         this._name=name;
         this._x=X;
         this._y=Y;
         this._pic=picture;
+        this._Favourite=fav;
+
     }
 
     public void setName(String name) {
@@ -31,6 +34,12 @@ public class Place {
     }
     public void setId(int X) {
         this._id = X;
+    }
+    public void makeFavourite(int fav){
+        this._Favourite=fav;
+    }
+    public int isFavourite(){
+        return this._Favourite;
     }
 
     public int getId() {

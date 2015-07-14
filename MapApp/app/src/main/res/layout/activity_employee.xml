@@ -18,10 +18,11 @@
             android:layout_height="74dp"
             android:id="@+id/searchViewHolder"
             android:layout_alignParentTop="true"
-            android:background="#66aff3">
+            android:background="#1976d3">
+
             <EditText
                 android:drawableLeft="@drawable/ictop_search2"
-
+                android:paddingRight="12dp"
                 android:paddingLeft="12dp"
                 android:drawablePadding="10dp"
                 android:layout_width="fill_parent"
@@ -33,7 +34,6 @@
                 android:layout_marginRight="12dp"
                 android:background="@drawable/round_corner"
                 android:layout_centerHorizontal="true"/>
-
         </RelativeLayout>
 
         <com.baoyz.swipemenulistview.SwipeMenuListView

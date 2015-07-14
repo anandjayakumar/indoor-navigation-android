@@ -38,6 +38,10 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     int CLICKED=0;
     EditText search;
 
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+
     String placeLabel;
     int TYPE_PLACE=1;
     int TYPE_LABEL=2;
@@ -86,7 +90,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                         currentList = 2;
                         search.setHint(placeLabel);
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
-                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
+                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp,0,0);
                         lv.setMenuCreator(creator);
                         lv.setAdapter(adapter);
                         adapter.filter(2, text);
@@ -108,7 +112,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                         plp = handler.getPlacesByName(TYPE_PLACE, text, null);
                         state = 1;
                     }
-                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
+                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp,0,0);
                     lv.setMenuCreator(creator);
                     lv.setAdapter(adapter);
                     currentList = 2;
@@ -168,6 +172,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                 switch (index) {
                     case 0:
                         Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
+                        handler.setFavourite(plp.get(position).getId(),1,ITEM_TYPE_FAVOURITE_PLACE);
                         break;
                 }
                 return false;
@@ -199,7 +204,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
         if (currentList == 1) {
             placeLabel = (arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             plp = handler.getPlacesByName(TYPE_PLACE,placeLabel,null);
-            adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp);
+            adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp,0,0);
             lv.setAdapter(adapter);
             currentList = 2;
             CLICKED=1;

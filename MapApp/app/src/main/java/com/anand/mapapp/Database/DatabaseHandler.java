@@ -9,6 +9,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Place;
@@ -16,14 +17,18 @@ import com.anand.mapapp.Classes.QRcode;
 import com.anand.mapapp.Classes.Timelog;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-
-
     int TYPE_NAME=1;
     int TYPE_PLACE=1;
     int TYPE_LABEL=2;
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
     int TYPE_PLACE_LABEL=3;
+    private static final int ITEM_TYPE_EMPLOYEE=1;
+    private static final int ITEM_TYPE_PLACE=2;
+
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
     // All Static variables
     // Database Version
     private static final int DATABASE_VERSION = 2;
@@ -49,7 +54,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_PIC = "pic";
     private static final String KEY_TAG = "tag";
     private static final String KEY_EMAIL = "email";
-
+    private static final String KEY_FAVOURITE = "favourite";
 
 
     public DatabaseHandler(Context context) {
@@ -61,12 +66,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_EMPLOYEE_TABLE = "CREATE TABLE " + TABLE_EMPLOYEE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_X + " INTEGER,"
-                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER," +KEY_DESIGNATION + " TEXT," + KEY_EMAIL+ " TEXT "+ ")";
+                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER," +KEY_DESIGNATION + " TEXT," + KEY_EMAIL+ " TEXT, "+ KEY_FAVOURITE + " INTEGER "+ ")";
         db.execSQL(CREATE_EMPLOYEE_TABLE);
 
         String CREATE_PLACE_TABLE = "CREATE TABLE " + TABLE_PLACE + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT," + KEY_X + " INTEGER,"
-                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER" + ")";
+                + KEY_Y + " INTEGER," + KEY_PIC + " INTEGER, " + KEY_FAVOURITE + " INTEGER "+ ")";
         db.execSQL(CREATE_PLACE_TABLE);
 
         String CREATE_LOG_TABLE = "CREATE TABLE " + TABLE_LOG + "("
@@ -93,14 +98,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void insertLog(Timelog tlog) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(KEY_ID,tlog.getId());
-        cv.put(KEY_LINK,tlog.getLink());
+        cv.put(KEY_ID, tlog.getId());
+        cv.put(KEY_LINK, tlog.getLink());
         cv.put(KEY_DATE, tlog.getDate());
         cv.put(KEY_TIME, tlog.getTime());
         db.insert(TABLE_LOG, null, cv);
         db.close();
-
-    }
+   }
 
     public int getLogSize(){
         String countQuery = "SELECT  * FROM " + TABLE_LOG;
@@ -125,6 +129,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cv.put(KEY_PIC,EmployeeList.get(i).getPic());
             cv.put(KEY_DESIGNATION,EmployeeList.get(i).getDesg());
             cv.put(KEY_EMAIL,EmployeeList.get(i).getEmail());
+            cv.put(KEY_FAVOURITE,EmployeeList.get(i).isFavourite());
             db.insert(TABLE_EMPLOYEE, null, cv);
         }
         db.setTransactionSuccessful();
@@ -186,6 +191,98 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public void setFavourite(int id,int value,int type){
+        if(type==ITEM_TYPE_FAVOURITE_EMP) {
+            String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE id=" + id;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            cursor.moveToFirst();
+            Employee employee = new Employee();
+
+            ContentValues cv = new ContentValues();
+
+            cv.put(KEY_ID, cursor.getInt(0));
+            cv.put(KEY_NAME, cursor.getString(1));
+            cv.put(KEY_X, cursor.getInt(2));
+            cv.put(KEY_Y, cursor.getInt(3));
+            cv.put(KEY_PIC, cursor.getInt(4));
+            cv.put(KEY_DESIGNATION, cursor.getString(5));
+            cv.put(KEY_EMAIL, cursor.getString(6));
+            cv.put(KEY_FAVOURITE, value);
+            db.update(TABLE_EMPLOYEE, cv, "id ='" + id + "'", null);
+            cursor.close();
+            db.close();
+        }
+        else  if(type==ITEM_TYPE_FAVOURITE_PLACE) {
+            String selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE id=" + id;
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            cursor.moveToFirst();
+            Employee employee = new Employee();
+
+            ContentValues cv = new ContentValues();
+
+            cv.put(KEY_ID, cursor.getInt(0));
+            cv.put(KEY_NAME,cursor.getString(1));
+            cv.put(KEY_X,cursor.getInt(2));
+            cv.put(KEY_Y,cursor.getInt(3));
+            cv.put(KEY_PIC,cursor.getInt(4));
+            cv.put(KEY_FAVOURITE, value);
+            db.update(TABLE_PLACE, cv, "id ='" + id + "'", null);
+            cursor.close();
+            db.close();
+        }
+    }
+
+
+    public List<Employee> getFavEmployees() {
+        List<Employee> employeeList = new ArrayList<Employee>();
+        String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE "+KEY_FAVOURITE + " = 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Employee emp_o = new Employee();
+                emp_o.setId(cursor.getInt(0));
+                emp_o.setName(cursor.getString(1));
+                emp_o.setX(cursor.getInt(2));
+                emp_o.setY(cursor.getInt(3));
+                emp_o.setPic(cursor.getInt(4));
+                emp_o.setDesg(cursor.getString(5));
+                emp_o.setEmail(cursor.getString(6));
+                emp_o.makeFavourite(cursor.getInt(7));
+                employeeList.add(emp_o);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return employeeList;
+    }
+
+    public List<Place> getFavPlaces() {
+        List<Place> placesList = new ArrayList<Place>();
+        String selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE "+KEY_FAVOURITE + " = 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Place pl=new Place();
+                pl.setId(cursor.getInt(0));
+                pl.setName(cursor.getString(1));
+                pl.setX(cursor.getInt(2));
+                pl.setY(cursor.getInt(3));
+                pl.setPic(cursor.getInt(4));
+                pl.makeFavourite(cursor.getInt(5));
+                placesList.add(pl);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return placesList;
+    }
+
     public Employee getEmployeeId(int id) {
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE +" WHERE id="+id;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -199,6 +296,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         employee.setPic(cursor.getInt(4));
         employee.setDesg(cursor.getString(5));
         employee.setEmail(cursor.getString(6));
+        employee.makeFavourite(cursor.getInt(7));
         cursor.close();
         db.close();
         return employee;
@@ -310,6 +408,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 emp_o.setPic(cursor.getInt(4));
                 emp_o.setDesg(cursor.getString(5));
                 emp_o.setEmail(cursor.getString(6));
+                emp_o.makeFavourite(cursor.getInt(7));
                 employeeList.add(emp_o);
             } while (cursor.moveToNext());
         }
@@ -365,6 +464,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 emp_o.setPic(cursor.getInt(4));
                 emp_o.setDesg(cursor.getString(5));
                 emp_o.setEmail(cursor.getString(6));
+                emp_o.makeFavourite(cursor.getInt(7));
                 employeeList.add(emp_o);
             } while (cursor.moveToNext());
         }

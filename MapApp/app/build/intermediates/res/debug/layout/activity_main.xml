@@ -11,19 +11,26 @@
         android:id="@+id/touchImg"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true" />
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginBottom="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:weightSum="2"
+    android:background="#1976d3">
+
 
     <RelativeLayout
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:background="#66aff3">
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:background="#1976d3">
 
         <ImageView
             android:layout_width="50dp"
@@ -40,8 +47,7 @@
             android:id="@+id/searchButton"
             android:src="@drawable/searchicon"
             android:onClick="callSearch"
-            android:layout_toRightOf="@+id/qrButton"
-            android:layout_toLeftOf="@+id/logButton"
+            android:layout_centerInParent="true"
             android:padding="10dp" />
 
 
@@ -51,8 +57,17 @@
             android:id="@+id/logButton"
             android:src="@drawable/logicon"
             android:onClick="callLog"
-            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
             android:padding="12dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        android:background="#1976d3">
 
         <ImageView
             android:layout_width="50dp"
@@ -60,8 +75,15 @@
             android:id="@+id/lockButton"
             android:src="@drawable/lockicon"
             android:onClick="callLock"
-            android:layout_toLeftOf="@+id/marker"
-            android:layout_toRightOf="@+id/logButton"
+            android:layout_alignParentLeft="true"
+            android:padding="12dp" />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/favButton"
+            android:src="@drawable/favicon"
+            android:onClick="callFavourite"
+            android:layout_centerInParent="true"
             android:padding="12dp" />
 
 
@@ -73,6 +95,8 @@
             android:onClick="callClear"
             android:layout_alignParentRight="true"
             android:padding="12dp"/>
-    </RelativeLayout>
+        </RelativeLayout>
+
+</LinearLayout>
 </RelativeLayout>
 <!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/activity_main.xml -->

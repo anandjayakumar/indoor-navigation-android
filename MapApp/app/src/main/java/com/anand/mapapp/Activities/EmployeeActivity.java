@@ -8,10 +8,12 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -40,6 +42,10 @@ import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +61,10 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     int POP_PRESENT=0;
     private Inflater inflater;
 
+    Employee emp;
+    private static final int ITEM_TYPE_EMPLOYEE=1;
+    private static final int ITEM_TYPE_PLACE=2;
+
     CustomAdapter adapter;
     EditText search;
     SwipeMenuListView lv;
@@ -68,6 +78,10 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
+
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
     int CLICKED=0;
 
     DatabaseHandler handler;
@@ -125,7 +139,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         search.setHint(designationEmp);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
-                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
                         lv.setMenuCreator(creator);
                         lv.setAdapter(adapter);
                         adapter.filter(1, text);
@@ -152,7 +166,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         state = 1;
                     }
                     lv.setMenuCreator(creator);
-                    adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+                    adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
                     lv.setAdapter(adapter);
                     currentList = 2;
                     adapter.filter(1, text);
@@ -198,7 +212,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        Toast.makeText(getApplicationContext(), "open", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
+                        handler.setFavourite(employees.get(position).getId(),1,ITEM_TYPE_FAVOURITE_EMP);
                         break;
                     case 1:
                         showPopup(EmployeeActivity.this, position);
@@ -323,7 +339,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
-            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
             lv.setAdapter(adapter);
             currentList=2;
             CLICKED=1;
@@ -356,9 +372,6 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
             if(state==2){
                 if(POP_PRESENT==0) {
-//                    EditText search1 = (EditText)findViewById(R.id.searchView1);
-//                   search1.setCompoundDrawables(null, null, getResources().getDrawable(R.drawable.profile), null);
-
                     search.setHint(designationEmp);
                     if (search.getText() != null) {
                         search.setText(null);
@@ -386,6 +399,31 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    private void pullDb() {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String currentDBPath = "/data/data/" + getPackageName() + "/databases/MAIN_DB";
+                String backupDBPath = "maindb.db";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(sd, backupDBPath);
+
+                if (currentDB.exists()) {
+                    FileChannel src = new FileInputStream(currentDB).getChannel();
+                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                    dst.transferFrom(src, 0, src.size());
+                    src.close();
+                    dst.close();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("pullDb", e.getMessage());
+        }
     }
 
 }

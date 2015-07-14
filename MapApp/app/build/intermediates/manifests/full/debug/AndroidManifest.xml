@@ -50,6 +50,10 @@
             android:label="@string/title_activity_employee"
             android:windowSoftInputMode="stateHidden" >
         </activity>
+        <activity
+            android:name="com.anand.mapapp.Activities.FavouriteActivity"
+            android:label="@string/title_activity_favourite" >
+        </activity>
     </application>
 
 </manifest>
