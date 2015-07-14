@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="#1976D3"
+    android:layout_margin="0dp" >
+
+    <TextView
+        android:id="@+id/tabsText"
+        android:text="EMPLOYEES"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#E4E379"
+        android:textSize="20sp"
+        android:paddingBottom="1dp"
+        android:layout_gravity="center_horizontal"
+        />
+    <View
+        android:id="@+id/underLine"
+        android:layout_width="120dp"
+        android:layout_height="2dp"
+        android:background="#E4E379"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/tab1.xml -->
