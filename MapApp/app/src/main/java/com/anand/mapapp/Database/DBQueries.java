@@ -71,7 +71,7 @@ public class DBQueries {
             List<Employee> empList = new ArrayList<Employee>();
             Employee em = new Employee();
 
-            em = new Employee(1,"Aarathi R",  2, 1, R.drawable.flag, "Software Engineer", "aarathirchandran@gmail.com",0);
+            em = new Employee(1,"Aarathi R",  2, 1, R.drawable.flag, "Project Manager", "aarathirchandran@gmail.com",0);
             empList.add(em);
             em = new Employee(2,"Anita Grace Daniel",  3, 2,R.drawable.flag, "Project Manager", "animoldaniel@gmail.com",0);
             empList.add(em);
@@ -85,15 +85,15 @@ public class DBQueries {
             empList.add(em);
             em = new Employee(7,"Jose Thomas",  5, 4,R.drawable.flag, "Trainee","josethomas919@gmail.com",0);
             empList.add(em);
-            em = new Employee(8,"Koushik CP",  3, 3,R.drawable.flag, "Software Engineer","koushikcp94@gmail.com",0);
+            em = new Employee(8,"Koushik CP",  3, 3,R.drawable.flag, "Business Analyst","koushikcp94@gmail.com",0);
             empList.add(em);
-            em = new Employee(9,"Lekha KP",  2, 4,R.drawable.flag, "Developer"," lekhakp1994@gmail.com",0);
+            em = new Employee(9,"Lekha KP",  2, 4,R.drawable.flag, "Business Analyst"," lekhakp1994@gmail.com",0);
             empList.add(em);
             em = new Employee(10,"Manu Jose",  5, 3,R.drawable.flag, "Trainee","manu.jose9645@gmail.com",0);
             empList.add(em);
             em = new Employee(11,"Roni Vincent",  1, 4,R.drawable.flag, "Designer","vincentroni93@gmail.com",0);
             empList.add(em);
-            em = new Employee(12,"Sona Thaj KN",  5, 2,R.drawable.flag, "Software Engineer","sonathaj@gmail.com",0);
+            em = new Employee(12,"Sona Thaj KN",  5, 2,R.drawable.flag, "Project Manager","sonathaj@gmail.com",0);
             empList.add(em);
 
             dbh.batchInsertEmployee(empList);

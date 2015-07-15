@@ -7,12 +7,10 @@
 
     <TextView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Scan History"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+    android:layout_height="50dp"
+    android:text="@string/scan_history"
 
-        android:background="#212DDB"
+        android:background="#1976d3"
         android:gravity="center"
     android:textColor="#FFFFFF"
 
@@ -37,19 +35,20 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="SL.NO"
-            android:textColor="#212DDB"
+            android:textColor="#1976d3"
             android:layout_gravity="center"
             android:id="@+id/textView2"
             android:layout_span="1"
             android:layout_weight="1"
-            android:gravity="center_horizontal" />
+            android:gravity="center" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="QR CODE"
-            android:textColor="#212DDB"
+            android:textColor="#1976d3"
+            android:gravity="center"
             android:layout_gravity="center"
             android:id="@+id/textView3"
             android:layout_span="1"
@@ -60,8 +59,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="TIME"
+            android:gravity="center"
             android:layout_gravity="center"
-            android:textColor="#212DDB"
+            android:textColor="#1976d3"
             android:id="@+id/textView4"
             android:layout_span="1"
             android:layout_weight="1" />

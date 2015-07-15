@@ -1,5 +1,7 @@
 package com.anand.mapapp.Activities;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class PlaceActivity extends ActionBarActivity implements AdapterView.OnItemClickListener{
+public class PlaceActivity extends Activity implements AdapterView.OnItemClickListener{
     CustomAdapter adapter;
     SwipeMenuListView lv;
     SwipeMenuCreator creator=null,creator2=null;
@@ -47,6 +49,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     int TYPE_LABEL=2;
     int TYPE_PLACE_LABEL=3;
 
+    int posIcon;
     int images[];
     String places[];
     DatabaseHandler handler;
@@ -58,6 +61,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place);
+
         search=(EditText) findViewById(R.id.searchView2);
 
         search.setHint("Search Here");
@@ -77,7 +81,7 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
             arraylist.add(wp);
         }
         handler = new DatabaseHandler(this);
-        adapter=new CustomAdapter(this,3,arraylist);
+        adapter=new CustomAdapter(this,3,arraylist,null,0,0);
         lv.setAdapter(adapter);
         search.addTextChangedListener(new TextWatcher() {
 
@@ -89,8 +93,9 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(placeLabel);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
-                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp,0,0);
+                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
                         lv.setMenuCreator(creator);
                         lv.setAdapter(adapter);
                         adapter.filter(2, text);
@@ -98,7 +103,8 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                     } else {
                         currentList = 1;
                         search.setHint("Search Here");
-                        adapter = new CustomAdapter(PlaceActivity.this, 3, arraylist);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
+                        adapter = new CustomAdapter(PlaceActivity.this, 3, arraylist,null,0,0);
                         lv.setMenuCreator(creator2);
                         lv.setAdapter(adapter);
                         adapter.filter(3, text);
@@ -107,12 +113,14 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                 } else {
                     if (CLICKED == 1) {
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         state = 2;
                     } else {
                         plp = handler.getPlacesByName(TYPE_PLACE, text, null);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
                     }
-                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp,0,0);
+                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
                     lv.setMenuCreator(creator);
                     lv.setAdapter(adapter);
                     currentList = 2;
@@ -142,9 +150,9 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
                 SwipeMenuItem favItem = new SwipeMenuItem(
                         getApplicationContext());
                 // set item background
-                favItem.setBackground(new ColorDrawable(Color.rgb(216, 219, 224)));
+                favItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
                 // set item width
-                favItem.setWidth(dp2px(90));
+                favItem.setWidth(dp2px(60));
                 // set item title
                 favItem.setIcon(R.drawable.fav);
                 // set item title fontsize
@@ -202,14 +210,17 @@ public class PlaceActivity extends ActionBarActivity implements AdapterView.OnIt
 
 
         if (currentList == 1) {
+
+            posIcon=position;
             placeLabel = (arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
-            plp = handler.getPlacesByName(TYPE_PLACE,placeLabel,null);
-            adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp,0,0);
+            plp = handler.getPlacesByName(TYPE_PLACE, placeLabel, null);
+            adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp);
             lv.setAdapter(adapter);
             currentList = 2;
             CLICKED=1;
             state=1;
             lv.setMenuCreator(creator);
+            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
             search.setHint(placeLabel);
             adapter.filter(5,placeLabel);
 

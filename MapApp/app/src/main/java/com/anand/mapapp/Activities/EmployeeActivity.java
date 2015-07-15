@@ -51,7 +51,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.zip.Inflater;
 
-public class EmployeeActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class EmployeeActivity extends Activity implements AdapterView.OnItemClickListener {
 
     Point p;
     FrameLayout layout_EMP;
@@ -60,6 +60,10 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     int MENU_ITEM_POS;
     int POP_PRESENT=0;
     private Inflater inflater;
+
+    int posIcon;
+    int favIcon;
+    int NOTfavIcon;
 
     Employee emp;
     private static final int ITEM_TYPE_EMPLOYEE=1;
@@ -76,6 +80,10 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
     String text;
 
+
+    SwipeMenuItem favItem;
+    SwipeMenuItem infoItem;
+
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
 
@@ -83,6 +91,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
     int CLICKED=0;
+
+
+    int favIcon_POSITION;
 
     DatabaseHandler handler;
     int images[];
@@ -95,6 +106,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
+
         search=(EditText) findViewById(R.id.searchView1);
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
@@ -109,10 +121,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
         padding = winW;
         search.setHint("Search Here");
 
-        images=new int[] { R.drawable.project_manager, R.drawable.developer,
-                R.drawable.architect, R.drawable.software_engineer,
-                R.drawable.trainee, R.drawable.intern, R.drawable.designer };
-        designations=new String[]{"Project Manager","Developer","Architect","Software Engineer","Trainee","Intern","Designer"};
+        images=new int[] { R.drawable.icon_pm, R.drawable.icon_a, R.drawable.icon_de, R.drawable.icon_ba,
+                R.drawable.icon_tr, R.drawable.icon_in };
+        designations=new String[]{"Project Manager","Architect","Designer","Business Analyst","Trainee","Intern"};
 
 
         lv =(SwipeMenuListView)findViewById(R.id.listView);
@@ -124,7 +135,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             arraylist.add(wp);
         }
         handler = new DatabaseHandler(this);
-        adapter=new CustomAdapter(this,3,arraylist);
+        adapter=new CustomAdapter(this,3,arraylist,null,0,0);
         lv.setAdapter(adapter);
 
         final Handler h = new Handler();
@@ -137,9 +148,9 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(designationEmp);
-                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
-                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
+                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                         lv.setMenuCreator(creator);
                         lv.setAdapter(adapter);
                         adapter.filter(1, text);
@@ -148,7 +159,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         currentList = 1;
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         search.setHint("Search Here");
-                        adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist);
+                        adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist,null,0,0);
                         lv.setAdapter(adapter);
                         adapter.filter(3, text);
                         state = 0;
@@ -156,7 +167,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                     }
                 } else {
                     if (CLICKED == 1) {
-                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         state = 2;
 
@@ -166,7 +177,7 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
                         state = 1;
                     }
                     lv.setMenuCreator(creator);
-                    adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
+                    adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                     lv.setAdapter(adapter);
                     currentList = 2;
                     adapter.filter(1, text);
@@ -179,16 +190,17 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
 
             @Override
             public void create(SwipeMenu menu) {
-                SwipeMenuItem favItem = new SwipeMenuItem(getApplicationContext());
-                favItem.setBackground(new ColorDrawable(Color.rgb(216, 219, 224)));
-                favItem.setWidth(dp2px(90));
+                favItem = new SwipeMenuItem(getApplicationContext());
+                favItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+                favItem.setWidth(dp2px(60));
                 favItem.setIcon(R.drawable.fav);
+
                 menu.addMenuItem(favItem);
 
-                SwipeMenuItem infoItem = new SwipeMenuItem(getApplicationContext());
-                infoItem.setBackground(new ColorDrawable(Color.rgb(120,120,120)));
-                infoItem.setWidth(dp2px(90));
-                infoItem.setIcon(R.drawable.info3);
+                infoItem = new SwipeMenuItem(getApplicationContext());
+                infoItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+                infoItem.setWidth(dp2px(60));
+                infoItem.setIcon(R.drawable.info);
                 menu.addMenuItem(infoItem);
             }
         };
@@ -212,9 +224,17 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-
-                        Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
-                        handler.setFavourite(employees.get(position).getId(),1,ITEM_TYPE_FAVOURITE_EMP);
+                        if(employees.get(position).isFavourite()==0){
+                            //favIcon_POSITION=position;
+                            Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
+                            employees.get(position).makeFavourite(1);
+                            handler.setFavourite(employees.get(position).getId(),1,ITEM_TYPE_FAVOURITE_EMP);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "Already Added To Favourites", Toast.LENGTH_SHORT).show();
+//                            employees.get(position).makeFavourite(0);
+//                            handler.setFavourite(employees.get(position).getId(),0,ITEM_TYPE_FAVOURITE_EMP);
+                        }
                         break;
                     case 1:
                         showPopup(EmployeeActivity.this, position);
@@ -336,10 +356,11 @@ public class EmployeeActivity extends ActionBarActivity implements AdapterView.O
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(currentList == 1) {
-            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, R.drawable.designer, 0);
+            posIcon=position;
+            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0,arraylist.get(posIcon).getImage(), 0);
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
-            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null,0,0);
+            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
             lv.setAdapter(adapter);
             currentList=2;
             CLICKED=1;

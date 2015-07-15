@@ -4,24 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:padding="10dp"
     android:orientation="vertical"
-    android:background="#66aff3"
-    android:layout_margin="0dp" >
+    android:background="#1976d3" >
 
     <TextView
         android:id="@+id/tabsText"
-        android:text="EMPLOYEES"
+        android:text="@string/employee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#EEE516"
-        android:textSize="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:paddingBottom="1dp"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_gravity="center_horizontal" />
     <View
         android:id="@+id/underLine"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="2dp"
         android:background="#EEE516"
         android:layout_gravity="center_horizontal"/>

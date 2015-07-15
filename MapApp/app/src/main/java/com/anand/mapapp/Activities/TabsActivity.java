@@ -1,6 +1,8 @@
 package com.anand.mapapp.Activities;
 
+import android.app.ActionBar;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -41,7 +43,10 @@ public class TabsActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_tabs);
+
 
         Resources resources = getResources();
         tabHost = getTabHost();

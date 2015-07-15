@@ -23,6 +23,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.anand.mapapp.Database.DBQueries;
 import com.anand.mapapp.Database.DatabaseHandler;
@@ -90,6 +92,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         sensorService = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         compass = sensorService.getDefaultSensor(Sensor.TYPE_ORIENTATION);

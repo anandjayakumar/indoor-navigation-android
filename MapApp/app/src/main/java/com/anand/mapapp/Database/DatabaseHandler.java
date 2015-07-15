@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
 import com.anand.mapapp.Classes.Employee;
+import com.anand.mapapp.Classes.Favourite;
 import com.anand.mapapp.Classes.Place;
 import com.anand.mapapp.Classes.QRcode;
 import com.anand.mapapp.Classes.Timelog;
@@ -235,52 +236,52 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
 
-    public List<Employee> getFavEmployees() {
-        List<Employee> employeeList = new ArrayList<Employee>();
+    public List<Favourite> getFavEmployees() {
+        List<Favourite> favouriteList = new ArrayList<Favourite>();
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE "+KEY_FAVOURITE + " = 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Employee emp_o = new Employee();
+                Favourite emp_o = new Favourite();
                 emp_o.setId(cursor.getInt(0));
                 emp_o.setName(cursor.getString(1));
                 emp_o.setX(cursor.getInt(2));
                 emp_o.setY(cursor.getInt(3));
                 emp_o.setPic(cursor.getInt(4));
-                emp_o.setDesg(cursor.getString(5));
-                emp_o.setEmail(cursor.getString(6));
-                emp_o.makeFavourite(cursor.getInt(7));
-                employeeList.add(emp_o);
+                emp_o.setDetail(cursor.getString(5));
+                emp_o.setExtra(cursor.getString(6));
+                favouriteList.add(emp_o);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return employeeList;
+        return favouriteList;
     }
 
-    public List<Place> getFavPlaces() {
-        List<Place> placesList = new ArrayList<Place>();
+    public List<Favourite> getFavPlaces() {
+        List<Favourite> favouriteList = new ArrayList<Favourite>();
         String selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE "+KEY_FAVOURITE + " = 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Place pl=new Place();
+                Favourite pl=new Favourite();
                 pl.setId(cursor.getInt(0));
                 pl.setName(cursor.getString(1));
                 pl.setX(cursor.getInt(2));
                 pl.setY(cursor.getInt(3));
                 pl.setPic(cursor.getInt(4));
-                pl.makeFavourite(cursor.getInt(5));
-                placesList.add(pl);
+                pl.setDetail("");
+                pl.setExtra("");
+                favouriteList.add(pl);
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return placesList;
+        return favouriteList;
     }
 
     public Employee getEmployeeId(int id) {

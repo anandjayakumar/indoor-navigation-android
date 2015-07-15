@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">MapApp</string>
 
+    <string name="search"><b>Search</b></string>
+    <string name="scan_history"><b>Scan History</b></string>
+    <string name="employee"><b>EMPLOYEE</b></string>
+    <string name="place"><b>PLACE</b></string>
+    <string name="scan"><b>Scan</b></string>
+    <string name="favourite"><b>Favourites</b></string>
+
     <string name="desg_lb">Designation: </string>
     <string name="x_lb">X: </string>
     <string name="y_lb">Y: </string>

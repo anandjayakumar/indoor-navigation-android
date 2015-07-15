@@ -42,7 +42,7 @@
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.TabsActivity"
-            android:label="@string/title_activity_tabs"
+            android:label="Search"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity

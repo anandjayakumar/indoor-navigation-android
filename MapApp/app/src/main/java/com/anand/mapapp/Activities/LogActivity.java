@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 
@@ -23,7 +24,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class LogActivity extends Activity {
+public class LogActivity extends Activity{
     public int listcounter;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -31,6 +32,7 @@ public class LogActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
+        //getSupportActionBar().hide();
         TextView txt = (TextView) findViewById(R.id.textView3);
         DatabaseHandler db = new DatabaseHandler(this);
         List<Timelog> tlog = new ArrayList<Timelog>();
@@ -65,14 +67,9 @@ public class LogActivity extends Activity {
                 tv2.setWidth(0);
                 tv3.setWidth(0);
 
-
-
-
                 tv1.setTextSize(20);
                 tv2.setTextSize(20);
                 tv3.setTextSize(20);
-
-
 
                 tv1.setPadding(0,10,0,10);
                 tv2.setPadding(0,10,0,10);
@@ -96,6 +93,8 @@ public class LogActivity extends Activity {
                 tv3.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
 
                 tv1.setGravity(Gravity.CENTER_HORIZONTAL);
+                tv2.setGravity(Gravity.CENTER_HORIZONTAL);
+                tv3.setGravity(Gravity.CENTER_HORIZONTAL);
 
 
 

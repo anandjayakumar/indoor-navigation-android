@@ -27,4 +27,4 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/imgv1"/>
-    </RelativeLayout><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/single_listview_label.xml -->
+</RelativeLayout><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/single_listview_label.xml -->

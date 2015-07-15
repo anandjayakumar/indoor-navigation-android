@@ -11,8 +11,7 @@
 
     <RelativeLayout  android:layout_width="match_parent"
         android:id="@+id/empPop"
-        android:layout_height="match_parent"
-        android:layout_marginTop="53dp">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="74dp"
@@ -21,7 +20,7 @@
             android:background="#1976d3">
 
             <EditText
-                android:drawableLeft="@drawable/ictop_search2"
+                android:drawableLeft="@drawable/ictop_search"
                 android:paddingRight="12dp"
                 android:paddingLeft="12dp"
                 android:drawablePadding="10dp"
