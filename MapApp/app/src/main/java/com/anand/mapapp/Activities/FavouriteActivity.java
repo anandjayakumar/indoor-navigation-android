@@ -97,18 +97,18 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         //Object toRemove = customAdapter.getItem(position);
         final int[] id = new int[1];
         final int[] type=new int[1];
-        final String[] desg= new String[1];
+        final String[] extra= new String[1];
         AlertDialog.Builder alertBox=new AlertDialog.Builder(FavouriteActivity.this);
         alertBox.setTitle("Confirm Deletion");
-        alertBox.setMessage("Are you sure you want to delete " + favouriteList.get(position).getName()+" ???");
+        alertBox.setMessage("Are you sure you want to delete " + favouriteList.get(position).getName()+" ?");
         final int pos = position;
         alertBox.setInverseBackgroundForced(true);
         alertBox.setNegativeButton("NO", null);
         alertBox.setPositiveButton("YES", new AlertDialog.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 id[0] =favouriteList.get(position).getId();
-                desg[0]=favouriteList.get(position).getDetail();
-                if(desg[0].equals("")){
+                extra[0]=favouriteList.get(position).getExtra();
+                if(extra[0].equals("")){
                     type[0]=ITEM_TYPE_FAVOURITE_PLACE;
                 }
                 else{
@@ -153,19 +153,13 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent returnIntent = new Intent(this, MainActivity.class);
-        returnIntent.putExtra("act_val", 4);
-        returnIntent.putExtra("name",
-                (favouriteList.get(position).getName()));
+        returnIntent.putExtra("act_val", (favouriteList.get(position).getType()));
+        returnIntent.putExtra("id",
+                (favouriteList.get(position).getId()));
         returnIntent.putExtra("x_val",
                 (favouriteList.get(position).getX()));
         returnIntent.putExtra("y_val",
                 (favouriteList.get(position).getY()));
-        returnIntent.putExtra("desg",
-                (favouriteList.get(position).getDetail()));
-        returnIntent.putExtra("email",
-                (favouriteList.get(position).getExtra()));
-        returnIntent.putExtra("images",
-                (favouriteList.get(position).getPic()));
         startActivity(returnIntent);
     }
 }

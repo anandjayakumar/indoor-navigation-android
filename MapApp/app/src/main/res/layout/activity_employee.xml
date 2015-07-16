@@ -33,6 +33,8 @@
                 android:layout_marginRight="12dp"
                 android:background="@drawable/round_corner"
                 android:layout_centerHorizontal="true"/>
+
+
         </RelativeLayout>
 
         <com.baoyz.swipemenulistview.SwipeMenuListView
@@ -40,6 +42,11 @@
             android:layout_below="@+id/searchViewHolder"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/labelList"
+            android:layout_below="@+id/searchViewHolder" />
 
     </RelativeLayout>
 </FrameLayout>

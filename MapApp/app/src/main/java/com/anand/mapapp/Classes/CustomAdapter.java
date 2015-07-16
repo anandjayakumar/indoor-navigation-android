@@ -1,14 +1,20 @@
 package com.anand.mapapp.Classes;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.anand.mapapp.Activities.EmployeeActivity;
+import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
 
 import java.util.ArrayList;
@@ -24,6 +30,17 @@ public class CustomAdapter extends BaseAdapter {
     private static final int ITEM_TYPE_FAVOURITE=4;
 
 
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+
+    DatabaseHandler handler;
+
+    String checkDesg;
+
+    EmployeeActivity empObject;
+
+
     Context mContext;
     ArrayList<Employee> elist;
     ArrayList<Place> plist;
@@ -37,12 +54,18 @@ public class CustomAdapter extends BaseAdapter {
     int imgW,imgH;
     private static LayoutInflater inflater=null;
 
+
+    public  CustomAdapter(){
+
+        this.empObject=new EmployeeActivity();
+    }
     public CustomAdapter(Context context, int value, List<Label> arraylist,List<Favourite> listFavourite,int imageWidth, int imageHeight) {
 
 
         val=value;
         imgW=imageWidth;
         imgH=imageHeight;
+        handler= new DatabaseHandler(context);
 
         switch(val) {
             case 3:
@@ -66,6 +89,7 @@ public class CustomAdapter extends BaseAdapter {
     public CustomAdapter(Context context, int value, List<Employee> employeeList, List<Place> placeList) {
         val=value;
 
+        handler= new DatabaseHandler(context);
         switch (val){
             case 1:
                 mContext = context;
@@ -94,15 +118,15 @@ public class CustomAdapter extends BaseAdapter {
         }else if(val == ITEM_TYPE_PLACE) {
             return plList.size();
         }else if(val==ITEM_TYPE_LABEL){
-                return label.size();
+            return label.size();
         }
         else if(val == ITEM_TYPE_FAVOURITE){
             return favList.size();
         }
-            else{
+        else{
             return 0;
         }
-}
+    }
 
     @Override
     public Object getItem(int position) {
@@ -135,6 +159,7 @@ public class CustomAdapter extends BaseAdapter {
         ImageView img;
         TextView tv1;
         TextView tv2;
+
 //        TextView tv3;
 
     }
@@ -171,11 +196,11 @@ public class CustomAdapter extends BaseAdapter {
                     convertView = inflater.inflate(R.layout.single_listview, null);
                     holder.tv = (TextView) convertView.findViewById(R.id.textv);
                     holder.img = (ImageView) convertView.findViewById(R.id.imgv);
+
+                   // holder.fav = (ImageView) convertView.findViewById(R.id.favButton);
+                    //holder.info = (ImageView) convertView.findViewById(R.id.infoButton);
                 }
-//                holder.tv1 = (TextView) convertView.findViewById(R.id.x);
-//                holder.tv2 = (TextView) convertView.findViewById(R.id.y);
-//                holder.tv3 = (TextView) convertView.findViewById(R.id.desg);
-                convertView.setTag(holder);
+              convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
@@ -187,121 +212,143 @@ public class CustomAdapter extends BaseAdapter {
         else if(val == ITEM_TYPE_EMPLOYEE) {
             holder.tv.setText(empList.get(position).getName());
             holder.img.setImageResource(empList.get(position).getPic());
-//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
-//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
-//            holder.tv3.setText(empList.get(position).getDesg());
+//            holder.info.setVisibility(View.VISIBLE);
+//            holder.info.setTag(empList.get(position).getId());
+//            holder.fav.setImageResource(R.drawable.fav);
+//            holder.info.setImageResource(R.drawable.info1);
+//            holder.fav.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (empList.get(position).isFavourite() == 0) {
+//                        //favIcon_POSITION=position;
+//                        Toast.makeText(mContext, "Added To Favourites", Toast.LENGTH_SHORT).show();
+//                        empList.get(position).makeFavourite(1);
+//                        handler.setFavourite(empList.get(position).getId(), 1, ITEM_TYPE_FAVOURITE_EMP);
+//                    } else {
+//                        Toast.makeText(mContext, "Already Added To Favourites", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            });
+//            holder.info.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                  //  empObject=new EmployeeActivity();
+//                   // empObject.showPopup(position);
+//                    Toast.makeText(mContext, ""+v.getTag(),Toast.LENGTH_SHORT).show();
+//
+//
+//                    //empObject.showPopup(position);
+//
+//
+//                }});
 
         }
         else if(val == ITEM_TYPE_FAVOURITE) {
-            holder.tv.setText(favList.get(position).getName());
-            holder.tv1.setText(favList.get(position).getDetail());
-            holder.tv2.setText(favList.get(position).getExtra());
-            holder.img.setImageResource(favList.get(position).getPic());
-//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
-//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
-//            holder.tv3.setText(empList.get(position).getDesg());
-
+            checkDesg=favList.get(position).getDetail();
+            if(checkDesg!=""){
+                holder.tv1.setVisibility(View.VISIBLE);
+                holder.tv2.setVisibility(View.VISIBLE);
+                holder.tv.setText(favList.get(position).getName());
+                holder.tv1.setText(favList.get(position).getDetail());
+                holder.tv2.setText(favList.get(position).getExtra());
+                holder.img.setImageResource(favList.get(position).getPic());
+            }
+            else
+            {
+                holder.tv.setText(favList.get(position).getName());
+                holder.tv1.setVisibility(View.GONE);
+                holder.tv2.setVisibility(View.GONE);
+                holder.img.setImageResource(favList.get(position).getPic());
+            }
         }
-//            holder.tv1.setText(String.valueOf(empList.get(position).getX()));
-//            holder.tv2.setText(String.valueOf(empList.get(position).getY()));
-//            holder.tv3.setText(empList.get(position).getDesg());
         else if(val == ITEM_TYPE_PLACE) {
+           // holder.info.setVisibility(View.GONE);
             holder.tv.setText(plList.get(position).getName());
             holder.img.setImageResource(plList.get(position).getPic());
-//            holder.tv1.setText(String.valueOf(plList.get(position).getX()));
-//            holder.tv2.setText(String.valueOf(plList.get(position).getY()));
+//            holder.fav.setImageResource(R.drawable.fav);
+//            holder.fav.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (empList.get(position).isFavourite() == 0) {
+//                        //favIcon_POSITION=position;
+//                        Toast.makeText(mContext, "Added to Favourites", Toast.LENGTH_SHORT).show();
+//                        plList.get(position).makeFavourite(1);
+//                        handler.setFavourite(plList.get(position).getId(),1,ITEM_TYPE_FAVOURITE_PLACE);
+//                        }
+//                    else {
+//                        Toast.makeText(mContext, "Already Added To Favourites", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//            });
         }
-
-
-//holder.img.setImageResource(empList.get(position).getEmployeeImg());
-//        convertView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                Intent intent=((Activity) mContext).getIntent();;
-//                intent.putExtra("name",
-//                        (empList.get(position).getEmployeeName()));
-//                intent.putExtra("x_val",
-//                        (empList.get(position).getXval()));
-//                intent.putExtra("y_val",
-//                        (empList.get(position).getYval()));
-//                intent.putExtra("desg",
-//                        (empList.get(position).getEmployeeDesg()));
-//                intent.putExtra("images",
-//                        (empList.get(position).getEmployeeImg()));
-//                ((Activity) v.getContext()).setResult(StartActivity.RESULT_OK, intent);
-//                ((Activity)v.getContext()).finish();
-//                //setResult(intent);
-//                //finish();
-//            }
-//        });
-
         return convertView;
     }
 
-    // Filter Class
-    public void filter(int id, String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        if(id==ITEM_TYPE_LABEL) {
-            label.clear();
-            if (charText.length() == 0) {
-                label.addAll(label_list);
-            }
-        }
-        else if(id==ITEM_TYPE_EMPLOYEE) {
-            empList.clear();
-            if (charText.length() == 0) {
-                empList.addAll(elist);
-            } else {
-                for (Employee wp : elist) {
-                    if (wp.getName().toLowerCase(Locale.getDefault())
-                            .contains(charText)) {
-                        empList.add(wp);
-                    }
-                }
-            }
-        }
-        else if(id==ITEM_TYPE_PLACE) {
-            plList.clear();
-            if (charText.length() == 0) {
-                plList.addAll(plist);
-            } else {
-                for (Place pi : plist) {
-                    if (pi.getName().toLowerCase(Locale.getDefault())
-                            .contains(charText)) {
-                        plList.add(pi);
-                    }
-                }
-            }
-        }
-        else if(id==4){
-            empList.clear();
-            if (charText.length() == 0) {
-                empList.addAll(elist);
-            } else {
-                for (Employee wp : elist) {
-                    if (wp.getDesg().toLowerCase(Locale.getDefault())
-                            .contains(charText)) {
-                        empList.add(wp);
-                    }
-                }
-            }
-        }
-        else if(id==5){
-            plList.clear();
-            if (charText.length() == 0) {
-                plList.addAll(plist);
-            } else {
-                for (Place wp : plist) {
-                    if (wp.getName().toLowerCase(Locale.getDefault())
-                            .contains(charText)) {
-                        plList.add(wp);
-                    }
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
+//    // Filter Class
+//    public void filter(int id, String charText) {
+//        charText = charText.toLowerCase(Locale.getDefault());
+//        if(id==ITEM_TYPE_LABEL) {
+//            label.clear();
+//            if (charText.length() == 0) {
+//                label.addAll(label_list);
+//            }
+//        }
+//        else if(id==ITEM_TYPE_EMPLOYEE) {
+//            empList.clear();
+//            if (charText.length() == 0) {
+//                empList.addAll(elist);
+//            } else {
+//                for (Employee wp : elist) {
+//                    if (wp.getName().toLowerCase(Locale.getDefault())
+//                            .contains(charText)) {
+//                        empList.add(wp);
+//                    }
+//                }
+//            }
+//        }
+//        else if(id==ITEM_TYPE_PLACE) {
+//            plList.clear();
+//            if (charText.length() == 0) {
+//                plList.addAll(plist);
+//            } else {
+//                for (Place pi : plist) {
+//                    if (pi.getName().toLowerCase(Locale.getDefault())
+//                            .contains(charText)) {
+//                        plList.add(pi);
+//                    }
+//                }
+//            }
+//        }
+//        else if(id==4){
+//            empList.clear();
+//            if (charText.length() == 0) {
+//                empList.addAll(elist);
+//            } else {
+//                for (Employee wp : elist) {
+//                    if (wp.getDesg().toLowerCase(Locale.getDefault())
+//                            .contains(charText)) {
+//                        empList.add(wp);
+//                    }
+//                }
+//            }
+//        }
+//        else if(id==5){
+//            plList.clear();
+//            if (charText.length() == 0) {
+//                plList.addAll(plist);
+//            } else {
+//                for (Place wp : plist) {
+//                    if (wp.getName().toLowerCase(Locale.getDefault())
+//                            .contains(charText)) {
+//                        plList.add(wp);
+//                    }
+//                }
+//            }
+//        }
+//        notifyDataSetChanged();
+//    }
 
 
 }

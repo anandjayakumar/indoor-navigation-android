@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -29,6 +30,8 @@ import android.widget.Scroller;
 public class TouchImageView extends ImageView {
 	
 	private static final String DEBUG = "DEBUG";
+
+    private boolean mIgnoreNextRequestLayout = false;
 	
 	//
 	// SuperMin and SuperMax multipliers. Determine how much the image can be
@@ -36,7 +39,7 @@ public class TouchImageView extends ImageView {
 	// min/max zoom boundary.
 	//
 	private static final float SUPER_MIN_MULTIPLIER = .75f;
-	private static final float SUPER_MAX_MULTIPLIER = 1.25f;
+	private static final float SUPER_MAX_MULTIPLIER = 1.00f;
 
     //
     // Scale of image ranges from minScale to maxScale, where minScale == 1
@@ -141,24 +144,18 @@ public class TouchImageView extends ImageView {
     public void setImageResource(int resId) {
     	super.setImageResource(resId);
     	savePreviousImageValues();
-    	fitImageToView();
+    	//fitImageToView();
     }
     
     @Override
     public void setImageBitmap(Bitmap bm) {
-
     	super.setImageBitmap(bm);
-    	savePreviousImageValues();
-    	fitImageToView();
+        savePreviousImageValues();
+    	//fitImageToView();
     }
-    
-    @Override
-    public void setImageDrawable(Drawable drawable) {
-    	super.setImageDrawable(drawable);
-    	savePreviousImageValues();
-    	fitImageToView();
-    }
-    
+
+
+
     @Override
     public void setImageURI(Uri uri) {
     	super.setImageURI(uri);
@@ -391,7 +388,7 @@ public class TouchImageView extends ImageView {
     /**
      * Set zoom parameters equal to another TouchImageView. Including scale, position,
      * and ScaleType.
-     * @param TouchImageView
+     *
      */
     public void setZoom(TouchImageView img) {
     	PointF center = img.getScrollPosition();
@@ -1051,7 +1048,7 @@ public class TouchImageView extends ImageView {
      * 			to the bounds of the bitmap size.
      * @return Coordinates of the point touched, in the coordinate system of the original drawable.
      */
-    private PointF transformCoordTouchToBitmap(float x, float y, boolean clipToBitmap) {
+    public PointF transformCoordTouchToBitmap(float x, float y, boolean clipToBitmap) {
          matrix.getValues(m);
          float origW = getDrawable().getIntrinsicWidth();
          float origH = getDrawable().getIntrinsicHeight();
@@ -1075,7 +1072,7 @@ public class TouchImageView extends ImageView {
      * @param by y-coordinate in original bitmap coordinate system
      * @return Coordinates of the point in the view's coordinate system.
      */
-    private PointF transformCoordBitmapToTouch(float bx, float by) {
+    public PointF transformCoordBitmapToTouch(float bx, float by) {
         matrix.getValues(m);        
         float origW = getDrawable().getIntrinsicWidth();
         float origH = getDrawable().getIntrinsicHeight();
@@ -1263,4 +1260,10 @@ public class TouchImageView extends ImageView {
     	matrix.getValues(n);
     	Log.d(DEBUG, "Scale: " + n[Matrix.MSCALE_X] + " TransX: " + n[Matrix.MTRANS_X] + " TransY: " + n[Matrix.MTRANS_Y]);
     }
+
+
+    public void clear(){
+        super.invalidate();
+    }
+
 }

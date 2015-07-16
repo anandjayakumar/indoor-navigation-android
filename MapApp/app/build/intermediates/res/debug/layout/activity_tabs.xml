@@ -29,5 +29,4 @@
             android:layout_height="wrap_content">
         </FrameLayout>
     </LinearLayout>
-</TabHost>
-<!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/activity_tabs.xml -->
+</TabHost><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/activity_tabs.xml -->

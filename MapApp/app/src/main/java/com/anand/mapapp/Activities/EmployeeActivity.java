@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -72,6 +73,8 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     CustomAdapter adapter;
     EditText search;
     SwipeMenuListView lv;
+    ListView labelList;
+    //ListView lv;
     SwipeMenuCreator creator=null,creator2=null;
     String designationEmp;
     int currentList=1;
@@ -115,7 +118,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         winW = windowW / 10;
         winH = windowH / 10;
         WiW = winW * 8;
-        WiH = winH * 5;
+        WiH = winH * 4;
         imgW = winW * 5;
         imgH = winH * 5;
         padding = winW;
@@ -129,6 +132,10 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         lv =(SwipeMenuListView)findViewById(R.id.listView);
         lv.setOnItemClickListener(this);
 
+        labelList=(ListView)findViewById(R.id.labelList);
+        labelList.setOnItemClickListener(this);
+
+
         for (int i = 0; i < designations.length; i++)
         {
             Label wp = new Label(images[i], designations[i]);
@@ -136,7 +143,9 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         }
         handler = new DatabaseHandler(this);
         adapter=new CustomAdapter(this,3,arraylist,null,0,0);
-        lv.setAdapter(adapter);
+        lv.setVisibility(View.GONE);
+        labelList.setVisibility(View.VISIBLE);
+        labelList.setAdapter(adapter);
 
         final Handler h = new Handler();
         final Runnable task = new Runnable() {
@@ -152,18 +161,22 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                         lv.setMenuCreator(creator);
+                        lv.setVisibility(View.VISIBLE);
+                        labelList.setVisibility(View.GONE);
                         lv.setAdapter(adapter);
-                        adapter.filter(1, text);
+                        //adapter.filter(1, text);
                         state = 1;
                     } else {
                         currentList = 1;
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         search.setHint("Search Here");
                         adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist,null,0,0);
-                        lv.setAdapter(adapter);
-                        adapter.filter(3, text);
+                        labelList.setAdapter(adapter);
+                        lv.setVisibility(View.GONE);
+                        labelList.setVisibility(View.VISIBLE);
+                        //adapter.filter(3, text);
                         state = 0;
-                        lv.setMenuCreator(creator2);
+                        //lv.setMenuCreator(null);
                     }
                 } else {
                     if (CLICKED == 1) {
@@ -177,10 +190,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         state = 1;
                     }
                     lv.setMenuCreator(creator);
+                    lv.setVisibility(View.VISIBLE);
+                    labelList.setVisibility(View.GONE);
                     adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                     lv.setAdapter(adapter);
                     currentList = 2;
-                    adapter.filter(1, text);
+                    //adapter.filter(1, text);
                 }
 
             }
@@ -200,24 +215,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                 infoItem = new SwipeMenuItem(getApplicationContext());
                 infoItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
                 infoItem.setWidth(dp2px(60));
-                infoItem.setIcon(R.drawable.info);
+                infoItem.setIcon(R.drawable.info1);
                 menu.addMenuItem(infoItem);
             }
         };
 
-
-        creator2 = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-
-
-            }
-        };
-
-
-
-        lv.setMenuCreator(creator2);
+        lv.setMenuCreator(null);
 
         lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
@@ -232,9 +235,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "Already Added To Favourites", Toast.LENGTH_SHORT).show();
-//                            employees.get(position).makeFavourite(0);
-//                            handler.setFavourite(employees.get(position).getId(),0,ITEM_TYPE_FAVOURITE_EMP);
-                        }
+                      }
                         break;
                     case 1:
                         showPopup(EmployeeActivity.this, position);
@@ -266,7 +267,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             }
         });
     }
-
 
     private void showPopup(final Activity context, int position) {
 
@@ -325,12 +325,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 //        });
     }
 
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
 
         int[] location = new int[2];
         location[0]=0; location[1]=winH;
-
         p = new Point();
         p.x = location[0];
         p.y = location[1];
@@ -361,29 +361,25 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
             adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+            lv.setVisibility(View.VISIBLE);
+            labelList.setVisibility(View.GONE);
             lv.setAdapter(adapter);
             currentList=2;
             CLICKED=1;
             state=1;
             lv.setMenuCreator(creator);
             search.setHint(designationEmp);
-            adapter.filter(4,designationEmp);
+            //adapter.filter(3,designationEmp);
         }
         else {
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 1);
-            returnIntent.putExtra("name",
-                    (employees.get(position).getName()));
+            returnIntent.putExtra("id",
+                    (employees.get(position).getId()));
             returnIntent.putExtra("x_val",
                     (employees.get(position).getX()));
             returnIntent.putExtra("y_val",
                     (employees.get(position).getY()));
-            returnIntent.putExtra("desg",
-                    (employees.get(position).getDesg()));
-            returnIntent.putExtra("email",
-                    (employees.get(position).getEmail()));
-            returnIntent.putExtra("images",
-                    (employees.get(position).getPic()));
             startActivity(returnIntent);
         }
     }
@@ -402,6 +398,8 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
                     }
                     state = 1;
+                    lv.setVisibility(View.VISIBLE);
+                    labelList.setVisibility(View.GONE);
                     lv.setMenuCreator(creator);
                 }
                 else if(POP_PRESENT==1) {
@@ -420,31 +418,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private void pullDb() {
-        try {
-            File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
-
-            if (sd.canWrite()) {
-                String currentDBPath = "/data/data/" + getPackageName() + "/databases/MAIN_DB";
-                String backupDBPath = "maindb.db";
-                File currentDB = new File(currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
-
-                if (currentDB.exists()) {
-                    FileChannel src = new FileInputStream(currentDB).getChannel();
-                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                    src.close();
-                    dst.close();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("pullDb", e.getMessage());
-        }
     }
 
 }

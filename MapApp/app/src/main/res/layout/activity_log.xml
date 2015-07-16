@@ -1,23 +1,19 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.anand.mapapp.Activities.LogActivity">
 
     <TextView
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:text="@string/scan_history"
-
-        android:background="#1976d3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/scan_history"
+        android:background="#1976D3"
         android:gravity="center"
-    android:textColor="#FFFFFF"
-
-    android:textSize="25dp"
-
-    android:id="@+id/textView"
-    android:layout_centerHorizontal="true" />
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:id="@+id/textView" />
 
     <TableRow
         android:layout_width="match_parent"
@@ -26,16 +22,15 @@
         android:background="#CCEEFF"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-
         android:weightSum="3"
         android:id="@+id/tab">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="SL.NO"
-            android:textColor="#1976d3"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Sl.No"
+            android:textColor="#1976D3"
             android:layout_gravity="center"
             android:id="@+id/textView2"
             android:layout_span="1"
@@ -45,27 +40,28 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="QR CODE"
-            android:textColor="#1976d3"
-            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="QR Code"
+            android:textColor="#1976D3"
             android:layout_gravity="center"
             android:id="@+id/textView3"
             android:layout_span="1"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="TIME"
-            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Time"
             android:layout_gravity="center"
-            android:textColor="#1976d3"
+            android:textColor="#1976D3"
             android:id="@+id/textView4"
             android:layout_span="1"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"/>
     </TableRow>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -92,3 +88,4 @@
 
 
 </RelativeLayout>
+

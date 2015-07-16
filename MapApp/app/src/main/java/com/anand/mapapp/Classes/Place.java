@@ -6,13 +6,15 @@ package com.anand.mapapp.Classes;
 public class Place {
     int _id;
     String _name;
+    String _type;
     int _x,_y;
     int _pic;
     int _Favourite;
     public Place(){}
-    public Place(int id,String name,int X,int Y,int picture,int fav){
+    public Place(int id,String name,String type,int X,int Y,int picture,int fav){
         this._id=id;
         this._name=name;
+        this._type=type;
         this._x=X;
         this._y=Y;
         this._pic=picture;
@@ -58,5 +60,12 @@ public class Place {
     }
     public int getPic() {
         return this._pic;
+    }
+
+    public void setType(String type){
+        this._type=type;
+    }
+    public String getType(){
+        return this._type;
     }
 }

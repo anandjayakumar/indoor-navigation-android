@@ -3,10 +3,10 @@ package com.anand.mapapp.Classes;
 public class Favourite {
     int id;
     String name;
+    int type;
     int pic;
     String detail;
     String extra;
-
     int px,py;
 
     public Favourite(){}
@@ -59,6 +59,13 @@ public class Favourite {
 
     public int getY(){
         return this.py;
+    }
+
+    public void setType(int type){
+        this.type=type;
+    }
+    public int getType(){
+        return this.type;
     }
 
 }

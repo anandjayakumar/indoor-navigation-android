@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
@@ -19,30 +19,31 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
 
     private QRCodeReaderView mydecoderview;
     DatabaseHandler db = new DatabaseHandler(this);
+    public String data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_decoder);
-        //getSupportActionBar().hide();
 
         mydecoderview = (QRCodeReaderView) findViewById(R.id.qrdecoderview);
         mydecoderview.setOnQRCodeReadListener(this);
 
     }
 
-    public final static String MESSAGE = "com.app1.aaru.myapp1.MESSAGE";
-    public static String data;
 
     @Override
     public void onQRCodeRead(String text, PointF[] points)
     {
         data=text;
-       /* List<Timelog> tlogg;
-        tlogg = db.getAllTimelog();
-        int size = tlogg.size();
-        Timelog tlog = new Timelog(size+1,data,date(),time());*/
+        if(!db.isValidQR(text)){
+            data="null";
+        }
+        //Toast.makeText(getApplicationContext(), "" +data, Toast.LENGTH_SHORT).show();
 
+        if(data=="null") {
+            Toast.makeText(getApplicationContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
+        }
         Intent intent=new Intent();
         intent.putExtra("MESSAGE",data);
         setResult(2,intent);
@@ -111,9 +112,11 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Intent intent=new Intent();
             intent.putExtra("MESSAGE","null");
-            setResult(2,intent);
+            setResult(3,intent);
             finish();
+
         }
+        Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
         return super.onKeyDown(keyCode, event);
     }
 }
