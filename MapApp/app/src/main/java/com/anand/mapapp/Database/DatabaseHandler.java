@@ -1,6 +1,5 @@
 package com.anand.mapapp.Database;
 
-
 import java.util.ArrayList;
 import java.util.List;
 

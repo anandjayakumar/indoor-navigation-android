@@ -8,11 +8,11 @@ package com.twotoasters.jazzylistview;
 
 public final class R {
 	public static final class attr {
-		public static final int effect = 0x7f010034;
-		public static final int max_velocity = 0x7f010038;
-		public static final int only_animate_fling = 0x7f010036;
-		public static final int only_animate_new_items = 0x7f010035;
-		public static final int simulate_grid_with_list = 0x7f010037;
+		public static final int effect = 0x7f010031;
+		public static final int max_velocity = 0x7f010035;
+		public static final int only_animate_fling = 0x7f010033;
+		public static final int only_animate_new_items = 0x7f010032;
+		public static final int simulate_grid_with_list = 0x7f010034;
 	}
 	public static final class id {
 		public static final int cards = 0x7f0d001c;
@@ -32,7 +32,7 @@ public final class R {
 		public static final int zipper = 0x7f0d002a;
 	}
 	public static final class styleable {
-		public static final int[] JazzyListView = { 0x7f010034, 0x7f010035, 0x7f010036, 0x7f010037, 0x7f010038 };
+		public static final int[] JazzyListView = { 0x7f010031, 0x7f010032, 0x7f010033, 0x7f010034, 0x7f010035 };
 		public static final int JazzyListView_effect = 0;
 		public static final int JazzyListView_max_velocity = 4;
 		public static final int JazzyListView_only_animate_fling = 2;

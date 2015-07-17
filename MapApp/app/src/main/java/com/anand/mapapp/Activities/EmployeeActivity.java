@@ -118,7 +118,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         winW = windowW / 10;
         winH = windowH / 10;
         WiW = winW * 8;
-        WiH = winH * 4;
+        WiH = winH * 5;
         imgW = winW * 5;
         imgH = winH * 5;
         padding = winW;
@@ -221,6 +221,20 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         };
 
         lv.setMenuCreator(null);
+
+//        // set SwipeListener
+//        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
+//
+//            @Override
+//            public void onSwipeStart(int position) {
+//                // swipe start
+//            }
+//
+//            @Override
+//            public void onSwipeEnd(int position) {
+//                // swipe end
+//            }
+//        });
 
         lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override

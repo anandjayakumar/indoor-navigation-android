@@ -38,12 +38,9 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         data=text;
         if(!db.isValidQR(text)){
             data="null";
-        }
-        //Toast.makeText(getApplicationContext(), "" +data, Toast.LENGTH_SHORT).show();
-
-        if(data=="null") {
             Toast.makeText(getApplicationContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
+
         Intent intent=new Intent();
         intent.putExtra("MESSAGE",data);
         setResult(2,intent);
@@ -110,13 +107,12 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();
             intent.putExtra("MESSAGE","null");
             setResult(3,intent);
             finish();
-
         }
-        Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
         return super.onKeyDown(keyCode, event);
     }
 }

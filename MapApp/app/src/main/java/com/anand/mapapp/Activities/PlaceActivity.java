@@ -69,10 +69,10 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
 
         search.setHint("Search Here");
 
-        images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,R.drawable.ic_entry,
+        images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,
                 R.drawable.ic_beverage, R.drawable.ic_toilet,
                 R.drawable.ic_server, R.drawable.ic_eatery};
-        places=new String[]{"Meeting Room","Entry","Exit","Beverages","Toilet","Server","Eatery"};
+        places=new String[]{"Meeting Room","Entry/Exit","Refreshment","Washroom","Server"};
 
         // Locate the ListView in listview_main.xml
         lv = (SwipeMenuListView)findViewById(R.id.listView2);
@@ -228,7 +228,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         if (currentList == 1) {
             posIcon=position;
             placeLabel = (arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
-            plp = handler.getPlacesByName(TYPE_PLACE, placeLabel, null);
+            plp = handler.getPlacesByName(TYPE_LABEL, placeLabel, null);
             adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp);
             lv.setAdapter(adapter);
             currentList = 2;

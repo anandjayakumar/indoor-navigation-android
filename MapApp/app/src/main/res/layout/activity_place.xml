@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="74dp"
+        android:layout_height="70dp"
         android:id="@+id/searchViewHolder"
         android:layout_alignParentTop="true"
         android:background="#1976d3">
@@ -16,7 +16,7 @@
             android:paddingRight="12dp"
             android:drawablePadding="10dp"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="46dp"
             android:id="@+id/searchView2"
             android:layout_marginTop="12dp"
             android:layout_marginBottom="12dp"

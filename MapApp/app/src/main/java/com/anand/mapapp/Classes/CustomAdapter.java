@@ -3,6 +3,7 @@ package com.anand.mapapp.Classes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,10 @@ public class CustomAdapter extends BaseAdapter {
 
     DatabaseHandler handler;
 
-    String checkDesg;
 
-    EmployeeActivity empObject;
+    String checkDesg;
+    String checkEmail;
+
 
 
     Context mContext;
@@ -52,14 +54,15 @@ public class CustomAdapter extends BaseAdapter {
     List<Favourite> favList = null;
     int val;
     int imgW,imgH;
+
+    String colors[];
+    String colorsPlace[];
+
     private static LayoutInflater inflater=null;
 
-
-    public  CustomAdapter(){
-
-        this.empObject=new EmployeeActivity();
-    }
     public CustomAdapter(Context context, int value, List<Label> arraylist,List<Favourite> listFavourite,int imageWidth, int imageHeight) {
+
+
 
 
         val=value;
@@ -245,27 +248,65 @@ public class CustomAdapter extends BaseAdapter {
 
         }
         else if(val == ITEM_TYPE_FAVOURITE) {
-            checkDesg=favList.get(position).getDetail();
-            if(checkDesg!=""){
-                holder.tv1.setVisibility(View.VISIBLE);
+
+            checkDesg = favList.get(position).getDetail();
+            checkEmail = favList.get(position).getExtra();
+            if (checkEmail != "") {
                 holder.tv2.setVisibility(View.VISIBLE);
                 holder.tv.setText(favList.get(position).getName());
                 holder.tv1.setText(favList.get(position).getDetail());
+
+
+                if (checkDesg.equals("Project Manager")) {
+                    holder.tv1.setTextColor(Color.parseColor("#f05d55"));
+
+                } else if (checkDesg.equals("Architect")) {
+                    holder.tv1.setTextColor(Color.parseColor("#fec300"));
+
+                } else if (checkDesg.equals("Designer")) {
+                    holder.tv1.setTextColor(Color.parseColor("#479fde"));
+
+                } else if (checkDesg.equals("Business Analyst")) {
+                    holder.tv1.setTextColor(Color.parseColor("#59747f"));
+
+                } else if (checkDesg.equals("Trainee")) {
+                    holder.tv1.setTextColor(Color.parseColor("#8ac539"));
+
+                } else if (checkDesg.equals("Intern")) {
+                    holder.tv1.setTextColor(Color.parseColor("#c69c6c"));
+
+                }
+
                 holder.tv2.setText(favList.get(position).getExtra());
                 holder.img.setImageResource(favList.get(position).getPic());
-            }
-            else
-            {
+            } else {
                 holder.tv.setText(favList.get(position).getName());
-                holder.tv1.setVisibility(View.GONE);
+                holder.tv1.setText(favList.get(position).getDetail());
+
+                if (checkDesg.equals("Meeting Room")) {
+                    holder.tv1.setTextColor(Color.parseColor("#009889"));
+
+                } else if (checkDesg.equals("Entry/Exit")) {
+                    holder.tv1.setTextColor(Color.parseColor("#df3d30"));
+
+                } else if (checkDesg.equals("Refreshment")) {
+                    holder.tv1.setTextColor(Color.parseColor("#ffc402"));
+
+                } else if (checkDesg.equals("Washroom")) {
+                    holder.tv1.setTextColor(Color.parseColor("#546e7b"));
+
+                } else if (checkDesg.equals("Server")) {
+                    holder.tv1.setTextColor(Color.parseColor("#9974d4"));
+
+                }
                 holder.tv2.setVisibility(View.GONE);
                 holder.img.setImageResource(favList.get(position).getPic());
             }
         }
-        else if(val == ITEM_TYPE_PLACE) {
-           // holder.info.setVisibility(View.GONE);
-            holder.tv.setText(plList.get(position).getName());
-            holder.img.setImageResource(plList.get(position).getPic());
+        else if (val == ITEM_TYPE_PLACE) {
+                // holder.info.setVisibility(View.GONE);
+                holder.tv.setText(plList.get(position).getName());
+                holder.img.setImageResource(plList.get(position).getPic());
 //            holder.fav.setImageResource(R.drawable.fav);
 //            holder.fav.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -282,7 +323,7 @@ public class CustomAdapter extends BaseAdapter {
 //
 //                }
 //            });
-        }
+            }
         return convertView;
     }
 

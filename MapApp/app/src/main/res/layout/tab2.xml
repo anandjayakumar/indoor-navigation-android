@@ -17,10 +17,10 @@
         android:layout_height="wrap_content"
         android:textColor="#8DBCF4"
         android:paddingBottom="1dp"
-        android:textSize="20sp" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
     <View
         android:id="@+id/underLine"
-        android:layout_width="81dp"
+        android:layout_width="68dp"
         android:layout_height="2dp"
         android:background="#E4E379"
         android:layout_gravity="center_horizontal"/>
