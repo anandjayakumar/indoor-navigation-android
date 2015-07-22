@@ -1,9 +1,11 @@
 package com.anand.mapapp.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -31,7 +33,6 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
 
     }
 
-
     @Override
     public void onQRCodeRead(String text, PointF[] points)
     {
@@ -40,20 +41,16 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
             data="null";
             Toast.makeText(getApplicationContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
-
         Intent intent=new Intent();
         intent.putExtra("MESSAGE",data);
         setResult(2,intent);
         finish();
-
     }
 
     public String date() {
-
         GregorianCalendar date = new GregorianCalendar();
         int day, month, year;
         String date1="";
-
 
         day = date.get(Calendar.DAY_OF_MONTH);
         month = date.get(Calendar.MONTH)+1;
@@ -64,11 +61,9 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
     }
 
     public String time() {
-
         GregorianCalendar date = new GregorianCalendar();
         int second, minute, hour;
         String time1="";
-
 
         second = date.get(Calendar.SECOND);
         minute = date.get(Calendar.MINUTE);
@@ -78,9 +73,6 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         return time1;
     }
 
-
-
-
     @Override
     public void cameraNotFound() {
 
@@ -88,7 +80,6 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
 
     @Override
     public void QRCodeNotFoundOnCamImage() {
-
 
     }
 

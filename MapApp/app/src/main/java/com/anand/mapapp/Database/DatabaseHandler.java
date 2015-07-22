@@ -26,14 +26,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final int ITEM_TYPE_FAVOURITE_EMP=4;
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
-    // All Static variables
-    // Database Version
+
     private static final int DATABASE_VERSION = 2;
 
-    // Database Name
     private static final String DATABASE_NAME = "MAIN_DB";
 
-    // Table name
     private static final String TABLE_EMPLOYEE = "employee";
     private static final String TABLE_PLACE = "place";
     private static final String TABLE_LOG = "log";
@@ -81,13 +78,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_LINK + " TEXT," + KEY_X + " INTEGER,"
                 + KEY_Y + " INTEGER," + KEY_TAG + " TEXT" + ")";
         db.execSQL(CREATE_QR_TABLE);
-
     }
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         if (oldVersion == 1 && newVersion == 2) {
             onCreate(db);
         }

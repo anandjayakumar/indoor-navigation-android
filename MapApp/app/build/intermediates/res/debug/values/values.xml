@@ -62,6 +62,7 @@
     <!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="button_text_color">#FFFFFF</color>
+    <color name="denim">#ff1976d3</color>
     <!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
@@ -287,6 +288,8 @@
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">MapApp</string>
+    <string name="confirmation"><font fgcolor="black">CONFIRM DELETION</font></string>
+    <string name="deletion">Are you sure you want to make the deletion ?</string>
     <string name="desg_lb">Designation: </string>
     <string name="employee"><b>EMPLOYEE</b></string>
     <string name="favourite"><b>Favourites</b></string>
@@ -311,6 +314,7 @@
     <string name="title_activity_log">LogActivity</string>
     <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_qr">QRActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="title_activity_tabs">TabsActivity</string>
     <string name="x_lb">X: </string>
     <string name="y_lb">Y: </string>

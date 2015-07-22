@@ -23,15 +23,8 @@ import com.anand.mapapp.R;
 
 public class TabsActivity extends TabActivity {
 
-    int indx,act;
-    String name,desig;
-    int x,y,img;
     TabHost mytabs;
     TabHost tabHost;
-//    String UNDERLINED_EMPLOYEE="<u>EMPLOYEES</u>";
-//    String EMPLOYEE="EMPLOYEES";
-//    String UNDERLINED_PLACE="<u>PLACES</u>";
-//    String PLACE="PLACES";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,14 +36,10 @@ public class TabsActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_tabs);
-
 
         Resources resources = getResources();
         tabHost = getTabHost();
-        //TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
 
         final View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
         final TextView tv1=(TextView) view1.findViewById(R.id.tabsText);
@@ -67,13 +56,11 @@ public class TabsActivity extends TabActivity {
         final View line2=(View) view2.findViewById(R.id.underLine);
         line2.setVisibility(View.GONE);
 
-
         Intent intentPlace = new Intent().setClass(this, PlaceActivity.class);
         TabSpec tabSpecPlace = tabHost
                 .newTabSpec("Places")
                 .setIndicator(view2)
                 .setContent(intentPlace);
-
 
         // add all tabs
         tabHost.addTab(tabSpecEmployee);
@@ -81,12 +68,10 @@ public class TabsActivity extends TabActivity {
 
         tabHost.setCurrentTab(2);
 
-
         mytabs = getTabHost();
         mytabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-
                 int index = mytabs.getCurrentTab();
                 switch (index) {
                     case 0:
@@ -102,7 +87,6 @@ public class TabsActivity extends TabActivity {
                         line2.setVisibility(View.VISIBLE);
                         break;
                 }
-
             }
         });
     }
@@ -113,12 +97,10 @@ public class TabsActivity extends TabActivity {
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Settings",
                         Toast.LENGTH_LONG).show();
-
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

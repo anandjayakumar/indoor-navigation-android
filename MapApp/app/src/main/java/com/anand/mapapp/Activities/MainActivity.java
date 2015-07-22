@@ -14,7 +14,6 @@ import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,7 +23,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Marker;
@@ -130,8 +127,8 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         scaleLevelf = getResources().getDisplayMetrics().density;
-        if (scaleLevelf != 4f) {
-            scaleLevelf += 1;
+        if(scaleLevelf != 4f) {
+            scaleLevelf += 1f;
         }
         scaleLevel = (int)scaleLevelf;
 
@@ -144,7 +141,7 @@ public class MainActivity extends Activity {
         img.buildDrawingCache(true);
 
         AssetManager asset = getAssets();
-        scalePath = "" + (int) scaleLevel;
+        scalePath = "" + scaleLevel;
         mapp = assetBitmap(asset, scalePath + "/map.png");
         pointp = assetBitmap(asset, scalePath + "/point.png");
         pointp2 = assetBitmap(asset, scalePath + "/point2.png");
@@ -183,8 +180,12 @@ public class MainActivity extends Activity {
         options.inScaled = false;
         options.inDither = false;
 
-   /*     posX = 250f;
-        posY = 414f;*/
+        posX = 250f;
+        posY = 414f;
+
+        imgX = width/2;
+        imgY = height/2;
+        updateLeftTop();
 
         handler = new Handler();
         img.setOnTouchListener(new View.OnTouchListener() {
@@ -223,10 +224,8 @@ public class MainActivity extends Activity {
         mapWidth = scaledVal(500);
         mapHeight = scaledVal(828);
         width = scaledVal(2000);
-        height = scaledVal(2400);
+        height = scaledVal(2000);
         circleHalf = circle.getWidth() / 2;
-        mapLeft = (width - mapWidth) / 2;
-        mapTop = (height - mapHeight) / 2;
         pointBigX = pointp.getWidth() / 2;
         pointBigY = pointp.getHeight() * 5 / 8;
         pointSmallX = pointp2.getWidth() / 2;
@@ -340,8 +339,7 @@ public class MainActivity extends Activity {
             }
             posX = (float) qr.getX();
             posY = (float) qr.getY();
-            imgX = scaledVal(posX) + mapLeft;
-            imgY = scaledVal(posY) + mapTop;
+            updateLeftTop();
             img.setScrollPosition(imgX / width, imgY / height);
             int size = db.getLogSize();
             Timelog tlog = new Timelog(size + 1, qr.geTag(), date(), time());
@@ -353,8 +351,7 @@ public class MainActivity extends Activity {
     }
 
     public void setValues() {
-        imgX = scaledVal(posX) + mapLeft;
-        imgY = scaledVal(posY) + mapTop;
+
         mkh = circleHalf;
         phX = pointBigX;
         phY = pointBigY;
@@ -389,10 +386,10 @@ public class MainActivity extends Activity {
                 Ex = in.getIntExtra("x_val", Ex);
                 Ey = in.getIntExtra("y_val", Ey);
                 mk = new Marker(Eid, act, Ex, Ey);
-                int x = scaledVal(mk.getX());
-                int y = scaledVal(mk.getY());
-                float xw = (float) x + mapLeft;
-                float yw = (float) y + mapTop;
+                float x = scaledVal(mk.getX());
+                float y = scaledVal(mk.getY());
+                float xw = x + mapLeft;
+                float yw = y + mapTop;
                 PointF temp = rotateP(xw, yw, degrees2, imgX, imgY);
                 mk.setMapx(temp.x);
                 mk.setMapy(temp.y);
@@ -494,7 +491,7 @@ public class MainActivity extends Activity {
                 float mkx, mky;
                 mkx = mk.getMapx();
                 mky = mk.getMapy();
-                markerMatrix.setTranslate(scaledVal(mkx) - mkh, scaledVal(mky) - mkh);
+                markerMatrix.setTranslate(mkx - mkh, mky - mkh);
                 try {
                     canvas.drawBitmap(marker, markerMatrix, mPaint);
                 } catch (NullPointerException e) {
@@ -522,7 +519,7 @@ public class MainActivity extends Activity {
             }
             pointerMatrix.reset();
             pointerMatrix.setTranslate(pinX, pinY);
-            pointerMatrix.postRotate(-degrees1, imgX, imgY);
+            pointerMatrix.postRotate(-degrees1+degrees2, imgX, imgY);
             canvas.drawBitmap(point, pointerMatrix, mPaint);
 
         }
@@ -667,7 +664,6 @@ public class MainActivity extends Activity {
                 POP_PRESENT = 0;
             }
         });
-        //popup.setFocusable(true);
 
         popup.setOutsideTouchable(true);
         int OFFSET_X = winW * 2;
@@ -719,12 +715,18 @@ public class MainActivity extends Activity {
         return x * scaleLevel / 4;
     }
 
+    public void updateLeftTop(){
+        float x,y;
+        x=scaledVal(posX);
+        y=scaledVal(posY);
+        mapLeft=imgX-x;
+        mapTop=imgY-y;
+    }
+
 
     @Override
     public void onBackPressed(){
-        //popup.dismiss();
         moveTaskToBack(true);
-       }
+    }
 
 }
-

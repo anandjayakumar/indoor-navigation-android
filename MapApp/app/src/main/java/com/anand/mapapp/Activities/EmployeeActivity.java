@@ -8,21 +8,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.app.Activity;
-import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -34,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.anand.mapapp.Classes.CustomAdapter;
+import com.anand.mapapp.Classes.SwipeListener;
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Label;
@@ -42,11 +40,8 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.baoyz.swipemenulistview.SwipeMenuView;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -56,61 +51,59 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
     Point p;
     FrameLayout layout_EMP;
-    int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
     PopupWindow popup;
-    int MENU_ITEM_POS;
-    int POP_PRESENT=0;
-    private Inflater inflater;
-
-    int posIcon;
-    int favIcon;
-    int NOTfavIcon;
-
-    Employee emp;
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
-
     CustomAdapter adapter;
     EditText search;
     SwipeMenuListView lv;
     ListView labelList;
-    //ListView lv;
-    SwipeMenuCreator creator=null,creator2=null;
-    String designationEmp;
-    int currentList=1;
-    int state=0;
-    int TYPE_NAME=1;
 
-    String text;
-
-
+    SwipeMenuCreator creator=null;
     SwipeMenuItem favItem;
     SwipeMenuItem infoItem;
 
+    private static final int ITEM_TYPE_EMPLOYEE=1;
+    private static final int ITEM_TYPE_PLACE=2;
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+
+    int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
+    int POP_PRESENT=0;
+    int posIcon;
+    int currentList=1;
+    int count=0;
+    int state=0;
+    int TYPE_NAME=1;
+
+    String designationEmp;
+    String text;
+
+
+    ImageView swipeImage;
+
+
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
-
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
     int CLICKED=0;
-
-
-    int favIcon_POSITION;
-
-    DatabaseHandler handler;
     int images[];
     String designations[];
-    List<Label> arraylist = new ArrayList<Label>();
-    public List<Employee> employees;
 
+    DatabaseHandler handler;
+
+    List<Label> arraylist = new ArrayList<Label>();
+    List<Employee> employees;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
 
+
+        View layout = getLayoutInflater().inflate(R.layout.single_listview,null);
+        final ImageView swipe=(ImageView) layout.findViewById(R.id.swipe);
+
+
         search=(EditText) findViewById(R.id.searchView1);
+
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
         windowW = getWindowManager().getDefaultDisplay().getWidth();
@@ -128,19 +121,18 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                 R.drawable.icon_tr, R.drawable.icon_in };
         designations=new String[]{"Project Manager","Architect","Designer","Business Analyst","Trainee","Intern"};
 
-
         lv =(SwipeMenuListView)findViewById(R.id.listView);
         lv.setOnItemClickListener(this);
 
         labelList=(ListView)findViewById(R.id.labelList);
         labelList.setOnItemClickListener(this);
 
-
         for (int i = 0; i < designations.length; i++)
         {
             Label wp = new Label(images[i], designations[i]);
             arraylist.add(wp);
         }
+
         handler = new DatabaseHandler(this);
         adapter=new CustomAdapter(this,3,arraylist,null,0,0);
         lv.setVisibility(View.GONE);
@@ -151,8 +143,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         final Runnable task = new Runnable() {
             @Override
             public void run() {
-
-
                 if (text.length() == 0 || text == "") {
                     if (CLICKED == 1) {
                         currentList = 2;
@@ -160,11 +150,10 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
-                        lv.setMenuCreator(creator);
                         lv.setVisibility(View.VISIBLE);
                         labelList.setVisibility(View.GONE);
                         lv.setAdapter(adapter);
-                        //adapter.filter(1, text);
+                        lv.setMenuCreator(creator);
                         state = 1;
                     } else {
                         currentList = 1;
@@ -174,11 +163,10 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         labelList.setAdapter(adapter);
                         lv.setVisibility(View.GONE);
                         labelList.setVisibility(View.VISIBLE);
-                        //adapter.filter(3, text);
                         state = 0;
-                        //lv.setMenuCreator(null);
                     }
-                } else {
+                }
+                else {
                     if (CLICKED == 1) {
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
@@ -189,13 +177,13 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
                     }
-                    lv.setMenuCreator(creator);
+
                     lv.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
                     adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                     lv.setAdapter(adapter);
+                    lv.setMenuCreator(creator);
                     currentList = 2;
-                    //adapter.filter(1, text);
                 }
 
             }
@@ -205,51 +193,83 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
             @Override
             public void create(SwipeMenu menu) {
-                favItem = new SwipeMenuItem(getApplicationContext());
-                favItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
-                favItem.setWidth(dp2px(60));
-                favItem.setIcon(R.drawable.fav);
-
-                menu.addMenuItem(favItem);
+                switch (menu.getViewType()) {
+                    case 6:
+                        favItem = new SwipeMenuItem(getApplicationContext());
+                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
+                        favItem.setWidth(dp2px(60));
+                        favItem.setIcon(R.drawable.fav_active);
+                        menu.addMenuItem(favItem);
+                        break;
+                    case 7:
+                        favItem = new SwipeMenuItem(getApplicationContext());
+                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
+                        favItem.setWidth(dp2px(60));
+                        favItem.setIcon(R.drawable.fav_inactive);
+                        menu.addMenuItem(favItem);
+                        break;
+                }
 
                 infoItem = new SwipeMenuItem(getApplicationContext());
-                infoItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
+                infoItem.setBackground(new ColorDrawable(Color.rgb(0, 172, 192)));
                 infoItem.setWidth(dp2px(60));
-                infoItem.setIcon(R.drawable.info1);
+                infoItem.setIcon(R.drawable.info_icon);
                 menu.addMenuItem(infoItem);
             }
         };
 
-        lv.setMenuCreator(null);
-
-//        // set SwipeListener
-//        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-//
+//        lv.setOnTouchListener(new SwipeListener(EmployeeActivity.) {
 //            @Override
-//            public void onSwipeStart(int position) {
-//                // swipe start
-//            }
+//            public void onSwipeLeft() {
+//                // Whatever
 //
-//            @Override
-//            public void onSwipeEnd(int position) {
-//                // swipe end
 //            }
 //        });
+
+
+        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
+            @Override
+            public void onSwipeStart(int position) {
+                // swipe start
+                swipeImage= (ImageView) lv.getChildAt(position).findViewById(R.id.swipe);
+
+                count=0;
+                if (swipeImage.getVisibility() == View.VISIBLE) {
+                    swipeImage.setVisibility(View.GONE);
+                } else {
+                    swipeImage.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+                // swipe end
+                count=count+1;
+                if (count == 2){
+                    swipeImage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
 
         lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        if(employees.get(position).isFavourite()==0){
-                            //favIcon_POSITION=position;
+                        adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+                        lv.setAdapter(adapter);
+                        if (employees.get(position).isFavourite() == 0) {
                             Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
                             employees.get(position).makeFavourite(1);
-                            handler.setFavourite(employees.get(position).getId(),1,ITEM_TYPE_FAVOURITE_EMP);
+                            handler.setFavourite(employees.get(position).getId(), 1, ITEM_TYPE_FAVOURITE_EMP);
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Already Added To Favourites", Toast.LENGTH_SHORT).show();
-                      }
+                        else {
+                            Toast.makeText(getApplicationContext(), "Removed From Favourites", Toast.LENGTH_SHORT).show();
+                            employees.get(position).makeFavourite(0);
+                            handler.setFavourite(employees.get(position).getId(), 0, ITEM_TYPE_FAVOURITE_EMP);
+                        }
+                        lv.setMenuCreator(creator);
                         break;
                     case 1:
                         showPopup(EmployeeActivity.this, position);
@@ -310,15 +330,11 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
         popup.setBackgroundDrawable(new BitmapDrawable());
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
         ImageView img = (ImageView) layout.findViewById(R.id.imageView);
         img.setImageResource(employees.get(position).getPic());
-        //img.setLayoutParams(new android.view.ViewGroup.LayoutParams(imgW, imgH));
         img.getLayoutParams().width = imgW;
         img.getLayoutParams().height = imgH;
-        //img.setPadding(padding,padding,padding,padding);
-
-//        img.setMaxWidth(imgW-100);
-//        img.setMaxHeight(imgH-100);
 
         TextView nameTV=(TextView)layout.findViewById(R.id.nameT);
         nameTV.setText(employees.get(position).getName());
@@ -328,28 +344,16 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
         TextView emailTV=(TextView)layout.findViewById(R.id.emailT);
         emailTV.setText(employees.get(position).getEmail());
-
-//        Button close = (Button) layout.findViewById(R.id.close);
-//        close.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                popup.dismiss();
-//            }
-//        });
     }
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-
         int[] location = new int[2];
         location[0]=0; location[1]=winH;
         p = new Point();
         p.x = location[0];
         p.y = location[1];
     }
-
 
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
@@ -373,7 +377,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             posIcon=position;
             search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0,arraylist.get(posIcon).getImage(), 0);
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
-            employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
+            employees = handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
             adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
             lv.setVisibility(View.VISIBLE);
             labelList.setVisibility(View.GONE);
@@ -383,7 +387,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             state=1;
             lv.setMenuCreator(creator);
             search.setHint(designationEmp);
-            //adapter.filter(3,designationEmp);
         }
         else {
             Intent returnIntent = new Intent(this, MainActivity.class);
@@ -433,5 +436,4 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

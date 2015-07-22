@@ -5,17 +5,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.anand.mapapp.Activities.EmployeeActivity;
 import com.anand.mapapp.Database.DatabaseHandler;
+import com.anand.mapapp.Libraries.TouchImageView;
 import com.anand.mapapp.R;
 
 import java.util.ArrayList;
@@ -30,15 +28,14 @@ public class CustomAdapter extends BaseAdapter {
     private static final int ITEM_TYPE_LABEL=3;
     private static final int ITEM_TYPE_FAVOURITE=4;
 
-
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+    private static final int TYPE_FAVOURITE=6;
+    private static final int TYPE_NOT_FAVOURITE=7;
 
     DatabaseHandler handler;
 
 
     String checkDesg;
+    int favValue;
     String checkEmail;
 
 
@@ -61,9 +58,6 @@ public class CustomAdapter extends BaseAdapter {
     private static LayoutInflater inflater=null;
 
     public CustomAdapter(Context context, int value, List<Label> arraylist,List<Favourite> listFavourite,int imageWidth, int imageHeight) {
-
-
-
 
         val=value;
         imgW=imageWidth;
@@ -115,6 +109,32 @@ public class CustomAdapter extends BaseAdapter {
 
 
     @Override
+    public int getViewTypeCount() {
+        return 5;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+
+        if(val==ITEM_TYPE_FAVOURITE){
+            return ITEM_TYPE_FAVOURITE;
+        }
+        else{
+            if (val == ITEM_TYPE_EMPLOYEE) {
+                favValue = empList.get(position).isFavourite();
+            }
+            else if(val == ITEM_TYPE_PLACE) {
+                favValue = plList.get(position).isFavourite();
+            }
+            if (favValue==1) {
+                return TYPE_FAVOURITE;
+            } else {
+                return TYPE_NOT_FAVOURITE;
+            }
+        }
+    }
+
+    @Override
     public int getCount() {
         if (val == ITEM_TYPE_EMPLOYEE) {
             return empList.size();
@@ -160,6 +180,7 @@ public class CustomAdapter extends BaseAdapter {
     {
         TextView tv;
         ImageView img;
+        ImageView swipe;
         TextView tv1;
         TextView tv2;
 
@@ -178,7 +199,6 @@ public class CustomAdapter extends BaseAdapter {
                 convertView = inflater.inflate(R.layout.single_listview_label, null);
                 holder.tv = (TextView) convertView.findViewById(R.id.textv1);
                 holder.img = (ImageView) convertView.findViewById(R.id.imgv1);
-
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -194,20 +214,22 @@ public class CustomAdapter extends BaseAdapter {
                     holder.tv2 = (TextView) convertView.findViewById(R.id.emailFav);
                     holder.img = (ImageView) convertView.findViewById(R.id.imageFav);
                     holder.img.getLayoutParams().height=imgH; holder.img.getLayoutParams().width=imgW;
+
                 }
                 else {
                     convertView = inflater.inflate(R.layout.single_listview, null);
                     holder.tv = (TextView) convertView.findViewById(R.id.textv);
                     holder.img = (ImageView) convertView.findViewById(R.id.imgv);
+                    holder.swipe=(ImageView) convertView.findViewById(R.id.swipe);
+//                    holder.swipe=(ImageView) convertView.findViewById(R.id.swipe);
 
-                   // holder.fav = (ImageView) convertView.findViewById(R.id.favButton);
-                    //holder.info = (ImageView) convertView.findViewById(R.id.infoButton);
                 }
               convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
         }
+
         if (val==ITEM_TYPE_LABEL){
             holder.tv.setText(label.get(position).getName());
             holder.img.setImageResource(label.get(position).getImage());
@@ -215,6 +237,7 @@ public class CustomAdapter extends BaseAdapter {
         else if(val == ITEM_TYPE_EMPLOYEE) {
             holder.tv.setText(empList.get(position).getName());
             holder.img.setImageResource(empList.get(position).getPic());
+
 //            holder.info.setVisibility(View.VISIBLE);
 //            holder.info.setTag(empList.get(position).getId());
 //            holder.fav.setImageResource(R.drawable.fav);
