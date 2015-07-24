@@ -1,24 +1,36 @@
 package com.anand.mapapp.Activities;
 
+import android.app.ActionBar;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
+import android.view.ContextMenu;
+import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.BaseInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -61,25 +73,18 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     SwipeMenuItem favItem;
     SwipeMenuItem infoItem;
 
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
     private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
 
     int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
     int POP_PRESENT=0;
     int posIcon;
     int currentList=1;
-    int count=0;
     int state=0;
     int TYPE_NAME=1;
-
     String designationEmp;
     String text;
 
-
-    ImageView swipeImage;
-
+    ImageView swipe;
 
     int TYPE_DESIGNATION=2;
     int TYPE_NAME_DESIGNATION=3;
@@ -97,13 +102,9 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
 
-
         View layout = getLayoutInflater().inflate(R.layout.single_listview,null);
-        final ImageView swipe=(ImageView) layout.findViewById(R.id.swipe);
-
-
+        swipe=(ImageView) layout.findViewById(R.id.swipe);
         search=(EditText) findViewById(R.id.searchView1);
-
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
         windowW = getWindowManager().getDefaultDisplay().getWidth();
@@ -111,7 +112,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         winW = windowW / 10;
         winH = windowH / 10;
         WiW = winW * 8;
-        WiH = winH * 5;
+        WiH = (int)(winH * 5.3);
         imgW = winW * 5;
         imgH = winH * 5;
         padding = winW;
@@ -193,22 +194,11 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
             @Override
             public void create(SwipeMenu menu) {
-                switch (menu.getViewType()) {
-                    case 6:
-                        favItem = new SwipeMenuItem(getApplicationContext());
-                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
-                        favItem.setWidth(dp2px(60));
-                        favItem.setIcon(R.drawable.fav_active);
-                        menu.addMenuItem(favItem);
-                        break;
-                    case 7:
-                        favItem = new SwipeMenuItem(getApplicationContext());
-                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
-                        favItem.setWidth(dp2px(60));
-                        favItem.setIcon(R.drawable.fav_inactive);
-                        menu.addMenuItem(favItem);
-                        break;
-                }
+                favItem = new SwipeMenuItem(getApplicationContext());
+                favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
+                favItem.setWidth(dp2px(60));
+                favItem.setIcon(R.drawable.fav_inactive);
+                menu.addMenuItem(favItem);
 
                 infoItem = new SwipeMenuItem(getApplicationContext());
                 infoItem.setBackground(new ColorDrawable(Color.rgb(0, 172, 192)));
@@ -216,40 +206,8 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                 infoItem.setIcon(R.drawable.info_icon);
                 menu.addMenuItem(infoItem);
             }
+
         };
-
-//        lv.setOnTouchListener(new SwipeListener(EmployeeActivity.) {
-//            @Override
-//            public void onSwipeLeft() {
-//                // Whatever
-//
-//            }
-//        });
-
-
-        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-            @Override
-            public void onSwipeStart(int position) {
-                // swipe start
-                swipeImage= (ImageView) lv.getChildAt(position).findViewById(R.id.swipe);
-
-                count=0;
-                if (swipeImage.getVisibility() == View.VISIBLE) {
-                    swipeImage.setVisibility(View.GONE);
-                } else {
-                    swipeImage.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onSwipeEnd(int position) {
-                // swipe end
-                count=count+1;
-                if (count == 2){
-                    swipeImage.setVisibility(View.VISIBLE);
-                }
-            }
-        });
 
 
         lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
@@ -257,14 +215,13 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
                 switch (index) {
                     case 0:
-                        adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
+                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
                         lv.setAdapter(adapter);
                         if (employees.get(position).isFavourite() == 0) {
                             Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
                             employees.get(position).makeFavourite(1);
                             handler.setFavourite(employees.get(position).getId(), 1, ITEM_TYPE_FAVOURITE_EMP);
-                        }
-                        else {
+                        } else {
                             Toast.makeText(getApplicationContext(), "Removed From Favourites", Toast.LENGTH_SHORT).show();
                             employees.get(position).makeFavourite(0);
                             handler.setFavourite(employees.get(position).getId(), 0, ITEM_TYPE_FAVOURITE_EMP);
@@ -302,13 +259,13 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         });
     }
 
+
     private void showPopup(final Activity context, int position) {
 
         POP_PRESENT=1;
         layout_EMP.getForeground().setAlpha(400);
         RelativeLayout viewGroup = (RelativeLayout) context.findViewById(R.id.popup);
-        LayoutInflater layoutInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
 
         popup = new PopupWindow(context);
@@ -335,13 +292,10 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         img.setImageResource(employees.get(position).getPic());
         img.getLayoutParams().width = imgW;
         img.getLayoutParams().height = imgH;
-
         TextView nameTV=(TextView)layout.findViewById(R.id.nameT);
         nameTV.setText(employees.get(position).getName());
-
         TextView desgTV=(TextView)layout.findViewById(R.id.desgT);
         desgTV.setText(employees.get(position).getDesg());
-
         TextView emailTV=(TextView)layout.findViewById(R.id.emailT);
         emailTV.setText(employees.get(position).getEmail());
     }
@@ -391,12 +345,9 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         else {
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 1);
-            returnIntent.putExtra("id",
-                    (employees.get(position).getId()));
-            returnIntent.putExtra("x_val",
-                    (employees.get(position).getX()));
-            returnIntent.putExtra("y_val",
-                    (employees.get(position).getY()));
+            returnIntent.putExtra("id",(employees.get(position).getId()));
+            returnIntent.putExtra("x_val",(employees.get(position).getX()));
+            returnIntent.putExtra("y_val",(employees.get(position).getY()));
             startActivity(returnIntent);
         }
     }
@@ -412,7 +363,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         CLICKED = 1;
                     } else {
                         CLICKED = 0;
-
                     }
                     state = 1;
                     lv.setVisibility(View.VISIBLE);

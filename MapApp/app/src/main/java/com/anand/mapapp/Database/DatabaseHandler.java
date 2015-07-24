@@ -468,4 +468,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return placeList;
     }
 
+    public void deleteLog(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_LOG,null,null);
+
+    }
+
 }

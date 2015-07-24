@@ -74,7 +74,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:id="@+id/lockButton"
-                android:src="@drawable/lockicon"
+                android:src="@drawable/unlockicon"
                 android:onClick="callLock"
                 android:layout_alignParentLeft="true"
                 android:padding="12dp" />

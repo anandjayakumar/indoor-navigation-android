@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -48,9 +49,7 @@ import static android.graphics.Color.TRANSPARENT;
 
 
 public class FavouriteActivity extends Activity implements AdapterView.OnItemClickListener {
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
-    private static final int ITEM_TYPE_LABEL=3;
+
     private static final int ITEM_TYPE_FAVOURITE=4;
     private static final int ITEM_TYPE_FAVOURITE_EMP=4;
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
@@ -105,17 +104,8 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         final Button YesButton,NoButton;
 
         AlertDialog.Builder alertBox=new AlertDialog.Builder(this);
-//        TextView titleText = new TextView(this);
-//        titleText.setText("CONFIRM DELETION");
-//        titleText.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-//        titleText.setGravity(Gravity.CENTER);
-//        titleText.setPadding(0,15,0,0);
-//        titleText.setTextAppearance(this, android.R.style.TextAppearance_Medium);
-//        titleText.setTextColor(Color.parseColor("#1976d3"));
-//
 
         alertBox.setTitle(R.string.confirmation);
-        //alertBox.setCustomTitle(titleText);
         alertBox.setMessage("Are you sure you want to delete " + favouriteList.get(position).getName() + " ?");
         alertBox.setInverseBackgroundForced(true);
         alertBox.setNegativeButton("NO", null);
@@ -142,7 +132,7 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         YesButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
         NoButton = dialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-        YesButton.setTextAppearance(this,android.R.style.TextAppearance_Small);
+        YesButton.setTextAppearance(this, android.R.style.TextAppearance_Small);
         YesButton.setTextColor(Color.parseColor("#1976d3"));
 
         NoButton.setTextAppearance(this, android.R.style.TextAppearance_Small);
@@ -173,6 +163,12 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void callCancel(View v){
+        v.startAnimation(AnimationUtils.loadAnimation(FavouriteActivity.this, R.anim.image_click));
+        finish();
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent returnIntent = new Intent(this, MainActivity.class);
@@ -185,5 +181,8 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
                 (favouriteList.get(position).getY()));
         startActivity(returnIntent);
     }
+
+
+
 }
 

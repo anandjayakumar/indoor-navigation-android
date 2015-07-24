@@ -4,22 +4,25 @@ import android.content.Context;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+
+import com.anand.mapapp.R;
 
 /**
  * Created by user on 22/7/15.
  */
 public class SwipeListener implements View.OnTouchListener {
 
-    private final GestureDetector gestureDetector;
+    final private GestureDetector gestureDetector;
 
     public SwipeListener(Context context) {
         gestureDetector = new GestureDetector(context, new GestureListener());
     }
-
     public void onSwipeLeft() {
     }
 
     public void onSwipeRight() {
+
     }
 
     public boolean onTouch(View v, MotionEvent event) {

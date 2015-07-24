@@ -5,20 +5,48 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.anand.mapapp.Activities.LogActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:text="@string/scan_history"
-        android:background="#1976D3"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:id="@+id/textView" />
+        android:id="@+id/head" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:text="@string/scan_history"
+            android:background="#1976D3"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:id="@+id/textView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bin"
+            android:layout_centerVertical="true"
+            android:src="@drawable/bin"
+            android:onClick="clearLog"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel"
+            android:src="@drawable/back"
+            android:onClick="callCancel"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp" />
+
+    </RelativeLayout>
 
     <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/head"
         android:background="#CCEEFF"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -84,9 +112,5 @@
         </LinearLayout>
     </ScrollView>
 
-
-
-
 </RelativeLayout>
-
 <!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/activity_log.xml -->

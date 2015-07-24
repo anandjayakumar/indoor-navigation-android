@@ -107,32 +107,32 @@ public class CustomAdapter extends BaseAdapter {
     }
 
 
-
-    @Override
-    public int getViewTypeCount() {
-        return 5;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-
-        if(val==ITEM_TYPE_FAVOURITE){
-            return ITEM_TYPE_FAVOURITE;
-        }
-        else{
-            if (val == ITEM_TYPE_EMPLOYEE) {
-                favValue = empList.get(position).isFavourite();
-            }
-            else if(val == ITEM_TYPE_PLACE) {
-                favValue = plList.get(position).isFavourite();
-            }
-            if (favValue==1) {
-                return TYPE_FAVOURITE;
-            } else {
-                return TYPE_NOT_FAVOURITE;
-            }
-        }
-    }
+//
+//    @Override
+//    public int getViewTypeCount() {
+//        return 5;
+//    }
+//
+//    @Override
+//    public int getItemViewType(int position) {
+//
+//        if(val==ITEM_TYPE_FAVOURITE){
+//            return ITEM_TYPE_FAVOURITE;
+//        }
+//        else{
+//            if (val == ITEM_TYPE_EMPLOYEE) {
+//                favValue = empList.get(position).isFavourite();
+//            }
+//            else if(val == ITEM_TYPE_PLACE) {
+//                favValue = plList.get(position).isFavourite();
+//            }
+//            if (favValue==1) {
+//                return TYPE_FAVOURITE;
+//            } else {
+//                return TYPE_NOT_FAVOURITE;
+//            }
+//        }
+//    }
 
     @Override
     public int getCount() {

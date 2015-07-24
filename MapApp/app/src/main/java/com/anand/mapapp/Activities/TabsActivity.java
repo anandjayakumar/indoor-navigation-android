@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -38,12 +39,10 @@ public class TabsActivity extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
 
-        Resources resources = getResources();
         tabHost = getTabHost();
-
         final View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
         final TextView tv1=(TextView) view1.findViewById(R.id.tabsText);
-        final View line1=(View) view1.findViewById(R.id.underLine);
+        final View line1= view1.findViewById(R.id.underLine);
 
         Intent intentEmployee = new Intent().setClass(this, EmployeeActivity.class);
         TabSpec tabSpecEmployee = tabHost
@@ -53,7 +52,7 @@ public class TabsActivity extends TabActivity {
 
         final View view2 = LayoutInflater.from(this).inflate(R.layout.tab2, null);
         final TextView tv2=(TextView) view2.findViewById(R.id.tabsText);
-        final View line2=(View) view2.findViewById(R.id.underLine);
+        final View line2= view2.findViewById(R.id.underLine);
         line2.setVisibility(View.GONE);
 
         Intent intentPlace = new Intent().setClass(this, PlaceActivity.class);
@@ -62,10 +61,8 @@ public class TabsActivity extends TabActivity {
                 .setIndicator(view2)
                 .setContent(intentPlace);
 
-        // add all tabs
         tabHost.addTab(tabSpecEmployee);
         tabHost.addTab(tabSpecPlace);
-
         tabHost.setCurrentTab(2);
 
         mytabs = getTabHost();
@@ -90,6 +87,7 @@ public class TabsActivity extends TabActivity {
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

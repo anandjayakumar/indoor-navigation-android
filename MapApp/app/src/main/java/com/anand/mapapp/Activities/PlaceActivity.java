@@ -43,9 +43,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     EditText search;
     DatabaseHandler handler;
 
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
-
     private static final int TYPE_PLACE=1;
     private static final int TYPE_LABEL=2;
     private static final int TYPE_PLACE_LABEL=3;
@@ -57,11 +55,8 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     String places[];
     String placeLabel;
     String text;
-
-
     ImageView swipeImage;
     int count;
-
 
     List<Label> placeTypeList = new ArrayList<Label>();
     List<Place> plp;
@@ -96,10 +91,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         lv.setVisibility(View.GONE);
         labelList.setVisibility(View.VISIBLE);
         labelList.setAdapter(adapter);
-
-
-
-
         final Handler h = new Handler();
         final Runnable task = new Runnable() {
             @Override
@@ -152,7 +143,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
 
             @Override
             public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
                 text = search.getText().toString().toLowerCase(Locale.getDefault());
                 h.removeCallbacks(task);
                 h.postDelayed(task, 400);
@@ -161,44 +151,32 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1,
                                           int arg2, int arg3) {
-                // TODO Auto-generated method stub
             }
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                                       int arg3) {
-                // TODO Auto-generated method stub
             }
         });
 
         creator = new SwipeMenuCreator() {
             @Override
             public void create(SwipeMenu menu) {
-                switch (menu.getViewType()) {
-                    case 6:
-                        favItem = new SwipeMenuItem(getApplicationContext());
-                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
-                        favItem.setWidth(dp2px(60));
-                        favItem.setIcon(R.drawable.fav_active);
-                        menu.addMenuItem(favItem);
-                        break;
-                    case 7:
-                        favItem = new SwipeMenuItem(getApplicationContext());
-                        favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
-                        favItem.setWidth(dp2px(60));
-                        favItem.setIcon(R.drawable.fav_inactive);
-                        menu.addMenuItem(favItem);
-                        break;
-                }
+                favItem = new SwipeMenuItem(getApplicationContext());
+                favItem.setBackground(new ColorDrawable(Color.rgb(255, 178, 0)));
+                favItem.setWidth(dp2px(60));
+                favItem.setIcon(R.drawable.fav_inactive);
+                menu.addMenuItem(favItem);
             }
+
         };
 
         lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
             @Override
             public void onSwipeStart(int position) {
                 // swipe start
-                swipeImage= (ImageView) lv.getChildAt(position).findViewById(R.id.swipe);
-                count=0;
+                swipeImage = (ImageView) lv.getChildAt(position).findViewById(R.id.swipe);
+                count = 0;
                 if (swipeImage.getVisibility() == View.VISIBLE) {
                     swipeImage.setVisibility(View.GONE);
                 } else {
@@ -208,9 +186,8 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
 
             @Override
             public void onSwipeEnd(int position) {
-                // swipe end
-                count=count+1;
-                if (count == 2){
+                count = count + 1;
+                if (count == 2) {
                     swipeImage.setVisibility(View.VISIBLE);
                 }
             }
@@ -279,12 +256,9 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         else {
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 2);
-            returnIntent.putExtra("id",
-                    (plp.get(position).getId()));
-            returnIntent.putExtra("x_val",
-                    (plp.get(position).getX()));
-            returnIntent.putExtra("y_val",
-                    (plp.get(position).getY()));
+            returnIntent.putExtra("id",(plp.get(position).getId()));
+            returnIntent.putExtra("x_val",(plp.get(position).getX()));
+            returnIntent.putExtra("y_val",(plp.get(position).getY()));
             startActivity(returnIntent);
         }
     }
@@ -296,8 +270,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                 search.setHint(placeLabel);
                 if(search.getText()!=null){
                     search.setText(null);
-                    CLICKED=1;
-                }
+                    CLICKED=1;                }
                 else{
                     CLICKED=0;
                 }

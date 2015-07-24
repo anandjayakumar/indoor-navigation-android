@@ -8,12 +8,15 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -28,10 +31,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Marker;
@@ -127,8 +132,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         scaleLevelf = getResources().getDisplayMetrics().density;
-        if(scaleLevelf != 4f) {
-            scaleLevelf += 1f;
+        if(scaleLevelf == 2f) {
+            scaleLevelf = 3f;
+        }
+        if(scaleLevelf == 1f || scaleLevelf == 1.5f) {
+            scaleLevelf = 2f;
         }
         scaleLevel = (int)scaleLevelf;
 
@@ -139,7 +147,6 @@ public class MainActivity extends Activity {
         img = (TouchImageView) findViewById(R.id.touchImg);
         img.setDrawingCacheEnabled(true);
         img.buildDrawingCache(true);
-
         AssetManager asset = getAssets();
         scalePath = "" + scaleLevel;
         mapp = assetBitmap(asset, scalePath + "/map.png");
@@ -152,7 +159,6 @@ public class MainActivity extends Activity {
         img.setMaxZoom(maxZoom);
         img.setMinZoom(minZoom);
         img.setZoom(startZoom);
-
         mPaint = new Paint();
         mPaint.setAntiAlias(false);
         mPaint.setFilterBitmap(true);
@@ -179,10 +185,10 @@ public class MainActivity extends Activity {
         options.inInputShareable = true;
         options.inScaled = false;
         options.inDither = false;
+        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
         posX = 250f;
         posY = 414f;
-
         imgX = width/2;
         imgY = height/2;
         updateLeftTop();
@@ -197,7 +203,7 @@ public class MainActivity extends Activity {
                         float x, y;
                         x = mk.getMapx() - mkh;
                         y = mk.getMapy() - mkh;
-                        box = new RectF(x, y, x + 2 * mkh+5, y + 2 * mkh+5);
+                        box = new RectF(x, y, x + 2 * mkh + 5, y + 2 * mkh + 5);
                         if (box.contains(point.x, point.y)) {
                             showPopup(MainActivity.this, mk.getCat(), mk.getId());
                         }
@@ -217,14 +223,18 @@ public class MainActivity extends Activity {
                 return true;
             }
         });
+        if(compass==null){
+            Toast.makeText(getApplicationContext(),"Rotation is not supported",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void updateScaleValues() {
 
         mapWidth = scaledVal(500);
         mapHeight = scaledVal(828);
-        width = scaledVal(2000);
-        height = scaledVal(2000);
+        width = scaledVal(1950);
+        height = scaledVal(1950);
         circleHalf = circle.getWidth() / 2;
         pointBigX = pointp.getWidth() / 2;
         pointBigY = pointp.getHeight() * 5 / 8;
@@ -286,35 +296,42 @@ public class MainActivity extends Activity {
     }
 
     public void callQR(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         Intent intent = new Intent(MainActivity.this, DecoderActivity.class);
         startActivityForResult(intent, 2);
     }
 
     public void callLog(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         Intent intent = new Intent(MainActivity.this, LogActivity.class);
         startActivity(intent);
     }
 
     public void callSearch(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         Intent intent = new Intent(MainActivity.this, TabsActivity.class);
         startActivity(intent);
     }
 
     public void callFavourite(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         Intent intent = new Intent(MainActivity.this, FavouriteActivity.class);
         startActivity(intent);
     }
 
 
     public void callLock(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
+        ImageView lock=(ImageView) findViewById(R.id.lockButton);
+        if(state==0) {
+            Toast.makeText(getApplicationContext(), "Read a QR to unlock", Toast.LENGTH_SHORT).show();
+        }
         if (state == 2) {
+            lock.setImageResource(R.drawable.lockicon);
             state = 1;
-        } else if(state==1){
+        }
+        else if(state==1){
+            lock.setImageResource(R.drawable.unlockicon);
             state = 2;
             degrees2 = degrees1;
         }
@@ -322,7 +339,7 @@ public class MainActivity extends Activity {
     }
 
     public void callClear(View v) {
-
+        v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         mkList.clear();
         mkList = new ArrayList<Marker>();
     }
@@ -332,6 +349,8 @@ public class MainActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         message = data.getStringExtra("MESSAGE");
         if (requestCode == 2 && !message.equals("null")) {
+            ImageView lock=(ImageView) findViewById(R.id.lockButton);
+            lock.setImageResource(R.drawable.lockicon);
             String link = data.getStringExtra("MESSAGE");
             QRcode qr = db.getQRcodeLink(link);
             if (state == 0  ) {
@@ -365,36 +384,37 @@ public class MainActivity extends Activity {
         super.onPause();
         handler.removeCallbacks(runnable);
 
-
     }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-
         if(POP_PRESENT==1 ){
             popup.dismiss();
         }
-
         if (skipIntent == 0) {
             Intent in = getIntent();
             act = in.getIntExtra("act_val", act);
             if (act == 1 || act == 2) {
 
                 Eid = in.getIntExtra("id", Eid);
-                Ex = in.getIntExtra("x_val", Ex);
-                Ey = in.getIntExtra("y_val", Ey);
-                mk = new Marker(Eid, act, Ex, Ey);
-                float x = scaledVal(mk.getX());
-                float y = scaledVal(mk.getY());
-                float xw = x + mapLeft;
-                float yw = y + mapTop;
-                PointF temp = rotateP(xw, yw, degrees2, imgX, imgY);
-                mk.setMapx(temp.x);
-                mk.setMapy(temp.y);
-                if (!mkList.contains(mk)) {
-                    mkList.add(mk);
+                if(Eid != 0) {
+                    Ex = in.getIntExtra("x_val", Ex);
+                    Ey = in.getIntExtra("y_val", Ey);
+                    mk = new Marker(Eid, act, Ex, Ey);
+                    float x = scaledVal(mk.getX());
+                    float y = scaledVal(mk.getY());
+                    float xw = x + mapLeft;
+                    float yw = y + mapTop;
+                    PointF temp = rotateP(xw, yw, degrees2, imgX, imgY);
+                    mk.setMapx(temp.x);
+                    mk.setMapy(temp.y);
+                    if (!mkList.contains(mk)) {
+                        mkList.add(mk);
+                    }
+                    in.removeExtra("id");
+                    in.putExtra("id",0);
                 }
             }
         }
@@ -405,16 +425,15 @@ public class MainActivity extends Activity {
         runnable = new Runnable() {
 
             public void run() {
+
                 update();
                 handler.postDelayed(this, 30);
-
             }
         };
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 500);
 
     }
-
 
     public void update() {
 
@@ -461,7 +480,7 @@ public class MainActivity extends Activity {
             map.recycle();
         }
 
-        map = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_4444);
+        map = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(map);
         mapMatrix.reset();
         pinX = imgX - phX;
@@ -470,7 +489,13 @@ public class MainActivity extends Activity {
         if (state == 0) {
 
             mapMatrix.setTranslate(mapLeft, mapTop);
-            canvas.drawBitmap(mapp, mapMatrix, mPaint);
+
+            try {
+                canvas.drawBitmap(mapp, mapMatrix, mPaint);
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+
             for (Marker mk : mkList) {
                 float mkx, mky;
                 mkx = mk.getX();
