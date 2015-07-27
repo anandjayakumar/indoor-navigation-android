@@ -1,8 +1,6 @@
 package com.anand.mapapp.Classes;
 
-/**
- * Created by user on 25/6/15.
- */
+
 public class Employee {
 
     int _id;
@@ -11,9 +9,10 @@ public class Employee {
     int _x,_y;
     String _designation;
     String _email;
+    int _Favourite;
 
     public Employee(){}
-    public Employee(int id,String name,int X,int Y,int img,String desg,String email){
+    public Employee(int id,String name,int X,int Y,int img,String desg,String email,int fav){
         this._id =id;
         this._name =name;
         this._pic=img;
@@ -21,6 +20,7 @@ public class Employee {
         this._y=Y;
         this._designation=desg;
         this._email=email;
+        this._Favourite=fav;
     }
 
     public void setId(int X) {
@@ -48,6 +48,14 @@ public class Employee {
     }
     public String getName() {
         return this._name;
+    }
+    public void makeFavourite(int fav){
+        this._Favourite=fav;
+    }
+
+
+    public int isFavourite(){
+        return this._Favourite;
     }
 
 

@@ -1,23 +1,54 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.anand.mapapp.Activities.DecoderActivity">
-    <com.dlazaro66.qrcodereaderview.QRCodeReaderView
-        android:id="@+id/qrdecoderview"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:id="@+id/head" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/scan"
+            android:background="#1976d3"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="25dp"
+            android:id="@+id/textView"
+            android:layout_centerHorizontal="true" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancel"
+            android:src="@drawable/back"
+            android:onClick="callCancel"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_centerInParent="true"
-        android:padding="50dp"
-        android:layout_gravity="center" />
+        android:layout_marginTop="50dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:src="@drawable/back2"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitXY" />
-
-
-</RelativeLayout><!-- From: file:/home/user/MapApp/app/src/main/res/layout/activity_decoder.xml -->
+        <com.dlazaro66.qrcodereaderview.QRCodeReaderView
+            android:id="@+id/qrdecoderview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerInParent="true"
+            android:padding="50dp"
+            android:layout_gravity="center" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageView"
+            android:src="@drawable/back2"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY" />
+    </RelativeLayout>
+</RelativeLayout><!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/layout/activity_decoder.xml -->

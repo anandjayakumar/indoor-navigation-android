@@ -6,23 +6,33 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:weightSum="1">
+        android:layout_height="fill_parent">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:id="@+id/head" >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="@string/search"
+                android:background="#1976d3"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:id="@+id/textView"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+        <TabWidget
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@android:id/tabs"
+            android:background="#1976d3">
+        </TabWidget>
         <FrameLayout
             android:id="@android:id/tabcontent"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp">
-
-            <TabWidget
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:id="@android:id/tabs"
-                android:layout_marginTop="50dp"
-                android:background="#66aff3"
-                >
-            </TabWidget>
+            android:layout_height="wrap_content">
         </FrameLayout>
     </LinearLayout>
 </TabHost>

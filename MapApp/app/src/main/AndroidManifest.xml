@@ -1,50 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.anand.mapapp">
+    package="com.anand.mapapp" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        tools:replace="android:icon"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:largeHeap="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon" >
         <activity
-            android:hardwareAccelerated="false"
             android:name=".Activities.MainActivity"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:launchMode="singleTask" >
         </activity>
         <activity
             android:name=".Activities.DecoderActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_decoder" >
         </activity>
         <activity
             android:name=".Activities.LogActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_log" >
         </activity>
         <activity
             android:name=".Activities.PlaceActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_place"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".Activities.TabsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_tabs"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".Activities.EmployeeActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_employee"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".Activities.FavouriteActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_favourite"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name=".Activities.SplashScreen"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

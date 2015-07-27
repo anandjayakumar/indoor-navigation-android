@@ -144,56 +144,16 @@ public class TouchImageView extends ImageView {
     public void setImageResource(int resId) {
     	super.setImageResource(resId);
     	savePreviousImageValues();
-    	fitImageToView();
+    	//fitImageToView();
     }
     
     @Override
     public void setImageBitmap(Bitmap bm) {
-
     	super.setImageBitmap(bm);
         savePreviousImageValues();
     	//fitImageToView();
-        //invalidate();
-        //setImageDrawable(new BitmapDrawable(context.getResources(), bm));
-
     }
 
-
-    
-    @Override
-   /* public void setImageDrawable(Drawable drawable) {
-        super.setImageDrawable(drawable);
-    	savePreviousImageValues();
-    	fitImageToView();
-    }*/
-
-
-    public void setImageDrawable(final Drawable newDrawable) {
-      //  if (VERSION.SDK_INT < VERSION_CODES.ICE_CREAM_SANDWICH) {
-
-            // The currently set Drawable
-            final Drawable oldDrawable = getDrawable();
-
-            if (null != oldDrawable && oldDrawable != newDrawable) {
-                final int oldWidth = oldDrawable.getIntrinsicWidth();
-                final int oldHeight = oldDrawable.getIntrinsicHeight();
-
-                mIgnoreNextRequestLayout = oldHeight == newDrawable.getIntrinsicHeight()
-                        && oldWidth == newDrawable.getIntrinsicWidth();
-            }
-       // }
-
-        super.setImageDrawable(newDrawable);
-        savePreviousImageValues();
-    }
-
-    @Override
-    public void requestLayout() {
-        if (!mIgnoreNextRequestLayout) {
-            super.requestLayout();
-        }
-        mIgnoreNextRequestLayout = false;
-    }
 
 
     @Override
@@ -1088,7 +1048,7 @@ public class TouchImageView extends ImageView {
      * 			to the bounds of the bitmap size.
      * @return Coordinates of the point touched, in the coordinate system of the original drawable.
      */
-    private PointF transformCoordTouchToBitmap(float x, float y, boolean clipToBitmap) {
+    public PointF transformCoordTouchToBitmap(float x, float y, boolean clipToBitmap) {
          matrix.getValues(m);
          float origW = getDrawable().getIntrinsicWidth();
          float origH = getDrawable().getIntrinsicHeight();
@@ -1112,7 +1072,7 @@ public class TouchImageView extends ImageView {
      * @param by y-coordinate in original bitmap coordinate system
      * @return Coordinates of the point in the view's coordinate system.
      */
-    private PointF transformCoordBitmapToTouch(float bx, float by) {
+    public PointF transformCoordBitmapToTouch(float bx, float by) {
         matrix.getValues(m);        
         float origW = getDrawable().getIntrinsicWidth();
         float origH = getDrawable().getIntrinsicHeight();

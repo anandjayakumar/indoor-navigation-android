@@ -4,4 +4,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/home/user/MapApp/app/src/main/res/menu/menu_employee.xml -->
+<!-- From: file:/home/user/AndroidStudioProjects/MapApp/app/src/main/res/menu/menu_employee.xml -->

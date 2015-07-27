@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daimajia.swipe.SwipeLayout
+    xmlns:swipe="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    swipe:leftEdgeSwipeOffset="0dp"
+    swipe:rightEdgeSwipeOffset="0dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/swipeAction"
+        android:gravity="center">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:background="#FFFFFF"
+            android:layout_weight="3">
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:background="#FFB200"
+            android:id="@+id/fav"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/favIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/info"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:background="#00ACC0"
+            android:layout_weight="1">
+
+            <ImageView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:id="@+id/infoIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:background="@drawable/item"
+        android:id="@+id/single_item"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/imgv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            app:siBorderWidth="0dp"
+            app:siBorderColor="#fff"/>
+
+        <TextView
+            android:id="@+id/textv"
+            android:textColor="#000"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:paddingLeft="15dp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgv"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipeIcon"
+            android:layout_centerVertical="true"
+            android:src="@drawable/swipe"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+</com.daimajia.swipe.SwipeLayout>

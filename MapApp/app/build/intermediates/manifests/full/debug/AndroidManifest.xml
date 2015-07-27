@@ -16,40 +16,58 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.anand.mapapp.Activities.MainActivity"
-            android:hardwareAccelerated="false"
+            android:hardwareAccelerated="true"
             android:label="@string/app_name"
-            android:launchMode="singleTask" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.DecoderActivity"
-            android:label="@string/title_activity_decoder" >
+            android:label="@string/title_activity_decoder"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.LogActivity"
-            android:label="@string/title_activity_log" >
+            android:label="@string/title_activity_log"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.PlaceActivity"
             android:label="@string/title_activity_place"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.TabsActivity"
             android:label="@string/title_activity_tabs"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name="com.anand.mapapp.Activities.EmployeeActivity"
             android:label="@string/title_activity_employee"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.anand.mapapp.Activities.FavouriteActivity"
+            android:label="@string/title_activity_favourite"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.anand.mapapp.Activities.SplashScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
