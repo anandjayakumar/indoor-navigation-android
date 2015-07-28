@@ -1,20 +1,19 @@
 package com.anand.mapapp.Database;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Favourite;
 import com.anand.mapapp.Classes.Place;
 import com.anand.mapapp.Classes.QRcode;
 import com.anand.mapapp.Classes.Timelog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     int TYPE_NAME=1;
@@ -460,6 +459,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 pl.setX(cursor.getInt(3));
                 pl.setY(cursor.getInt(4));
                 pl.setPic(cursor.getInt(5));
+                pl.makeFavourite(cursor.getInt(6));
                 placeList.add(pl);
             } while (cursor.moveToNext());
         }

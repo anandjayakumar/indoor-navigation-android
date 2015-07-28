@@ -8,15 +8,12 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -341,7 +338,7 @@ public class MainActivity extends Activity {
     public void callClear(View v) {
         v.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, R.anim.image_click));
         mkList.clear();
-        mkList = new ArrayList<Marker>();
+        mkList = new ArrayList<>();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -415,6 +412,7 @@ public class MainActivity extends Activity {
                     }
                     in.removeExtra("id");
                     in.putExtra("id",0);
+                    img.setScrollPosition(imgX / width, imgY / height);
                 }
             }
         }

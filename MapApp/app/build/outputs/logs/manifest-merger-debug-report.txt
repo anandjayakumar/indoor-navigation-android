@@ -27,9 +27,6 @@ application
 ADDED from AndroidManifest.xml:9:5
 MERGED from com.android.support:appcompat-v7:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
-MERGED from com.baoyz.swipemenulistview:library:1.1.0:11:5
-MERGED from com.android.support:appcompat-v7:22.2.0:22:5
-MERGED from com.android.support:support-v4:22.2.0:22:5
 MERGED from com.android.support:support-v4:22.2.0:22:5
 	android:label
 		ADDED from AndroidManifest.xml:12:9
@@ -135,9 +132,6 @@ MERGED from com.android.support:appcompat-v7:22.2.0:20:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0:7:5
 MERGED from com.github.siyamed:android-shape-imageview:0.9.2:8:5
-MERGED from com.baoyz.swipemenulistview:library:1.1.0:7:5
-MERGED from com.android.support:appcompat-v7:22.2.0:20:5
-MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.twotoasters.jazzylistview:library:1.2.1:7:5
 MERGED from com.android.support:support-v4:22.2.0:20:5
 MERGED from com.daimajia.swipelayout:library:1.2.0:6:5

@@ -7,9 +7,9 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -48,36 +48,26 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     EditText search;
     ListView labelList;
 
-
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
+    private static final int TYPE_NAME=1;
+    private static final int TYPE_DESIGNATION=2;
+    private static final int TYPE_NAME_DESIGNATION=3;
 
     int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
     int POP_PRESENT=0;
     int posIcon;
     int currentList=1;
-    int count=0;
     int state=0;
-    int TYPE_NAME=1;
+
+    int CLICKED=0;
+    int images[];
 
     String designationEmp;
     String text;
-
-    ImageView swipe;
-
-    ImageView swipeImage;
-    int i=0;
-    int TYPE_DESIGNATION=2;
-    int TYPE_NAME_DESIGNATION=3;
-    int CLICKED=0;
-    int images[];
     String designations[];
 
     DatabaseHandler handler;
 
-    List<Label> arraylist = new ArrayList<Label>();
+    List<Label> arraylist = new ArrayList<>();
     List<Employee> employees;
 
     @Override
@@ -125,68 +115,21 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         mListView.setVisibility(View.GONE);
         labelList.setAdapter(adapter);
 
-
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ((SwipeLayout)(mListView.getChildAt(position - mListView.getFirstVisiblePosition()))).open(true);
-//            }
-//        });
-//        mListView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                Log.e("ListView", "OnTouch");
-//                return false;
-//            }
-//        });
-//        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(mContext, "OnItemLongClickListener", Toast.LENGTH_SHORT).show();
-//                return true;
-//            }
-//        });
-//        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(AbsListView view, int scrollState) {
-//                Log.e("ListView", "onScrollStateChanged");
-//            }
-//
-//            @Override
-//            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//            }
-//        });
-//        mListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Log.e("ListView", "onItemSelected:" + position);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                Log.e("ListView", "onNothingSelected:");
-//            }
-//        });
-
         final Handler h = new Handler();
         final Runnable task = new Runnable() {
             @Override
             public void run() {
-                if (text.length() == 0 || text == "") {
+                if (text.length() == 0 || text.equals("")) {
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(designationEmp);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
                         mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
-
-                        // lv.setAdapter(adapter);
                         mListView.setAdapter(mAdapter);
                         mAdapter.setMode(Attributes.Mode.Single);
-                      //  lv.setVisibility(View.VISIBLE);
                         mListView.setVisibility(View.VISIBLE);
                         labelList.setVisibility(View.GONE);
-                       // lv.setMenuCreator(creator);
                         state = 1;
                     } else {
                         currentList = 1;
@@ -194,7 +137,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setHint("Search Here");
                         adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist,null,0,0);
                         labelList.setAdapter(adapter);
-                       // lv.setVisibility(View.GONE);
                         mListView.setVisibility(View.GONE);
                         labelList.setVisibility(View.VISIBLE);
                         state = 0;
@@ -212,51 +154,16 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         state = 1;
                     }
 
-                   // lv.setVisibility(View.VISIBLE);
                     mListView.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
                     mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
-
-                    // lv.setAdapter(adapter);
                     mListView.setAdapter(mAdapter);
                     mAdapter.setMode(Attributes.Mode.Single);
-
-                    // lv.setMenuCreator(creator);
                     currentList = 2;
                 }
 
             }
         };
-
-
-//        lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-//                switch (index) {
-//                    case 0:
-//                        adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
-//                        lv.setAdapter(adapter);
-//                        if (employees.get(position).isFavourite() == 0) {
-//                            Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
-//                            employees.get(position).makeFavourite(1);
-//                            handler.setFavourite(employees.get(position).getId(), 1, ITEM_TYPE_FAVOURITE_EMP);
-//                        }
-//                        else {
-//                            Toast.makeText(getApplicationContext(), "Removed From Favourites", Toast.LENGTH_SHORT).show();
-//                            employees.get(position).makeFavourite(0);
-//                            handler.setFavourite(employees.get(position).getId(), 0, ITEM_TYPE_FAVOURITE_EMP);
-//                        }
-//                        i=0;
-//                        lv.setMenuCreator(creator);
-//                        break;
-//                    case 1:
-//                        showPopup(EmployeeActivity.this, position);
-//                        break;
-//                }
-//                return false;
-//            }
-//        });
-
         search.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -305,6 +212,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         int OFFSET_X = winW;
         int OFFSET_Y = winH;
 
+        //noinspection deprecation
         popup.setBackgroundDrawable(new BitmapDrawable());
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
 
@@ -332,11 +240,6 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         p.y = location[1];
     }
 
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_employee, menu);
@@ -344,8 +247,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
+          return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -356,26 +258,16 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
             employees = handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
             mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
-
-
-          //  lv.setVisibility(View.VISIBLE);
             mListView.setVisibility(View.VISIBLE);
             labelList.setVisibility(View.GONE);
-           // lv.setAdapter(adapter);
             mListView.setAdapter(mAdapter);
             mAdapter.setMode(Attributes.Mode.Single);
             currentList=2;
             CLICKED=1;
             state=1;
-            i=0;
-            //lv.setMenuCreator(creator);
             search.setHint(designationEmp);
         }
         else {
-//            if((((SwipeLayout) view).getOpenStatus() == SwipeLayout.Status.Close))
-//            {
-//                //Start your activity
-//            }
             Intent returnIntent = new Intent(this, MainActivity.class);
             returnIntent.putExtra("act_val", 1);
             returnIntent.putExtra("id",
@@ -389,7 +281,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
             if(state==2){
                 if(POP_PRESENT==0) {
@@ -402,10 +294,8 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
                     }
                     state = 1;
-                   // lv.setVisibility(View.VISIBLE);
                     mListView.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
-                   // lv.setMenuCreator(creator);
                 }
                 else if(POP_PRESENT==1) {
                     popup.dismiss();

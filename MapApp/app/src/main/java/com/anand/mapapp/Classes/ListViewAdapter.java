@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,8 +27,8 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     List<Place> plList = null;
     DatabaseHandler handler;
     SwipeLayout swipeLayout;
-    ImageView favIcon;
-    ImageView infoIcon;
+    int pos;
+
     private static final int ITEM_TYPE_EMPLOYEE=1;
     private static final int ITEM_TYPE_PLACE=2;
 
@@ -68,9 +69,11 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     public int getSwipeLayoutResourceId(int position) {
         return R.id.swipe;
     }
+
+
     @Override
-    public View generateView(int position, ViewGroup parent) {
-        final int pos=position;
+    public View generateView(final int position, ViewGroup parent) {
+
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
         swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.swipeAction));
@@ -78,13 +81,12 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
-
-
+                TextView swipePos=(TextView)layout.findViewById(R.id.pos);
+                pos= Integer.parseInt((String) swipePos.getText());
             }
 
             @Override
             public void onClose(SwipeLayout layout) {
-
             }
 
             @Override
@@ -119,11 +121,12 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                     }
                 }
                 else if (val == ITEM_TYPE_PLACE) {
-                    if (plist.get(pos).isFavourite() == 0) {
+                    if (plList.get(pos).isFavourite() == 0) {
                         Toast.makeText(mContext, "Added To Favourites", Toast.LENGTH_SHORT).show();
                         plList.get(pos).makeFavourite(1);
                         handler.setFavourite(plList.get(pos).getId(), 1, ITEM_TYPE_FAVOURITE_PLACE);
-                    } else {
+                    }
+                    else {
                         Toast.makeText(mContext, "Removed From Favourites", Toast.LENGTH_SHORT).show();
                         plList.get(pos).makeFavourite(0);
                         handler.setFavourite(plList.get(pos).getId(), 0, ITEM_TYPE_FAVOURITE_PLACE);
@@ -148,18 +151,23 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     }
 
     @Override
-    public void fillValues(int position, View convertView) {
+    public void fillValues(final int position, View convertView) {
+        TextView itemPos = (TextView) convertView.findViewById(R.id.pos);
         TextView tv = (TextView) convertView.findViewById(R.id.textv);
         ImageView img = (ImageView) convertView.findViewById(R.id.imgv);
         ImageView swipe=(ImageView) convertView.findViewById(R.id.swipeIcon);
+        LinearLayout infoLayout=(LinearLayout) convertView.findViewById(R.id.info);
 
-        favIcon=(ImageView)convertView.findViewById(R.id.favIcon);
-        infoIcon=(ImageView)convertView.findViewById(R.id.infoIcon);
+        ImageView favIcon=(ImageView)convertView.findViewById(R.id.favIcon);
+        ImageView infoIcon=(ImageView)convertView.findViewById(R.id.infoIcon);
+        itemPos.setText(String.valueOf(position));
 
         if (val == ITEM_TYPE_EMPLOYEE) {
             tv.setText(empList.get(position).getName());
             img.setImageResource(empList.get(position).getPic());
-            infoIcon.setVisibility(View.VISIBLE);
+
+            //infoIcon.setVisibility(View.VISIBLE);
+           infoLayout.setVisibility(View.VISIBLE);
             if (empList.get(position).isFavourite() == 0) {
                 favIcon.setImageResource(R.drawable.fav_inactive);
             }
@@ -171,7 +179,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         else if (val == ITEM_TYPE_PLACE) {
             tv.setText(plList.get(position).getName());
             img.setImageResource(plList.get(position).getPic());
-            infoIcon.setVisibility(View.GONE);
+            infoLayout.setVisibility(View.GONE);
             if (plList.get(position).isFavourite() == 0) {
                 favIcon.setImageResource(R.drawable.fav_inactive);
             }
@@ -179,8 +187,9 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 favIcon.setImageResource(R.drawable.fav_active);
             }
         }
-
     }
+
+
     @Override
     public int getCount() {
         if (val == ITEM_TYPE_EMPLOYEE) {

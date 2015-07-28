@@ -1,25 +1,18 @@
 package com.anand.mapapp.Activities;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 
 public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCodeReadListener {
 
@@ -85,7 +78,7 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
 
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();

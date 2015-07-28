@@ -37,12 +37,12 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     EditText search;
     DatabaseHandler handler;
 
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
 
     private static final int TYPE_PLACE=1;
     private static final int TYPE_LABEL=2;
     private static final int TYPE_PLACE_LABEL=3;
+    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
+    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
 
     int currentList=1,state=0;
     int CLICKED=0;
@@ -227,6 +227,8 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                     CLICKED=0;
                 }
                 state=1;
+                mListView.setVisibility(View.VISIBLE);
+                labelList.setVisibility(View.GONE);
            }
            else {
                CLICKED=0;
