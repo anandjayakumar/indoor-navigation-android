@@ -33,7 +33,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     ImageView imgSwipe;
 
     SwipeLayout swp;
-
+    ImageView swipe;
     ImageView favLayout;
 
 
@@ -86,9 +86,52 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
         swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
-        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.swipeAction));
-        swipeLayout.setClickToClose(true);
+//        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.swipeAction));
+//        swipeLayout.setClickToClose(true);
 
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {
+                TextView swipePos = (TextView) layout.findViewById(R.id.pos);
+//                tvSwipe = (TextView) layout.findViewById(R.id.textvSwipe);
+//                imgSwipe = (ImageView) layout.findViewById(R.id.imgvSwipe);
+                pos = Integer.parseInt((String) swipePos.getText());
+//               swipe=(ImageView) layout.findViewById(R.id.swipeIcon);
+//                swipe.setVisibility(View.GONE);
+//                tvSwipe.setVisibility(View.VISIBLE);
+//                imgSwipe.setVisibility(View.VISIBLE);
+//                tvSwipe.setText(empList.get(pos).getName());
+//                imgSwipe.setImageResource(empList.get(pos).getPic());
+            }
+
+            @Override
+            public void onClose(final SwipeLayout layout) {
+                //layout.setLeftSwipeEnabled(false);
+//                tvSwipe.setVisibility(View.INVISIBLE);
+//                imgSwipe.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
+
+            }
+
+
+            @Override
+            public void onStartClose(SwipeLayout layout) {
+            }
+
+            @Override
+            public void onStartOpen(SwipeLayout layout) {
+
+            }
+
+            @Override
+            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
+                //when user's hand released.
+                swp = layout;
+            }
+        });
 
         v.findViewById(R.id.fav).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,47 +177,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 //closeItem(pos);
             }
         });
-        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
-            @Override
-            public void onOpen(SwipeLayout layout) {
-                TextView swipePos = (TextView) layout.findViewById(R.id.pos);
-//                tvSwipe = (TextView) layout.findViewById(R.id.textvSwipe);
-//                imgSwipe = (ImageView) layout.findViewById(R.id.imgvSwipe);
-                pos = Integer.parseInt((String) swipePos.getText());
-//                tvSwipe.setVisibility(View.VISIBLE);
-//                imgSwipe.setVisibility(View.VISIBLE);
-//                tvSwipe.setText(empList.get(pos).getName());
-//                imgSwipe.setImageResource(empList.get(pos).getPic());
-            }
-
-            @Override
-            public void onClose(final SwipeLayout layout) {
-                //layout.setLeftSwipeEnabled(false);
-//                tvSwipe.setVisibility(View.INVISIBLE);
-//                imgSwipe.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
-            }
-
-
-            @Override
-            public void onStartClose(SwipeLayout layout) {
-            }
-
-            @Override
-            public void onStartOpen(SwipeLayout layout) {
-
-            }
-
-            @Override
-            public void onHandRelease(SwipeLayout layout, float xvel, float yvel) {
-                //when user's hand released.
-                swp=layout;
-            }
-        });
         return v;
     }
 
@@ -184,8 +186,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         TextView tv = (TextView) convertView.findViewById(R.id.textv);
         ImageView img = (ImageView) convertView.findViewById(R.id.imgv);
 
-
-        ImageView swipe=(ImageView) convertView.findViewById(R.id.swipeIcon);
         LinearLayout infoLayout=(LinearLayout) convertView.findViewById(R.id.info);
 
         ImageView favIcon=(ImageView)convertView.findViewById(R.id.favIcon);
