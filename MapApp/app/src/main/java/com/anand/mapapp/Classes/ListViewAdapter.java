@@ -93,9 +93,8 @@ public class ListViewAdapter extends BaseSwipeAdapter {
         v.findViewById(R.id.fav).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                favLayout = (ImageView) swp.findViewById(R.id.favIcon);
                 if (val == ITEM_TYPE_EMPLOYEE) {
-                    favLayout = (ImageView) swp.findViewById(R.id.favIcon);
-
                     if (empList.get(pos).isFavourite() == 0) {
                         Toast.makeText(mContext, "Added To Favourites", Toast.LENGTH_SHORT).show();
                         empList.get(pos).makeFavourite(1);
@@ -112,10 +111,12 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                         Toast.makeText(mContext, "Added To Favourites", Toast.LENGTH_SHORT).show();
                         plList.get(pos).makeFavourite(1);
                         handler.setFavourite(plList.get(pos).getId(), 1, ITEM_TYPE_FAVOURITE_PLACE);
+                        favLayout.setImageResource(R.drawable.fav_active);
                     } else {
                         Toast.makeText(mContext, "Removed From Favourites", Toast.LENGTH_SHORT).show();
                         plList.get(pos).makeFavourite(0);
                         handler.setFavourite(plList.get(pos).getId(), 0, ITEM_TYPE_FAVOURITE_PLACE);
+                        favLayout.setImageResource(R.drawable.fav_inactive);
                     }
                 }
                 // closeItem(pos);
