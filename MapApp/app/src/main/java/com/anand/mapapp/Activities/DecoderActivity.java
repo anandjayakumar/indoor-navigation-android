@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-
 
 public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCodeReadListener {
 
@@ -30,7 +29,14 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         mydecoderview.setOnQRCodeReadListener(this);
 
     }
-
+    public void callCancel(View v){
+        v.startAnimation(AnimationUtils.loadAnimation(DecoderActivity.this, R.anim.image_click));
+        Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent();
+        intent.putExtra("MESSAGE", "null");
+        setResult(3, intent);
+        finish();
+    }
 
     @Override
     public void onQRCodeRead(String text, PointF[] points)
@@ -38,48 +44,14 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         data=text;
         if(!db.isValidQR(text)){
             data="null";
+
             Toast.makeText(getApplicationContext(), "Invalid QR Code", Toast.LENGTH_SHORT).show();
         }
-
         Intent intent=new Intent();
-        intent.putExtra("MESSAGE",data);
+        intent.putExtra("MESSAGE", data);
         setResult(2,intent);
         finish();
-
     }
-
-    public String date() {
-
-        GregorianCalendar date = new GregorianCalendar();
-        int day, month, year;
-        String date1="";
-
-
-        day = date.get(Calendar.DAY_OF_MONTH);
-        month = date.get(Calendar.MONTH)+1;
-        year = date.get(Calendar.YEAR);
-        date1=""+day+"/"+month+"/"+year;
-
-        return date1;
-    }
-
-    public String time() {
-
-        GregorianCalendar date = new GregorianCalendar();
-        int second, minute, hour;
-        String time1="";
-
-
-        second = date.get(Calendar.SECOND);
-        minute = date.get(Calendar.MINUTE);
-        hour = date.get(Calendar.HOUR);
-        time1=""+hour+":"+minute+":"+second;
-
-        return time1;
-    }
-
-
-
 
     @Override
     public void cameraNotFound() {
@@ -88,7 +60,6 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
 
     @Override
     public void QRCodeNotFoundOnCamImage() {
-
 
     }
 
@@ -104,8 +75,10 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         mydecoderview.getCameraManager().stopPreview();
     }
 
+
+
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             Toast.makeText(getApplicationContext(), "No QR code read", Toast.LENGTH_SHORT).show();
             Intent intent=new Intent();

@@ -1,12 +1,9 @@
 package com.anand.mapapp.Activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.TypedValue;
@@ -16,48 +13,51 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.anand.mapapp.Classes.CustomAdapter;
-import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.Classes.Label;
+import com.anand.mapapp.Classes.ListViewAdapter;
 import com.anand.mapapp.Classes.Place;
+import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.daimajia.swipe.util.Attributes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class PlaceActivity extends Activity implements AdapterView.OnItemClickListener{
+
     CustomAdapter adapter;
-    SwipeMenuListView lv;
-
+    private ListView mListView;
+    private ListViewAdapter mAdapter;
     ListView labelList;
-    SwipeMenuCreator creator=null,creator2=null;
-    int currentList=1,state=0;
-    int CLICKED=0;
     EditText search;
+    DatabaseHandler handler;
 
+
+    private static final int TYPE_PLACE=1;
+    private static final int TYPE_LABEL=2;
+    private static final int TYPE_PLACE_LABEL=3;
     private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
 
-    String placeLabel;
-    int TYPE_PLACE=1;
-    int TYPE_LABEL=2;
-    int TYPE_PLACE_LABEL=3;
-
+    int currentList=1,state=0;
+    int CLICKED=0;
     int posIcon;
     int images[];
     String places[];
-    DatabaseHandler handler;
-    List<Label> arraylist = new ArrayList<Label>();
+    String placeLabel;
+    String text;
 
+
+    ImageView swipeImage;
+    int count;
+
+
+    List<Label> placeTypeList = new ArrayList<Label>();
     List<Place> plp;
 
     @Override
@@ -66,7 +66,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         setContentView(R.layout.activity_place);
 
         search=(EditText) findViewById(R.id.searchView2);
-
         search.setHint("Search Here");
 
         images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,
@@ -74,134 +73,95 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                 R.drawable.ic_server, R.drawable.ic_eatery};
         places=new String[]{"Meeting Room","Entry/Exit","Refreshment","Washroom","Server"};
 
-        // Locate the ListView in listview_main.xml
-        lv = (SwipeMenuListView)findViewById(R.id.listView2);
-        lv.setOnItemClickListener(this);
-
+        mListView = (ListView) findViewById(R.id.listPlace);
+        mListView.setOnItemClickListener(this);
 
         labelList=(ListView)findViewById(R.id.labelList2);
         labelList.setOnItemClickListener(this);
 
-
         for (int i = 0; i < places.length; i++)
         {
             Label wp = new Label(images[i], places[i]);
-            arraylist.add(wp);
+            placeTypeList.add(wp);
         }
+
         handler = new DatabaseHandler(this);
-        adapter=new CustomAdapter(this,3,arraylist,null,0,0);
-        lv.setVisibility(View.GONE);
+        adapter=new CustomAdapter(this,3,placeTypeList,null,0,0);
+        mListView.setVisibility(View.GONE);
         labelList.setVisibility(View.VISIBLE);
         labelList.setAdapter(adapter);
-        search.addTextChangedListener(new TextWatcher() {
 
+
+
+
+        final Handler h = new Handler();
+        final Runnable task = new Runnable() {
             @Override
-            public void afterTextChanged(Editable arg0) {
-// TODO Auto-generated method stub
-                String text = search.getText().toString().toLowerCase(Locale.getDefault());
+            public void run() {
                 if (text.length() == 0 || text == "") {
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(placeLabel);
-                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, placeTypeList.get(posIcon).getImage(), 0);
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
-                        adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
-                        lv.setMenuCreator(creator);
-                        lv.setVisibility(View.VISIBLE);
+                        mAdapter = new ListViewAdapter(PlaceActivity.this, 2, null, plp);
+                        mListView.setVisibility(View.VISIBLE);
                         labelList.setVisibility(View.GONE);
-                        lv.setAdapter(adapter);
-                        //adapter.filter(2, text);
+                        mListView.setAdapter(mAdapter);
+                        mAdapter.setMode(Attributes.Mode.Single);
                         state = 1;
-                    } else {
+                    }
+                    else {
                         currentList = 1;
                         search.setHint("Search Here");
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
-                        adapter = new CustomAdapter(PlaceActivity.this, 3, arraylist,null,0,0);
-                        lv.setVisibility(View.GONE);
+                        adapter = new CustomAdapter(PlaceActivity.this, 3, placeTypeList,null,0,0);
+                        mListView.setVisibility(View.GONE);
                         labelList.setVisibility(View.VISIBLE);
-                        //lv.setMenuCreator(creator2);
-
                         labelList.setAdapter(adapter);
-                        //adapter.filter(3, text);
                         state = 0;
                     }
-                } else {
+                }
+                else {
                     if (CLICKED == 1) {
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
-                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
+                        search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, placeTypeList.get(posIcon).getImage(), 0);
                         state = 2;
-                    } else {
+                    }
+                    else {
                         plp = handler.getPlacesByName(TYPE_PLACE, text, null);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
                     }
-                    adapter = new CustomAdapter(PlaceActivity.this, 2, null, plp);
-                    lv.setMenuCreator(creator);
-                    lv.setVisibility(View.VISIBLE);
+                    mAdapter = new ListViewAdapter(PlaceActivity.this, 2, null, plp);
+                    mListView.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
-                    lv.setAdapter(adapter);
+                    mListView.setAdapter(mAdapter);
+                    mAdapter.setMode(Attributes.Mode.Single);
                     currentList = 2;
-                    //adapter.filter(2, text);
                 }
+            }
+        };
+        search.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                text = search.getText().toString().toLowerCase(Locale.getDefault());
+                h.removeCallbacks(task);
+                h.postDelayed(task, 400);
             }
 
             @Override
             public void beforeTextChanged(CharSequence arg0, int arg1,
                                           int arg2, int arg3) {
-// TODO Auto-generated method stub
+                // TODO Auto-generated method stub
             }
 
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2,
                                       int arg3) {
-// TODO Auto-generated method stub
-            }
-        });
-
-
-        creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                // create "open" item
-                SwipeMenuItem favItem = new SwipeMenuItem(
-                        getApplicationContext());
-                // set item background
-                favItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
-                // set item width
-                favItem.setWidth(dp2px(60));
-                // set item title
-                favItem.setIcon(R.drawable.fav);
-                // set item title fontsize
-
-                // add to menu
-                menu.addMenuItem(favItem);
-            }
-        };
-
-
-        creator2 = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-
-
-            }
-        };
-
-        lv.setMenuCreator(creator2);
-
-        lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    case 0:
-                        Toast.makeText(getApplicationContext(), "Added to Favourites", Toast.LENGTH_SHORT).show();
-                        plp.get(position).makeFavourite(1);
-                        handler.setFavourite(plp.get(position).getId(),1,ITEM_TYPE_FAVOURITE_PLACE);
-                        break;
-                }
-                return false;
+                // TODO Auto-generated method stub
             }
         });
     }
@@ -217,6 +177,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         getMenuInflater().inflate(R.menu.menu_place, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -227,20 +188,18 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (currentList == 1) {
             posIcon=position;
-            placeLabel = (arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
+            placeLabel = (placeTypeList.get(position).getName()).toLowerCase(Locale.getDefault());
             plp = handler.getPlacesByName(TYPE_LABEL, placeLabel, null);
-            adapter = new CustomAdapter(PlaceActivity.this, 2,null,plp);
-            lv.setAdapter(adapter);
+            mAdapter = new ListViewAdapter(PlaceActivity.this, 2,null,plp);
+            mListView.setAdapter(mAdapter);
+            mAdapter.setMode(Attributes.Mode.Single);
             currentList = 2;
             CLICKED=1;
             state=1;
-            lv.setMenuCreator(creator);
-            lv.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.VISIBLE);
             labelList.setVisibility(View.GONE);
-            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
+            search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, placeTypeList.get(posIcon).getImage(), 0);
             search.setHint(placeLabel);
-            //adapter.filter(5,placeLabel);
-
         }
         else {
             Intent returnIntent = new Intent(this, MainActivity.class);
@@ -268,8 +227,10 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                     CLICKED=0;
                 }
                 state=1;
-            }
-            else {
+                mListView.setVisibility(View.VISIBLE);
+                labelList.setVisibility(View.GONE);
+           }
+           else {
                CLICKED=0;
                search.setHint("Search Here");
                search.setText(null);
@@ -277,6 +238,5 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
             return true;
         }
         return super.onKeyDown(keyCode, event);
-
     }
 }

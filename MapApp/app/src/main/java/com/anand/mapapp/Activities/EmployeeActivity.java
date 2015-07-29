@@ -1,20 +1,15 @@
 package com.anand.mapapp.Activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.app.Activity;
-import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.app.ActionBarActivity;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -22,95 +17,67 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.anand.mapapp.Classes.CustomAdapter;
-import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Label;
+import com.anand.mapapp.Classes.ListViewAdapter;
+import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
-import com.baoyz.swipemenulistview.SwipeMenu;
-import com.baoyz.swipemenulistview.SwipeMenuCreator;
-import com.baoyz.swipemenulistview.SwipeMenuItem;
-import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.daimajia.swipe.util.Attributes;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.zip.Inflater;
 
-public class EmployeeActivity extends Activity implements AdapterView.OnItemClickListener {
+public class EmployeeActivity extends Activity implements AdapterView.OnItemClickListener{
 
+    private ListView mListView;
+    private ListViewAdapter mAdapter;
     Point p;
     FrameLayout layout_EMP;
-    int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
     PopupWindow popup;
-    int MENU_ITEM_POS;
-    int POP_PRESENT=0;
-    private Inflater inflater;
-
-    int posIcon;
-    int favIcon;
-    int NOTfavIcon;
-
-    Employee emp;
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
-
     CustomAdapter adapter;
     EditText search;
-    SwipeMenuListView lv;
     ListView labelList;
-    //ListView lv;
-    SwipeMenuCreator creator=null,creator2=null;
-    String designationEmp;
+
+    private static final int TYPE_NAME=1;
+    private static final int TYPE_DESIGNATION=2;
+    private static final int TYPE_NAME_DESIGNATION=3;
+
+    int WiW, WiH, windowW, windowH, winW, winH, imgW, imgH, padding;
+    int POP_PRESENT=0;
+    int posIcon;
     int currentList=1;
     int state=0;
-    int TYPE_NAME=1;
 
-    String text;
-
-
-    SwipeMenuItem favItem;
-    SwipeMenuItem infoItem;
-
-    int TYPE_DESIGNATION=2;
-    int TYPE_NAME_DESIGNATION=3;
-
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
     int CLICKED=0;
+    int images[];
 
-
-    int favIcon_POSITION;
+    String designationEmp;
+    String text;
+    String designations[];
 
     DatabaseHandler handler;
-    int images[];
-    String designations[];
-    List<Label> arraylist = new ArrayList<Label>();
-    public List<Employee> employees;
 
+    List<Label> arraylist = new ArrayList<>();
+    List<Employee> employees;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee);
 
+
         search=(EditText) findViewById(R.id.searchView1);
+
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
         windowW = getWindowManager().getDefaultDisplay().getWidth();
@@ -129,42 +96,40 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         designations=new String[]{"Project Manager","Architect","Designer","Business Analyst","Trainee","Intern"};
 
 
-        lv =(SwipeMenuListView)findViewById(R.id.listView);
-        lv.setOnItemClickListener(this);
+        mListView = (ListView) findViewById(R.id.listEmp);
+        mListView.setOnItemClickListener(this);
 
         labelList=(ListView)findViewById(R.id.labelList);
         labelList.setOnItemClickListener(this);
-
 
         for (int i = 0; i < designations.length; i++)
         {
             Label wp = new Label(images[i], designations[i]);
             arraylist.add(wp);
         }
+
+
         handler = new DatabaseHandler(this);
         adapter=new CustomAdapter(this,3,arraylist,null,0,0);
-        lv.setVisibility(View.GONE);
         labelList.setVisibility(View.VISIBLE);
+        mListView.setVisibility(View.GONE);
         labelList.setAdapter(adapter);
 
         final Handler h = new Handler();
         final Runnable task = new Runnable() {
             @Override
             public void run() {
-
-
-                if (text.length() == 0 || text == "") {
+                if (text.length() == 0 || text.equals("")) {
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(designationEmp);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
-                        adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
-                        lv.setMenuCreator(creator);
-                        lv.setVisibility(View.VISIBLE);
+                        mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
+                        mListView.setAdapter(mAdapter);
+                        mAdapter.setMode(Attributes.Mode.Single);
+                        mListView.setVisibility(View.VISIBLE);
                         labelList.setVisibility(View.GONE);
-                        lv.setAdapter(adapter);
-                        //adapter.filter(1, text);
                         state = 1;
                     } else {
                         currentList = 1;
@@ -172,13 +137,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setHint("Search Here");
                         adapter = new CustomAdapter(EmployeeActivity.this, 3, arraylist,null,0,0);
                         labelList.setAdapter(adapter);
-                        lv.setVisibility(View.GONE);
+                        mListView.setVisibility(View.GONE);
                         labelList.setVisibility(View.VISIBLE);
-                        //adapter.filter(3, text);
                         state = 0;
-                        //lv.setMenuCreator(null);
                     }
-                } else {
+                }
+                else {
                     if (CLICKED == 1) {
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
@@ -189,76 +153,17 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
                     }
-                    lv.setMenuCreator(creator);
-                    lv.setVisibility(View.VISIBLE);
+
+                    mListView.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
-                    adapter = new CustomAdapter(EmployeeActivity.this, 1, employees, null);
-                    lv.setAdapter(adapter);
+                    mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
+                    mListView.setAdapter(mAdapter);
+                    mAdapter.setMode(Attributes.Mode.Single);
                     currentList = 2;
-                    //adapter.filter(1, text);
                 }
 
             }
         };
-
-        creator = new SwipeMenuCreator() {
-
-            @Override
-            public void create(SwipeMenu menu) {
-                favItem = new SwipeMenuItem(getApplicationContext());
-                favItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
-                favItem.setWidth(dp2px(60));
-                favItem.setIcon(R.drawable.fav);
-
-                menu.addMenuItem(favItem);
-
-                infoItem = new SwipeMenuItem(getApplicationContext());
-                infoItem.setBackground(new ColorDrawable(Color.rgb(255, 255, 255)));
-                infoItem.setWidth(dp2px(60));
-                infoItem.setIcon(R.drawable.info1);
-                menu.addMenuItem(infoItem);
-            }
-        };
-
-        lv.setMenuCreator(null);
-
-//        // set SwipeListener
-//        lv.setOnSwipeListener(new SwipeMenuListView.OnSwipeListener() {
-//
-//            @Override
-//            public void onSwipeStart(int position) {
-//                // swipe start
-//            }
-//
-//            @Override
-//            public void onSwipeEnd(int position) {
-//                // swipe end
-//            }
-//        });
-
-        lv.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(int position, SwipeMenu menu, int index) {
-                switch (index) {
-                    case 0:
-                        if(employees.get(position).isFavourite()==0){
-                            //favIcon_POSITION=position;
-                            Toast.makeText(getApplicationContext(), "Added To Favourites", Toast.LENGTH_SHORT).show();
-                            employees.get(position).makeFavourite(1);
-                            handler.setFavourite(employees.get(position).getId(),1,ITEM_TYPE_FAVOURITE_EMP);
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Already Added To Favourites", Toast.LENGTH_SHORT).show();
-                      }
-                        break;
-                    case 1:
-                        showPopup(EmployeeActivity.this, position);
-                        break;
-                }
-                return false;
-            }
-        });
-
         search.addTextChangedListener(new TextWatcher() {
 
             @Override
@@ -281,8 +186,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             }
         });
     }
-
-    private void showPopup(final Activity context, int position) {
+    public void showPopup(final Activity context, int position) {
 
         POP_PRESENT=1;
         layout_EMP.getForeground().setAlpha(400);
@@ -308,17 +212,14 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         int OFFSET_X = winW;
         int OFFSET_Y = winH;
 
+        //noinspection deprecation
         popup.setBackgroundDrawable(new BitmapDrawable());
         popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
         ImageView img = (ImageView) layout.findViewById(R.id.imageView);
         img.setImageResource(employees.get(position).getPic());
-        //img.setLayoutParams(new android.view.ViewGroup.LayoutParams(imgW, imgH));
         img.getLayoutParams().width = imgW;
         img.getLayoutParams().height = imgH;
-        //img.setPadding(padding,padding,padding,padding);
-
-//        img.setMaxWidth(imgW-100);
-//        img.setMaxHeight(imgH-100);
 
         TextView nameTV=(TextView)layout.findViewById(R.id.nameT);
         nameTV.setText(employees.get(position).getName());
@@ -328,32 +229,15 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
         TextView emailTV=(TextView)layout.findViewById(R.id.emailT);
         emailTV.setText(employees.get(position).getEmail());
-
-//        Button close = (Button) layout.findViewById(R.id.close);
-//        close.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                popup.dismiss();
-//            }
-//        });
     }
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-
         int[] location = new int[2];
         location[0]=0; location[1]=winH;
         p = new Point();
         p.x = location[0];
         p.y = location[1];
-    }
-
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
     }
 
     @Override
@@ -363,8 +247,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        return super.onOptionsItemSelected(item);
+          return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -373,33 +256,32 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
             posIcon=position;
             search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0,arraylist.get(posIcon).getImage(), 0);
             designationEmp=(arraylist.get(position).getName()).toLowerCase(Locale.getDefault());
-            employees=handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
-            adapter=new CustomAdapter(EmployeeActivity.this, 1, employees, null);
-            lv.setVisibility(View.VISIBLE);
+            employees = handler.getEmployeesByName(TYPE_DESIGNATION, designationEmp, null);
+            mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
+            mListView.setVisibility(View.VISIBLE);
             labelList.setVisibility(View.GONE);
-            lv.setAdapter(adapter);
+            mListView.setAdapter(mAdapter);
+            mAdapter.setMode(Attributes.Mode.Single);
             currentList=2;
             CLICKED=1;
             state=1;
-            lv.setMenuCreator(creator);
             search.setHint(designationEmp);
-            //adapter.filter(3,designationEmp);
         }
         else {
-            Intent returnIntent = new Intent(this, MainActivity.class);
-            returnIntent.putExtra("act_val", 1);
-            returnIntent.putExtra("id",
-                    (employees.get(position).getId()));
-            returnIntent.putExtra("x_val",
-                    (employees.get(position).getX()));
-            returnIntent.putExtra("y_val",
-                    (employees.get(position).getY()));
-            startActivity(returnIntent);
+                Intent returnIntent = new Intent(this, MainActivity.class);
+                returnIntent.putExtra("act_val", 1);
+                returnIntent.putExtra("id",
+                        (employees.get(position).getId()));
+                returnIntent.putExtra("x_val",
+                        (employees.get(position).getX()));
+                returnIntent.putExtra("y_val",
+                        (employees.get(position).getY()));
+                startActivity(returnIntent);
         }
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
             if(state==2){
                 if(POP_PRESENT==0) {
@@ -412,9 +294,8 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
                     }
                     state = 1;
-                    lv.setVisibility(View.VISIBLE);
+                    mListView.setVisibility(View.VISIBLE);
                     labelList.setVisibility(View.GONE);
-                    lv.setMenuCreator(creator);
                 }
                 else if(POP_PRESENT==1) {
                     popup.dismiss();
@@ -433,5 +314,4 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
         }
         return super.onKeyDown(keyCode, event);
     }
-
 }

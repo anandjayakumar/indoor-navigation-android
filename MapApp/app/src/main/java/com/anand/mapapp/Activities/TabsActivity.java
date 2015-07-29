@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -23,15 +24,8 @@ import com.anand.mapapp.R;
 
 public class TabsActivity extends TabActivity {
 
-    int indx,act;
-    String name,desig;
-    int x,y,img;
     TabHost mytabs;
     TabHost tabHost;
-//    String UNDERLINED_EMPLOYEE="<u>EMPLOYEES</u>";
-//    String EMPLOYEE="EMPLOYEES";
-//    String UNDERLINED_PLACE="<u>PLACES</u>";
-//    String PLACE="PLACES";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,18 +37,12 @@ public class TabsActivity extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_tabs);
 
-
-        Resources resources = getResources();
         tabHost = getTabHost();
-        //TabHost tabHost = (TabHost)findViewById(android.R.id.tabhost);
-
         final View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
         final TextView tv1=(TextView) view1.findViewById(R.id.tabsText);
-        final View line1=(View) view1.findViewById(R.id.underLine);
+        final View line1= view1.findViewById(R.id.underLine);
 
         Intent intentEmployee = new Intent().setClass(this, EmployeeActivity.class);
         TabSpec tabSpecEmployee = tabHost
@@ -64,9 +52,8 @@ public class TabsActivity extends TabActivity {
 
         final View view2 = LayoutInflater.from(this).inflate(R.layout.tab2, null);
         final TextView tv2=(TextView) view2.findViewById(R.id.tabsText);
-        final View line2=(View) view2.findViewById(R.id.underLine);
+        final View line2= view2.findViewById(R.id.underLine);
         line2.setVisibility(View.GONE);
-
 
         Intent intentPlace = new Intent().setClass(this, PlaceActivity.class);
         TabSpec tabSpecPlace = tabHost
@@ -74,19 +61,14 @@ public class TabsActivity extends TabActivity {
                 .setIndicator(view2)
                 .setContent(intentPlace);
 
-
-        // add all tabs
         tabHost.addTab(tabSpecEmployee);
         tabHost.addTab(tabSpecPlace);
-
         tabHost.setCurrentTab(2);
-
 
         mytabs = getTabHost();
         mytabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-
                 int index = mytabs.getCurrentTab();
                 switch (index) {
                     case 0:
@@ -102,10 +84,10 @@ public class TabsActivity extends TabActivity {
                         line2.setVisibility(View.VISIBLE);
                         break;
                 }
-
             }
         });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,12 +95,10 @@ public class TabsActivity extends TabActivity {
             case R.id.action_settings:
                 Toast.makeText(getApplicationContext(), "Settings",
                         Toast.LENGTH_LONG).show();
-
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

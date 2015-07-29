@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MapApp</string>
+    <string name="app_name">Qway</string>
 
     <string name="search"><b>Search</b></string>
     <string name="scan_history"><b>Scan History</b></string>
@@ -8,11 +8,12 @@
     <string name="scan"><b>Scan</b></string>
     <string name="favourite"><b>Favourites</b></string>
 
+    <string name="deletion">Are you sure you want to make the deletion ?</string>
 
     <string name="desg_lb">Designation: </string>
     <string name="x_lb">X: </string>
     <string name="y_lb">Y: </string>
-
+    <string name="confirmation"><font fgcolor="black">CONFIRM DELETION</font></string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_qr">QRActivity</string>
@@ -22,4 +23,5 @@
     <string name="title_activity_place">PlaceActivity</string>
     <string name="title_activity_employee">EmployeeActivity</string>
     <string name="title_activity_favourite">FavouriteActivity</string>
+    <string name="title_activity_splash_screen">SplashScreen</string>
 </resources>
