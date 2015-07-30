@@ -36,6 +36,15 @@
 
 
         </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchViewHolder"
+            android:id="@+id/emptySearch"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_centerInParent="true"
+            android:paddingTop="30dp"
+            android:textColor="#AE202020"/>
         <ListView
             android:id="@+id/listEmp"
             android:layout_below="@+id/searchViewHolder"

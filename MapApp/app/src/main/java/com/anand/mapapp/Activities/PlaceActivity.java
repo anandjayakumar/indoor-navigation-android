@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.anand.mapapp.Classes.CustomAdapter;
 import com.anand.mapapp.Classes.Label;
@@ -66,6 +67,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         setContentView(R.layout.activity_place);
 
         search=(EditText) findViewById(R.id.searchView2);
+        final TextView emptySearch=(TextView) findViewById(R.id.emptySearch);
         search.setHint("Search Here");
 
         images=new int[] { R.drawable.ic_meeting, R.drawable.ic_entry,
@@ -104,6 +106,12 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                         search.setHint(placeLabel);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, placeTypeList.get(posIcon).getImage(), 0);
                         plp = handler.getPlacesByName(TYPE_PLACE_LABEL, text, placeLabel);
+                        if(plp.size()==0){
+                            emptySearch.setText("No Match Found");
+                        }
+                        else{
+                            emptySearch.setText(null);
+                        }
                         mAdapter = new ListViewAdapter(PlaceActivity.this, 2, null, plp);
                         mListView.setVisibility(View.VISIBLE);
                         labelList.setVisibility(View.GONE);
@@ -132,6 +140,12 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
                         plp = handler.getPlacesByName(TYPE_PLACE, text, null);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
+                    }
+                    if(plp.size()==0){
+                        emptySearch.setText("No Match Found");
+                    }
+                    else{
+                        emptySearch.setText(null);
                     }
                     mAdapter = new ListViewAdapter(PlaceActivity.this, 2, null, plp);
                     mListView.setVisibility(View.VISIBLE);

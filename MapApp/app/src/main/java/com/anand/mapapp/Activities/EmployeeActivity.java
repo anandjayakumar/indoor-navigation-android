@@ -77,6 +77,7 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
 
 
         search=(EditText) findViewById(R.id.searchView1);
+        final TextView emptySearch=(TextView)findViewById(R.id.emptySearch);
 
         layout_EMP = (FrameLayout) findViewById(R.id.emp_lay);
         layout_EMP.getForeground().setAlpha(0);
@@ -125,6 +126,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         search.setHint(designationEmp);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, arraylist.get(posIcon).getImage(), 0);
                         employees = handler.getEmployeesByName(TYPE_NAME_DESIGNATION, text, designationEmp);
+                        if(employees.size()==0){
+                            emptySearch.setText("No Match Found");
+                        }
+                        else{
+                            emptySearch.setText(null);
+                        }
                         mAdapter=new ListViewAdapter(EmployeeActivity.this, 1, employees, null);
                         mListView.setAdapter(mAdapter);
                         mAdapter.setMode(Attributes.Mode.Single);
@@ -152,6 +159,12 @@ public class EmployeeActivity extends Activity implements AdapterView.OnItemClic
                         employees = handler.getEmployeesByName(TYPE_NAME, text, null);
                         search.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ictop_search, 0, 0, 0);
                         state = 1;
+                    }
+                    if(employees.size()==0){
+                        emptySearch.setText("No Match Found");
+                    }
+                    else{
+                        emptySearch.setText(null);
                     }
 
                     mListView.setVisibility(View.VISIBLE);
