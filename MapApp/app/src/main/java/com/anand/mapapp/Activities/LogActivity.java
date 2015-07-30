@@ -1,15 +1,13 @@
 package com.anand.mapapp.Activities;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.Menu;
-
-import android.app.Activity;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
@@ -18,11 +16,10 @@ import android.widget.ScrollView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.anand.mapapp.Classes.Timelog;
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
-import com.anand.mapapp.Classes.Timelog;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -30,15 +27,14 @@ import java.util.List;
 public class LogActivity extends Activity {
     public int listcounter;
     DatabaseHandler db;
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log);
 
        db = new DatabaseHandler(this);
-        List<Timelog> tlog = new ArrayList<Timelog>();
-        tlog = db.getAllTimelog();
+        List<Timelog> tlog = db.getAllTimelog();
         listcounter = 0;
         int i = 0,j;
         TextView tv1,tv2,tv3;
@@ -120,7 +116,7 @@ public class LogActivity extends Activity {
     public String date() {
         GregorianCalendar date = new GregorianCalendar();
         int day, month, year;
-        String date1 = "";
+        String date1;
         day = date.get(Calendar.DAY_OF_MONTH);
         month = date.get(Calendar.MONTH) + 1;
         year = date.get(Calendar.YEAR);

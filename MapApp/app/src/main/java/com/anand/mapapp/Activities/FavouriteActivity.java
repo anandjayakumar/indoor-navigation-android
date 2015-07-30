@@ -3,49 +3,27 @@ package com.anand.mapapp.Activities;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.test.suitebuilder.annotation.LargeTest;
-import android.view.ContextThemeWrapper;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.anand.mapapp.Classes.CustomAdapter;
-import com.anand.mapapp.Classes.Employee;
 import com.anand.mapapp.Classes.Favourite;
-import com.anand.mapapp.Classes.Label;
-import com.anand.mapapp.Classes.Place;
 import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.R;
 import com.twotoasters.jazzylistview.JazzyListView;
 import com.twotoasters.jazzylistview.effects.GrowEffect;
 
-import java.nio.channels.NonReadableChannelException;
-import java.text.FieldPosition;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
-import static android.graphics.Color.TRANSPARENT;
 
 
 public class FavouriteActivity extends Activity implements AdapterView.OnItemClickListener {
@@ -88,7 +66,7 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 CustomAdapter clickAdapter = (CustomAdapter) listFavourite.getAdapter();
-                removeItemAt(clickAdapter, position); // you need to implement this method
+                removeItemAt(position); // you need to implement this method
                 clickAdapter.notifyDataSetChanged();
                 return true;
             }
@@ -96,11 +74,10 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
         }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public void removeItemAt(CustomAdapter customAdapter, final int position) {
+    public void removeItemAt(final int position) {
         final int[] id = new int[1];
         final int[] type=new int[1];
         final String[] extra= new String[1];
-        final int pos = position;
         final Button YesButton,NoButton;
 
         AlertDialog.Builder alertBox=new AlertDialog.Builder(this);
@@ -120,7 +97,7 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
                 }
 
                 handler.setFavourite(id[0], 0, type[0]);
-                favouriteList.remove(pos);
+                favouriteList.remove(position);
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
             }
@@ -157,10 +134,7 @@ public class FavouriteActivity extends Activity implements AdapterView.OnItemCli
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
 

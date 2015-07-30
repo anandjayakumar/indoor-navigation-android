@@ -11,9 +11,6 @@ import com.anand.mapapp.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by user on 25/6/15.
- */
 public class DBQueries {
 
     Context mContext;
@@ -50,7 +47,6 @@ public class DBQueries {
 
         }
 
-
         @Override
         protected void onPreExecute() {
 
@@ -68,7 +64,7 @@ public class DBQueries {
         protected Void doInBackground(Void... params) {
 
             DatabaseHandler dbh = new DatabaseHandler(mContext);
-            List<Employee> empList = new ArrayList<Employee>();
+            List<Employee> empList = new ArrayList<>();
             Employee em;
 
             em = new Employee(1,"Aarathi R", 308,35, R.drawable.flag, "Project Manager", "aarathirchandran@gmail.com", 0);
@@ -126,7 +122,7 @@ public class DBQueries {
     }
 
     public interface EmployeeinsertionCompletion {
-        public void employeeinsertionCompleted();
+        void employeeinsertionCompleted();
     }
 
     class Placeinsertiontask extends AsyncTask<Void, Void, Void> {
@@ -157,7 +153,7 @@ public class DBQueries {
         protected Void doInBackground(Void... params) {
 
             DatabaseHandler dbh = new DatabaseHandler(mContext);
-            List<Place> placeList = new ArrayList<Place>();
+            List<Place> placeList = new ArrayList<>();
 
             Place pl;
 
@@ -190,7 +186,7 @@ public class DBQueries {
     }
 
     public interface PlaceinsertionCompletion {
-        public void placeinsertionCompleted();
+         void placeinsertionCompleted();
     }
 
     class QRinsertiontask extends AsyncTask<Void, Void, Void> {
@@ -218,10 +214,10 @@ public class DBQueries {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        public Void doInBackground(Void... params) {
 
             DatabaseHandler dbh = new DatabaseHandler(mContext);
-            List<QRcode> qrList = new ArrayList<QRcode>();
+            List<QRcode> qrList = new ArrayList<>();
 
             QRcode qr= new QRcode();
             qr.setId(1);
@@ -304,12 +300,9 @@ public class DBQueries {
 
             return null;
         }
-
-
-
     }
 
     public interface QRinsertionCompletion {
-        public void qrinsertionCompleted();
+         void qrinsertionCompleted();
     }
 }

@@ -75,8 +75,6 @@ public class DecoderActivity extends Activity implements QRCodeReaderView.OnQRCo
         mydecoderview.getCameraManager().stopPreview();
     }
 
-
-
     @Override
     public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {

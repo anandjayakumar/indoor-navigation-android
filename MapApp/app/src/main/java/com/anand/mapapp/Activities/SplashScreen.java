@@ -10,16 +10,13 @@ import com.anand.mapapp.R;
 
 public class SplashScreen extends Activity  {
 
-    /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 1500;
-
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-//        GifView view = new GifView(this, "file:///android_asset/splash_html.html");
-//        setContentView(view);
         setContentView(R.layout.activity_splash_screen);
 
+        /* Duration of wait */
+        int SPLASH_DISPLAY_LENGTH = 1500;
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {

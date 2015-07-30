@@ -28,12 +28,8 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     DatabaseHandler handler;
     SwipeLayout swipeLayout;
 
-
-    TextView tvSwipe;
-    ImageView imgSwipe;
-
     SwipeLayout swp;
-    ImageView swipe;
+
     ImageView favLayout;
 
 
@@ -42,8 +38,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     private static final int ITEM_TYPE_EMPLOYEE=1;
     private static final int ITEM_TYPE_PLACE=2;
 
-    private static final int ITEM_TYPE_LABEL=3;
-    private static final int ITEM_TYPE_FAVOURITE=4;
+
 
     private static final int ITEM_TYPE_FAVOURITE_EMP=4;
     private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
@@ -51,7 +46,7 @@ public class ListViewAdapter extends BaseSwipeAdapter {
     int val;
     private Context mContext;
 
-    private static LayoutInflater inflater=null;
+    static LayoutInflater inflater=null;
 
     public ListViewAdapter(Context context, int value, List<Employee> employeeList, List<Place> placeList) {
         val=value;
@@ -62,14 +57,14 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                 mContext = context;
                 this.empList = employeeList;
                 inflater = LayoutInflater.from(mContext);
-                this.elist = new ArrayList<Employee>();
+                this.elist = new ArrayList<>();
                 this.elist.addAll(empList);
                 break;
             case 2:
                 mContext = context;
                 this.plList= placeList;
                 inflater = LayoutInflater.from(mContext);
-                this.plist = new ArrayList<Place>();
+                this.plist = new ArrayList<>();
                 this.plist.addAll(plList);
 
 
@@ -86,34 +81,20 @@ public class ListViewAdapter extends BaseSwipeAdapter {
 
         View v = LayoutInflater.from(mContext).inflate(R.layout.listview_item, null);
         swipeLayout = (SwipeLayout)v.findViewById(getSwipeLayoutResourceId(position));
-//        swipeLayout.addDrag(SwipeLayout.DragEdge.Right, v.findViewById(R.id.swipeAction));
-//        swipeLayout.setClickToClose(true);
 
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override
             public void onOpen(SwipeLayout layout) {
                 TextView swipePos = (TextView) layout.findViewById(R.id.pos);
-//                tvSwipe = (TextView) layout.findViewById(R.id.textvSwipe);
-//                imgSwipe = (ImageView) layout.findViewById(R.id.imgvSwipe);
                 pos = Integer.parseInt((String) swipePos.getText());
-//               swipe=(ImageView) layout.findViewById(R.id.swipeIcon);
-//                swipe.setVisibility(View.GONE);
-//                tvSwipe.setVisibility(View.VISIBLE);
-//                imgSwipe.setVisibility(View.VISIBLE);
-//                tvSwipe.setText(empList.get(pos).getName());
-//                imgSwipe.setImageResource(empList.get(pos).getPic());
             }
 
             @Override
             public void onClose(final SwipeLayout layout) {
-                //layout.setLeftSwipeEnabled(false);
-//                tvSwipe.setVisibility(View.INVISIBLE);
-//                imgSwipe.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onUpdate(SwipeLayout layout, int leftOffset, int topOffset) {
-
             }
 
 
@@ -162,7 +143,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                         favLayout.setImageResource(R.drawable.fav_inactive);
                     }
                 }
-                // closeItem(pos);
             }
         });
 
@@ -174,7 +154,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
                         ((EmployeeActivity) mContext).showPopup((EmployeeActivity) mContext, pos);
                     }
                 }
-                //closeItem(pos);
             }
         });
         return v;
@@ -196,7 +175,6 @@ public class ListViewAdapter extends BaseSwipeAdapter {
             tv.setText(empList.get(position).getName());
             img.setImageResource(empList.get(position).getPic());
 
-            //infoIcon.setVisibility(View.VISIBLE);
            infoLayout.setVisibility(View.VISIBLE);
             if (empList.get(position).isFavourite() == 0) {
                 favIcon.setImageResource(R.drawable.fav_inactive);

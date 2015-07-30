@@ -4,16 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -42,8 +41,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     private static final int TYPE_PLACE=1;
     private static final int TYPE_LABEL=2;
     private static final int TYPE_PLACE_LABEL=3;
-    private static final int ITEM_TYPE_FAVOURITE_EMP=4;
-    private static final int ITEM_TYPE_FAVOURITE_PLACE=5;
 
     int currentList=1,state=0;
     int CLICKED=0;
@@ -53,12 +50,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     String placeLabel;
     String text;
 
-
-    ImageView swipeImage;
-    int count;
-
-
-    List<Label> placeTypeList = new ArrayList<Label>();
+    List<Label> placeTypeList = new ArrayList<>();
     List<Place> plp;
 
     @Override
@@ -100,7 +92,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         final Runnable task = new Runnable() {
             @Override
             public void run() {
-                if (text.length() == 0 || text == "") {
+                if (text.length() == 0 || text.equals("")) {
                     if (CLICKED == 1) {
                         currentList = 2;
                         search.setHint(placeLabel);
@@ -180,12 +172,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
         });
     }
 
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_place, menu);
@@ -194,7 +180,6 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
 
@@ -229,7 +214,7 @@ public class PlaceActivity extends Activity implements AdapterView.OnItemClickLi
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, @NonNull KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && state!=0) {
            if(state==2){
                 search.setHint(placeLabel);

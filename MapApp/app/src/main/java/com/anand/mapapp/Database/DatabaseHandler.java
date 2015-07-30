@@ -174,7 +174,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
             cursor.moveToFirst();
-            Employee employee = new Employee();
             ContentValues cv = new ContentValues();
             cv.put(KEY_ID, cursor.getInt(0));
             cv.put(KEY_NAME, cursor.getString(1));
@@ -193,7 +192,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
             cursor.moveToFirst();
-            Place place = new Place();
             ContentValues cv = new ContentValues();
             cv.put(KEY_ID, cursor.getInt(0));
             cv.put(KEY_NAME,cursor.getString(1));
@@ -210,7 +208,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     public List<Favourite> getFavEmployees() {
-        List<Favourite> favouriteList = new ArrayList<Favourite>();
+        List<Favourite> favouriteList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE "+KEY_FAVOURITE + " = 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -235,7 +233,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<Favourite> getFavPlaces() {
-        List<Favourite> favouriteList = new ArrayList<Favourite>();
+        List<Favourite> favouriteList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE "+KEY_FAVOURITE + " = 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -325,14 +323,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int cnt = cursor.getCount();
         cursor.close();
         db.close();
-        if(cnt!=0){
-            return true;
-        }
-        return false;
+        return cnt != 0;
     }
 
     public List<Timelog> getAllTimelog() {
-        List<Timelog> logList = new ArrayList<Timelog>();
+        List<Timelog> logList = new ArrayList<>();
         String selectQuery = "SELECT  * FROM " + TABLE_LOG;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -352,58 +347,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return logList;
     }
 
-    public List<Employee> getAllEmployees() {
-        List<Employee> employeeList = new ArrayList<Employee>();
-        String selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Employee emp_o = new Employee();
-                emp_o.setId(cursor.getInt(0));
-                emp_o.setName(cursor.getString(1));
-                emp_o.setX(cursor.getInt(2));
-                emp_o.setY(cursor.getInt(3));
-                emp_o.setPic(cursor.getInt(4));
-                emp_o.setDesg(cursor.getString(5));
-                emp_o.setEmail(cursor.getString(6));
-                emp_o.makeFavourite(cursor.getInt(7));
-                employeeList.add(emp_o);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-        return employeeList;
-    }
-
-    public List<Place> getAllPlaces() {
-        List<Place> placeList = new ArrayList<Place>();
-        String selectQuery = "SELECT  * FROM " + TABLE_PLACE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                Place pl=new Place();
-                pl.setId(cursor.getInt(0));
-                pl.setName(cursor.getString(1));
-                pl.setType(cursor.getString(2));
-                pl.setX(cursor.getInt(3));
-                pl.setY(cursor.getInt(4));
-                pl.setPic(cursor.getInt(5));
-                placeList.add(pl);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        db.close();
-
-        return placeList;
-    }
-
     public List<Employee> getEmployeesByName(int type, String text, String desgName){
         String selectQuery = null;
-        List<Employee> employeeList = new ArrayList<Employee>();
+        List<Employee> employeeList = new ArrayList<>();
         if(type==TYPE_NAME){
             selectQuery = "SELECT  * FROM " + TABLE_EMPLOYEE + " WHERE " + KEY_NAME +" LIKE " + "'%"+text+"%'";
         }
@@ -435,7 +381,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public List<Place> getPlacesByName(int type, String text, String place) {
-        List<Place> placeList = new ArrayList<Place>();
+        List<Place> placeList = new ArrayList<>();
         String selectQuery = null;
         if(type==TYPE_PLACE){
             selectQuery = "SELECT  * FROM " + TABLE_PLACE + " WHERE " + KEY_NAME +" LIKE " + "'%"+text+"%'";

@@ -19,9 +19,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,12 +43,8 @@ import com.anand.mapapp.Database.DatabaseHandler;
 import com.anand.mapapp.Libraries.TouchImageView;
 import com.anand.mapapp.R;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -160,7 +154,7 @@ public class MainActivity extends Activity {
         mPaint.setAntiAlias(false);
         mPaint.setFilterBitmap(true);
 
-        mkList = new ArrayList<Marker>();
+        mkList = new ArrayList<>();
 
         db = new DatabaseHandler(this);
         dbQueries = new DBQueries(getApplicationContext());
@@ -174,7 +168,7 @@ public class MainActivity extends Activity {
             addQR();
             SharedPreferences.Editor editor = getSharedPreferences("MyPREFERENCES", MODE_PRIVATE).edit();
             editor.putString("flag", "set");
-            editor.commit();
+            editor.apply();
         }
 
         options = new BitmapFactory.Options();
@@ -562,44 +556,14 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
-
-
-    private void pullDb() {
-        try {
-            File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
-
-            if (sd.canWrite()) {
-                String currentDBPath = "/data/data/" + getPackageName() + "/databases/MAIN_DB";
-                String backupDBPath = "maindb.db";
-                File currentDB = new File(currentDBPath);
-                File backupDB = new File(sd, backupDBPath);
-
-                if (currentDB.exists()) {
-                    FileChannel src = new FileInputStream(currentDB).getChannel();
-                    FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                    dst.transferFrom(src, 0, src.size());
-                    src.close();
-                    dst.close();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("pullDb", e.getMessage());
-        }
-    }
-
 
     public String date() {
 
         GregorianCalendar date = new GregorianCalendar();
         int day, month, year;
-        String date1 = "";
+        String date1;
         day = date.get(Calendar.DAY_OF_MONTH);
         month = date.get(Calendar.MONTH) + 1;
         year = date.get(Calendar.YEAR);
@@ -611,7 +575,7 @@ public class MainActivity extends Activity {
 
         GregorianCalendar date = new GregorianCalendar();
         String sec, min, hr;
-        String time1 = "";
+        String time1;
         long time = System.currentTimeMillis();
         double hours = ((time / 3600000) % 24) + 6.5;
         int hrs = (int) hours;
@@ -654,8 +618,7 @@ public class MainActivity extends Activity {
         pts[0] = a;
         pts[1] = b;
         transform.mapPoints(pts);
-        PointF newPoint = new PointF(pts[0], pts[1]);
-        return newPoint;
+        return new PointF(pts[0], pts[1]);
     }
 
     private void showPopup(final Activity context, int cat, int position) {

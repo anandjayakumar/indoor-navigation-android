@@ -1,8 +1,5 @@
 package com.anand.mapapp.Classes;
 
-/**
- * Created by user on 25/6/15.
- */
 public class Place {
     int _id;
     String _name;

@@ -22,16 +22,12 @@ public class Marker {
         return this._id;
     }
 
-    public void setCat(int cat){
-        this._cat=cat;
-    }
+
     public int getCat(){
         return this._cat;
     }
 
-    public void setX(int X) {
-        this._x = X;
-    }
+
     public int getX() {
         return this._x;
     }
@@ -39,9 +35,7 @@ public class Marker {
     public int getY() {
         return this._y;
     }
-    public void setY(int Y) {
-        this._y = Y;
-    }
+
 
     public void setMapx(float x){
         this._mapx=x;

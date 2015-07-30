@@ -17,9 +17,6 @@ import java.util.List;
 
 public class CustomAdapter extends BaseAdapter {
 
-    private static final int ITEM_TYPE_EMPLOYEE=1;
-    private static final int ITEM_TYPE_PLACE=2;
-
     private static final int ITEM_TYPE_LABEL=3;
     private static final int ITEM_TYPE_FAVOURITE=4;
 
@@ -27,25 +24,19 @@ public class CustomAdapter extends BaseAdapter {
 
 
     String checkDesg;
-    int favValue;
     String checkEmail;
 
 
 
     Context mContext;
-    ArrayList<Employee> elist;
-    ArrayList<Place> plist;
+
     ArrayList<Label> label_list;
     ArrayList<Favourite> flist;
     List<Label> label;
-    List<Employee> empList = null;
-    List<Place> plList = null;
+
     List<Favourite> favList = null;
     int val;
     int imgW,imgH;
-
-    String colors[];
-    String colorsPlace[];
 
     private static LayoutInflater inflater=null;
 
@@ -61,14 +52,14 @@ public class CustomAdapter extends BaseAdapter {
                 mContext = context;
                 this.label = arraylist;
                 inflater = LayoutInflater.from(mContext);
-                this.label_list = new ArrayList<Label>();
+                this.label_list = new ArrayList<>();
                 this.label_list.addAll(arraylist);
                 break;
             case 4:
                 mContext = context;
                 this.favList = listFavourite;
                 inflater = LayoutInflater.from(mContext);
-                this.flist = new ArrayList<Favourite>();
+                this.flist = new ArrayList<>();
                 this.flist.addAll(favList);
                 break;
         }
@@ -112,7 +103,6 @@ public class CustomAdapter extends BaseAdapter {
     {
         TextView tv;
         ImageView img;
-        ImageView swipe;
         TextView tv1;
         TextView tv2;
     }
@@ -153,130 +143,78 @@ public class CustomAdapter extends BaseAdapter {
             holder.tv.setText(label.get(position).getName());
             holder.img.setImageResource(label.get(position).getImage());
         }
-        else if(val == ITEM_TYPE_FAVOURITE) {
+        else {
+            if (val == ITEM_TYPE_FAVOURITE) {
 
-            checkDesg = favList.get(position).getDetail();
-            checkEmail = favList.get(position).getExtra();
-            if (checkEmail != "") {
-                holder.tv2.setVisibility(View.VISIBLE);
-                holder.tv.setText(favList.get(position).getName());
-                holder.tv1.setText(favList.get(position).getDetail());
+                checkDesg = favList.get(position).getDetail();
+                checkEmail = favList.get(position).getExtra();
+                if (!checkEmail.equals("")) {
+                    holder.tv2.setVisibility(View.VISIBLE);
+                    holder.tv.setText(favList.get(position).getName());
+                    holder.tv1.setText(favList.get(position).getDetail());
 
 
-                if (checkDesg.equals("Project Manager")) {
-                    holder.tv1.setTextColor(Color.parseColor("#f05d55"));
+                    switch (checkDesg) {
+                        case "Project Manager":
+                            holder.tv1.setTextColor(Color.parseColor("#f05d55"));
 
-                } else if (checkDesg.equals("Architect")) {
-                    holder.tv1.setTextColor(Color.parseColor("#fec300"));
+                            break;
+                        case "Architect":
+                            holder.tv1.setTextColor(Color.parseColor("#fec300"));
 
-                } else if (checkDesg.equals("Designer")) {
-                    holder.tv1.setTextColor(Color.parseColor("#479fde"));
+                            break;
+                        case "Designer":
+                            holder.tv1.setTextColor(Color.parseColor("#479fde"));
 
-                } else if (checkDesg.equals("Business Analyst")) {
-                    holder.tv1.setTextColor(Color.parseColor("#59747f"));
+                            break;
+                        case "Business Analyst":
+                            holder.tv1.setTextColor(Color.parseColor("#59747f"));
 
-                } else if (checkDesg.equals("Trainee")) {
-                    holder.tv1.setTextColor(Color.parseColor("#8ac539"));
+                            break;
+                        case "Trainee":
+                            holder.tv1.setTextColor(Color.parseColor("#8ac539"));
 
-                } else if (checkDesg.equals("Intern")) {
-                    holder.tv1.setTextColor(Color.parseColor("#c69c6c"));
+                            break;
+                        case "Intern":
+                            holder.tv1.setTextColor(Color.parseColor("#c69c6c"));
 
+                            break;
+                    }
+
+                    holder.tv2.setText(favList.get(position).getExtra());
+                    holder.img.setImageResource(favList.get(position).getPic());
+                } else {
+                    holder.tv.setText(favList.get(position).getName());
+                    holder.tv1.setText(favList.get(position).getDetail());
+
+                    switch (checkDesg) {
+                        case "Meeting Room":
+                            holder.tv1.setTextColor(Color.parseColor("#009889"));
+
+                            break;
+                        case "Entry/Exit":
+                            holder.tv1.setTextColor(Color.parseColor("#df3d30"));
+
+                            break;
+                        case "Refreshment":
+                            holder.tv1.setTextColor(Color.parseColor("#ffc402"));
+
+                            break;
+                        case "Washroom":
+                            holder.tv1.setTextColor(Color.parseColor("#546e7b"));
+
+                            break;
+                        case "Server":
+                            holder.tv1.setTextColor(Color.parseColor("#9974d4"));
+
+                            break;
+                    }
+                    holder.tv2.setVisibility(View.GONE);
+                    holder.img.setImageResource(favList.get(position).getPic());
                 }
 
-                holder.tv2.setText(favList.get(position).getExtra());
-                holder.img.setImageResource(favList.get(position).getPic());
             }
-            else {
-                holder.tv.setText(favList.get(position).getName());
-                holder.tv1.setText(favList.get(position).getDetail());
-
-                if (checkDesg.equals("Meeting Room")) {
-                    holder.tv1.setTextColor(Color.parseColor("#009889"));
-
-                } else if (checkDesg.equals("Entry/Exit")) {
-                    holder.tv1.setTextColor(Color.parseColor("#df3d30"));
-
-                } else if (checkDesg.equals("Refreshment")) {
-                    holder.tv1.setTextColor(Color.parseColor("#ffc402"));
-
-                } else if (checkDesg.equals("Washroom")) {
-                    holder.tv1.setTextColor(Color.parseColor("#546e7b"));
-
-                } else if (checkDesg.equals("Server")) {
-                    holder.tv1.setTextColor(Color.parseColor("#9974d4"));
-
-                }
-                holder.tv2.setVisibility(View.GONE);
-                holder.img.setImageResource(favList.get(position).getPic());
-            }
-
         }
         return convertView;
     }
-
-//    // Filter Class
-//    public void filter(int id, String charText) {
-//        charText = charText.toLowerCase(Locale.getDefault());
-//        if(id==ITEM_TYPE_LABEL) {
-//            label.clear();
-//            if (charText.length() == 0) {
-//                label.addAll(label_list);
-//            }
-//        }
-//        else if(id==ITEM_TYPE_EMPLOYEE) {
-//            empList.clear();
-//            if (charText.length() == 0) {
-//                empList.addAll(elist);
-//            } else {
-//                for (Employee wp : elist) {
-//                    if (wp.getName().toLowerCase(Locale.getDefault())
-//                            .contains(charText)) {
-//                        empList.add(wp);
-//                    }
-//                }
-//            }
-//        }
-//        else if(id==ITEM_TYPE_PLACE) {
-//            plList.clear();
-//            if (charText.length() == 0) {
-//                plList.addAll(plist);
-//            } else {
-//                for (Place pi : plist) {
-//                    if (pi.getName().toLowerCase(Locale.getDefault())
-//                            .contains(charText)) {
-//                        plList.add(pi);
-//                    }
-//                }
-//            }
-//        }
-//        else if(id==4){
-//            empList.clear();
-//            if (charText.length() == 0) {
-//                empList.addAll(elist);
-//            } else {
-//                for (Employee wp : elist) {
-//                    if (wp.getDesg().toLowerCase(Locale.getDefault())
-//                            .contains(charText)) {
-//                        empList.add(wp);
-//                    }
-//                }
-//            }
-//        }
-//        else if(id==5){
-//            plList.clear();
-//            if (charText.length() == 0) {
-//                plList.addAll(plist);
-//            } else {
-//                for (Place wp : plist) {
-//                    if (wp.getName().toLowerCase(Locale.getDefault())
-//                            .contains(charText)) {
-//                        plList.add(wp);
-//                    }
-//                }
-//            }
-//        }
-//        notifyDataSetChanged();
-//    }
-
-
 }

@@ -8,13 +8,7 @@ public class QRcode {
     String _tag;
 
     public QRcode(){}
-    public QRcode(int id,String link,int X,int Y,String tag){
-        this._id =id;
-        this._x=X;
-        this._y=Y;
-        this._link=link;
-        this._tag=tag;
-    }
+
 
     public int getId(){
         return this._id;
